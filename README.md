@@ -1,26 +1,24 @@
-![Bomberman](img/bomberman_title.png)
+# Bombero
+<img src="img/bomberman_title.png" width="50%"/>
 
-A game similar to Dyna Blaster (Bomberman)
-
-# Description
+## Description
 Bombero is a 2D game similar to Dyna Blaster (Bomberman). 
 Goal of the game is eliminating all enemies and escaping through hidden gate. This is achieved by using bombs. Player has limited amount of time to do that.
 
-## Menu
+### Menu
 After game starts, player can see a menu with following options:
-### New game
-Starts a new game with level #1. 
+
+- **New game** - starts a new game with level #1. 
 Player has 3 lives available. 
 Explosion size: 1
 Available boms: 1 
-### Select level
-Opens list of available levels where player can select specific level or return to main menu screen.
-After selecting level game starts in that level with same properties as the New game option.
-### Exit
-Shuts down game.
 
-## Game cycle
-### Preparation
+- **Select level** - opens list of available levels where player can select specific level or return to main menu screen.
+After selecting level game starts in that level with same properties as the New game option.
+
+- **Exit** - shuts down game.
+
+### Initialization of game
 1. Load level - using level loader
 2. Place items - gate and powerups
 3. Place enemies
@@ -37,9 +35,9 @@ Shuts down game.
 - **success**: continue to next level
 - **fail**: substract 1 life, if lives > 0 restart level, otherwise it is game over
 
-## Map
+### Map
 Map contains static and dynamic objects:
-### A) Static objects
+#### A) Static objects
 **Wall block** 
 - undestructible
 - nobody can moves through them
@@ -76,7 +74,7 @@ Map contains static and dynamic objects:
 - destroys bricks, items, enemies and also player if they are in contact
 - default size of fire is 1, but can be enlarged by powerup item
 
-### B) Dynamic objects
+#### B) Dynamic objects
 **Player** 
 - can move to 4 directions: up, down, left, right 
 - can plant bombs (1 or more ATM)
@@ -87,17 +85,18 @@ Map contains static and dynamic objects:
 - movement depends on specific enemy type (multiple strategies)
 - player receives points after elimination (amount depends on enemy type)       
 
-## Level loading
+### Level loading
 Level data are stored in image files. 
 Each pixel of image represents object on map or empty field. 
 Every object has a specific color.
 Map size is defined by image dimensions.
 
-# Architecture
+## Architecture
+### Class diagram
+<img src="img/ClassDiagram_concept.png" title="Click for full size" alt="Class diagram" width="100%"/>
+## Graphics
 
-# Graphics
-
-# Testing
-## Player movement
-## Enemy movement
-## Collisions
+## Testing
+### Player movement
+### Enemy movement
+### Collisions
