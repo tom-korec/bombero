@@ -105,7 +105,7 @@ To keep diagram **_clean_**:
 - some methods (dispose)
 - some classes are not in diagram (specialized EnemyStrategy classes)
 
-<img src="img/ClassDiagram_concept.png" alt="Class diagram" width="100%"/>
+<img src="img/ClassDiagram_concept.png" title="Class diagram" alt="Class diagram" width="100%"/>
 
 There are __four colors__, which distinguish purpose (package) of class:
 
@@ -132,6 +132,51 @@ There are __four colors__, which distinguish purpose (package) of class:
 - defines type of enemy - movement and score for elimination
 
 ## Graphics
+### Main menu
+Selected option is bolder and bigger than other labels.
+
+<img title="Main menu" alt="Main menu" src="img/mockups/bomberman menu.jpg"/>
+
+### Main menu - select level
+Label of selected level is bigger and rotated. Labels of unavailable levels are gray.
+
+<img title="Main menu - select level" alt="Main menu - select level" src="img/mockups/bomberman menu - select level.jpg"/>
+
+### Game
+Contains HUD and gameboard. 
+
+HUD shows user:
+- time left
+- lives left
+- actual score
+- highscore
+
+<img title="Game" alt="Game" src="img/mockups/game.png"/>
+
+### Sprites
+#### Player
+![Player](img/sprites/player1.png)
+
+#### Wall block
+![Wall block](img/sprites/edgeWall.png)
+
+#### Empty field
+![Empty field](img/sprites/floor.png)
+
+#### Brick block
+![Brick block](img/sprites/wall.png)
+
+#### Powerups
+![Powerups](img/sprites/item.png)
+
+#### Gate
+![Gate](img/sprites/teleporter.png)
+
+#### Bomb
+![Bomb](img/sprites/bomb.png)
+
+#### Explosion
+![Explosion](img/sprites/explosion.png)
 
 ## Testing
 ### Player movement
