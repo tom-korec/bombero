@@ -26,14 +26,14 @@ Shuts down game.
 3. Place enemies
 
 ### Main game cycle
-####Repeat:
+#### Repeat:
 1. Read input
 2. Update world
 3. Resolve collisions
 4. Check game over conditions
 5. Render game
 
-####Game over:
+#### Game over:
 - **success**: continue to next level
 - **fail**: substract 1 life, if lives > 0 restart level, otherwise it is game over
 
@@ -43,26 +43,33 @@ Map contains static and dynamic objects:
 **Wall block** 
 - undestructible
 - nobody can moves through them
+
 **Brick block** 
 - destructible
 - some enemies can move through, player cannot
 - can contain item, which is revealed after contact with explosion
+
 **Item** 
 - hidden in bricks
 - power ups (bomb count, explosion size), gate
+
 **Gate** 
 - opened when there are no enemies
 - enemies are spawned after contact with explosion
+
 **Fire powerup** 
 - increases size of explosion (1,3,5)
+
 **Bomb powerup** 
 - increases number of placable bombs at one moment (1,2,3)
+
 **Bomb** 
 - planted by player
 - after some time it will explode and destroy enemies, player, brick blocks and items in range
 - will also explode after contact with explosion
 - neither player nor enemies can go through
 - default amount is 1 ATM
+
 **Explosion** 
 - replaces bomb after +-4 seconds
 - makes fire in 4 directions, except directions where are wall blocks
@@ -75,6 +82,7 @@ Map contains static and dynamic objects:
 - can plant bombs (1 or more ATM)
 - can collect items
 - lose 1 life after contact with enemy or explosion
+
 **Enemy** 
 - movement depends on specific enemy type (multiple strategies)
 - player receives points after elimination (amount depends on enemy type)       
