@@ -179,6 +179,25 @@ HUD shows user:
 ![Explosion](img/sprites/explosion.png)
 
 ## Testing
-### Player movement
-### Enemy movement
+### Mechanics
+- added score after enemy elimination
+- substract 1 life after player collide with enemy
+- substract 1 life after player collide with explosion
+- taking powerup increases stats
+- breaking brick block with bomb
+- bomb explodes
+
+### Player
+- move up
+- move down
+- move left
+- move right
+- do not move
+- plant bomb
+
 ### Collisions
+- player with wall / brick
+- player with bomb
+- enemy with wall
+- brick with explosion
+- enemy with explosion
