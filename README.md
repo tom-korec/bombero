@@ -1,5 +1,5 @@
 # Bombero
-<img src="img/bomberman_title.png" width="50%"/>
+<img src="img/bomberman_title.png" height="450px" width="100%" />
 
 ## Description
 Bombero is a 2D game similar to Dyna Blaster (Bomberman). 
@@ -15,6 +15,11 @@ Available boms: 1
 
 - **Select level** - opens list of available levels where player can select specific level or return to main menu screen.
 After selecting level game starts in that level with same properties as the New game option.
+
+- **_Options_** - (not guaranteed feature)
+   - opens possible settings such as difficulty (# lives), viewable area of map, music volume ... 
+                
+   - uses libGDX Preferences to store permanent data
 
 - **Exit** - shuts down game.
 
@@ -93,7 +98,39 @@ Map size is defined by image dimensions.
 
 ## Architecture
 ### Class diagram
-<img src="img/ClassDiagram_concept.png" title="Click for full size" alt="Class diagram" width="100%"/>
+Following diagram displays basic concept of game's structure. Diagram focuses on showing connections between classes. 
+
+To keep diagram **_clean_**:
+- some fields are left out (e.g. rendering fields - size, dimensions, position...)
+- some methods (dispose)
+- some classes are not in diagram (specialized EnemyStrategy classes)
+
+<img src="img/ClassDiagram_concept.png" alt="Class diagram" width="100%"/>
+
+There are __four colors__, which distinguish purpose (package) of class:
+
+&nbsp; &nbsp; **1. orange** - main classes, contains logic and game cycle
+
+&nbsp; &nbsp; **2. blue** - entity classes
+
+&nbsp; &nbsp; **3. green** - helper classes
+
+&nbsp; &nbsp; **4. gray** - libGDX classes
+
+### Design patterns
+#### Singleton
+- *Bombero, World controller, Assets*
+- there is just one instance of these classes and it is desirable to have acess to them from other classes
+- getInstance() methods can be replaced with eager initiliazation (initialized with application start) - direct acess (instance is `public static final`)
+
+#### Flyweight
+- *Assets*
+- Each texture is loaded just once
+
+#### Strategy
+- *EnemyStrategy*
+- defines type of enemy - movement and score for elimination
+
 ## Graphics
 
 ## Testing
