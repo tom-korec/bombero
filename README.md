@@ -105,7 +105,7 @@ To keep diagram **_clean_**:
 - some methods (dispose)
 - some classes are not in diagram (specialized EnemyStrategy classes)
 
-<img src="img/ClassDiagram_concept.png" title="Class diagram" alt="Class diagram" width="100%"/>
+<img src="img/ClassDiagram_concept2.png" title="Class diagram" alt="Class diagram" width="100%"/>
 
 There are __four colors__, which distinguish purpose (package) of class:
 
@@ -117,6 +117,11 @@ There are __four colors__, which distinguish purpose (package) of class:
 
 &nbsp; &nbsp; **4. gray** - libGDX classes
 
+### Activity diagram
+Displays cycle of the game.
+
+<img src="img/ActivityDiagram_gameCycle.png" title="Activity diagram" alt="Activity diagram" width="100%"/>
+
 ### Design patterns
 #### Singleton
 - *Bombero, World controller, Assets*
@@ -126,6 +131,12 @@ There are __four colors__, which distinguish purpose (package) of class:
 #### Flyweight
 - *Assets*
 - Each texture is loaded just once
+- *ViewFactory*
+- each sprite is loaded in memory just once - getSprite() will apply specific attributes of entity to sprite
+
+#### Factory
+- *ViewFactory*
+- *static* class which generates sprites for rendering
 
 #### Strategy
 - *EnemyStrategy*
