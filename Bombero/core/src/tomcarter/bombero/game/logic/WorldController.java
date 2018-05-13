@@ -8,7 +8,7 @@ public class WorldController {
     private int livesLeft;
     private int score;
 
-    private WorldController() {
+    public WorldController() {
 
     }
 

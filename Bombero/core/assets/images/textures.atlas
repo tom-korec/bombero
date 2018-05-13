@@ -1,0 +1,83 @@
+
+textures.png
+size: 512,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bomb
+  rotate: false
+  xy: 132, 27
+  size: 96, 32
+  orig: 96, 32
+  offset: 0, 0
+  index: -1
+edgeWall
+  rotate: false
+  xy: 292, 189
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+explosion
+  rotate: false
+  xy: 2, 27
+  size: 128, 224
+  orig: 128, 224
+  offset: 0, 0
+  index: -1
+floor
+  rotate: false
+  xy: 230, 27
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+itemDestroy
+  rotate: false
+  xy: 132, 223
+  size: 217, 28
+  orig: 217, 28
+  offset: 0, 0
+  index: -1
+items
+  rotate: false
+  xy: 132, 61
+  size: 64, 160
+  orig: 64, 160
+  offset: 0, 0
+  index: -1
+player
+  rotate: false
+  xy: 198, 129
+  size: 92, 92
+  orig: 92, 92
+  offset: 0, 0
+  index: -1
+playerDeath
+  rotate: false
+  xy: 2, 2
+  size: 184, 23
+  orig: 184, 23
+  offset: 0, 0
+  index: -1
+suddenDeathShadow
+  rotate: false
+  xy: 264, 61
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+teleporter
+  rotate: false
+  xy: 198, 61
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+wall
+  rotate: false
+  xy: 198, 95
+  size: 192, 32
+  orig: 192, 32
+  offset: 0, 0
+  index: -1
