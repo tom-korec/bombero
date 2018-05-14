@@ -14,8 +14,8 @@ public abstract class GameObject {
     protected Rectangle bounds;
     protected TextureRegion region;
 
-    public GameObject () {
-        position = new Vector2();
+    public GameObject ( float positionX, float positionY) {
+        position = new Vector2(positionX, positionY);
         dimension = new Vector2(1, 1);
         origin = new Vector2();
         scale = new Vector2(1, 1);

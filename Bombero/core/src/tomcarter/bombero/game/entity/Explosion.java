@@ -18,9 +18,8 @@ public class Explosion extends GameObject {
     private ExplosionPart[] down;
 
     public Explosion(int positionX, int positionY, int size) {
-        super();
+        super(positionX, positionY);
         region = Assets.instance.explosion.center[0];
-        position.set(positionX, positionY);
 
         left = new ExplosionPart[size];
         right = new ExplosionPart[size];
@@ -140,7 +139,7 @@ public class Explosion extends GameObject {
         private TextureRegion[] regions;
 
         public ExplosionPart(int positionX, int positionY, TextureRegion[] regions) {
-            super();
+            super(positionX, positionY);
             position.set(positionX, positionY);
             dimension.set(1f, 1f);
             this.region = regions[0];

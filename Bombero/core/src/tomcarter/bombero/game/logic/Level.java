@@ -1,6 +1,5 @@
 package tomcarter.bombero.game.logic;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.Vector2;
 import tomcarter.bombero.game.entity.*;
 
@@ -8,38 +7,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Level {
+    private final int width;
+    private final int height;
+
     private Player player;
     private List<Wall> walls;
     private List<Brick> bricks;
+    private List<Floor> floors;
     private List<Bomb> bombs;
     private List<Bomb> justExploded;
     private List<Explosion> explosions;
     private List<Explosion> endedExplosions;
 
 
-    public Level(Player player) {
+    public Level(int width, int height, Player player, List<Wall> walls, List<Brick> bricks, List<Floor> floors) {
+        this.width = width;
+        this.height = height;
+
         this.player = player;
-        walls = new ArrayList<Wall>();
-        bricks = new ArrayList<Brick>();
+        this.walls = new ArrayList<Wall>(walls);
+        this.bricks = new ArrayList<Brick>(bricks);
+        this.floors = new ArrayList<Floor>(floors);
         bombs = new ArrayList<Bomb>();
         justExploded = new ArrayList<Bomb>();
 
         explosions = new ArrayList<Explosion>();
         endedExplosions = new ArrayList<Explosion>();
-
-        Wall wall1 = new Wall(1,1);
-        Wall wall2 = new Wall(1,3);
-        Wall wall3 = new Wall(3,1);
-        Wall wall4 = new Wall(3,3);
-        Brick brick1 = new Brick(2,1);
-        Brick brick2 = new Brick(1,2);
-        walls.add(wall1);
-        walls.add(wall2);
-        walls.add(wall3);
-        walls.add(wall4);
-        bricks.add(brick1);
-        bricks.add(brick2);
-
     }
 
     public void update(float delta){
@@ -58,12 +51,12 @@ public class Level {
         handleEndedExplosions();
     }
 
-    public void handleEndedExplosions(){
+    private void handleEndedExplosions(){
         explosions.removeAll(endedExplosions);
         endedExplosions.clear();
     }
 
-    public void handleExplodedBombs(){
+    private void handleExplodedBombs(){
         bombs.removeAll(justExploded);
         for (Bomb bomb : justExploded){
             Explosion explosion = new Explosion((int) bomb.getPosition().x, (int) bomb.getPosition().y, bomb.getSize());
@@ -92,18 +85,7 @@ public class Level {
 
     public List<GameObject> getGameObjects(){
         ArrayList<GameObject> objects = new ArrayList<GameObject>();
-        Floor floor1 = new Floor(0,0);
-        Floor floor2 = new Floor(0,1);
-        Floor floor3 = new Floor(1,0);
-        Floor floor4 = new Floor(2,2);
-        Floor floor5 = new Floor(2,0);
-        Floor floor6 = new Floor(0,2);
-        objects.add(floor1);
-        objects.add(floor2);
-        objects.add(floor3);
-        objects.add(floor4);
-        objects.add(floor5);
-        objects.add(floor6);
+        objects.addAll(floors);
         objects.addAll(bricks);
         objects.addAll(walls);
         objects.addAll(bombs);
@@ -111,4 +93,5 @@ public class Level {
         objects.addAll(explosions);
         return objects;
     }
+
 }

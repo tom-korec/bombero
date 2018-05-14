@@ -17,10 +17,9 @@ public class Player extends GameObject {
     private Direction direction;
 
 
-    public Player(Vector2 position){
-        super();
+    public Player(float positionX, float positionY){
+        super(positionX, positionY);
         region = Assets.instance.player.down[0];
-        position.set(position);
         dimension.set(0.8f, 0.8f);
 
         currentFrameTime = DEFAULT_FRAME_TIME;

@@ -6,7 +6,7 @@ import tomcarter.bombero.utils.Constants;
 
 public class Bomb extends GameObject {
     private static final float DEFAULT_FRAME_TIME = 0.4f;
-
+    private static final int[] FRAME_INDEX_SEQUENCE = { 0, 1, 2, 1};
     private int size;
     private float timeToExplode;
     private float currentFrameTime;
@@ -15,9 +15,8 @@ public class Bomb extends GameObject {
     private Level context;
 
     public Bomb(float positionX, float positionY, Level context, int size) {
-        super();
+        super(positionX, positionY);
         region = Assets.instance.bomb.textures[0];
-        position.set(positionX, positionY);
         dimension.set( 0.8f, 0.8f);
         origin.set(0.4f, 0.4f);
 
@@ -42,8 +41,8 @@ public class Bomb extends GameObject {
 
         if (currentFrameTime < 0){
             currentFrameTime = DEFAULT_FRAME_TIME;
-            frameIndex = ++frameIndex % 3;
-            region = Assets.instance.bomb.textures[frameIndex];
+            frameIndex = ++frameIndex % 4;
+            region = Assets.instance.bomb.textures[FRAME_INDEX_SEQUENCE[frameIndex]];
         }
     }
 

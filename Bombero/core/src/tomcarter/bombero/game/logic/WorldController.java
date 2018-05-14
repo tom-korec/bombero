@@ -7,8 +7,10 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 import tomcarter.bombero.game.entity.Player;
 import tomcarter.bombero.utils.Constants;
+import tomcarter.bombero.utils.LevelLoader;
 
 public class WorldController extends InputAdapter {
+    LevelLoader levelLoader;
     private Level level;
 
     private int livesLeft;
@@ -16,17 +18,23 @@ public class WorldController extends InputAdapter {
     private int fireSize;
     private int bombCount;
 
-    public WorldController() {
-        init("tad");
+    public WorldController(String level) {
+        levelLoader = new LevelLoader();
+        init();
+        loadLevel(level);
     }
 
-    private void init(String level){
-        this.level = new Level(new Player(new Vector2(0,0)));
+    private void init(){
         livesLeft = Constants.STARTING_LIVES;
         score = 0;
         fireSize = Constants.STARTING_FIRE;
         bombCount = Constants.STARTING_BOMBS;
         Gdx.input.setInputProcessor(this);
+    }
+
+    private void loadLevel(String level){
+        this.level = levelLoader.load(level);
+        levelLoader.finishLoading();
     }
 
     public void update(float delta){

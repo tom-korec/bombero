@@ -6,9 +6,8 @@ import tomcarter.bombero.utils.Assets;
 public class Wall extends GameObject {
 
     public Wall(float positionX, float positionY) {
-        super();
+        super(positionX, positionY);
         region = Assets.instance.wall.texture;
-        position.set(positionX, positionY);
         dimension.set( 1f, 1f);
     }
 

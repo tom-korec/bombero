@@ -5,9 +5,8 @@ import tomcarter.bombero.utils.Assets;
 public class Floor extends GameObject {
 
     public Floor(int positionX, int positionY) {
-        super();
+        super(positionX, positionY);
         region = Assets.instance.floor.texture;
-        position.set(positionX, positionY);
         dimension.set( 1f, 1f);
     }
 

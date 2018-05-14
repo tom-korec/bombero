@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import tomcarter.bombero.game.logic.WorldController;
 import tomcarter.bombero.game.logic.WorldRenderer;
 import tomcarter.bombero.utils.Assets;
+import tomcarter.bombero.utils.Constants;
 
 public class Bombero implements ApplicationListener {
 	private WorldController controller;
@@ -22,7 +23,7 @@ public class Bombero implements ApplicationListener {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		// Load assets
 		Assets.instance.init(new AssetManager());
-		controller = new WorldController();
+		controller = new WorldController(Constants.LEVEL1);
 		renderer = new WorldRenderer(controller);
 	}
 
