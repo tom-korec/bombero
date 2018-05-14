@@ -1,10 +1,12 @@
 package tomcarter.bombero.game.logic;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Disposable;
+import tomcarter.bombero.game.entity.GameObject;
 import tomcarter.bombero.utils.Assets;
 import tomcarter.bombero.utils.Constants;
 
@@ -24,13 +26,23 @@ public class WorldRenderer implements Disposable {
 
     private void init () {
         batch = new SpriteBatch();
-        camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
-        camera.position.set(Constants.VIEWPORT_WIDTH/2, Constants.VIEWPORT_HEIGHT / 2, 0);
+        float ratio = Gdx.graphics.getWidth() / (float)Gdx.graphics.getHeight();
+        camera = new OrthographicCamera(Constants.VIEWPORT_HEIGHT * ratio, Constants.VIEWPORT_HEIGHT);
+        camera.position.set(Constants.VIEWPORT_HEIGHT * ratio /2, Constants.VIEWPORT_HEIGHT / 2, 0);
         camera.update();
         cameraGUI = new OrthographicCamera(Constants.VIEWPORT_GUI_WIDTH, Constants.VIEWPORT_GUI_HEIGHT);
         cameraGUI.position.set(0, 0, 0);
         cameraGUI.setToOrtho(true); // flip y-axis
         cameraGUI.update();
+    }
+
+    public void resize(int width, int height){
+        System.out.println(""+ width + " " + height);
+        float ratio = width / (float)height;
+
+        camera = new OrthographicCamera(Constants.VIEWPORT_HEIGHT * ratio, Constants.VIEWPORT_HEIGHT);
+        camera.position.set(Constants.VIEWPORT_HEIGHT * ratio /2, Constants.VIEWPORT_HEIGHT / 2, 0);
+        camera.update();
     }
 
     public void render () {
@@ -42,7 +54,12 @@ public class WorldRenderer implements Disposable {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        renderPlayer(batch);
+
+        for (GameObject object : worldController.getLevel().getGameObjects()) {
+            object.render(batch);
+        }
+
+        //renderPlayer(batch);
 
 
         batch.end();

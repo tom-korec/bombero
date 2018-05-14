@@ -20,6 +20,11 @@ public class Assets implements AssetErrorListener, Disposable {
 
     public AssetFonts fonts;
     public AssetPlayer player;
+    public AssetWall wall;
+    public AssetFloor floor;
+    public AssetBrick brick;
+    public AssetBomb bomb;
+    public AssetExplosion explosion;
 
 
     public void init(AssetManager assetManager){
@@ -32,6 +37,11 @@ public class Assets implements AssetErrorListener, Disposable {
 
         fonts = new AssetFonts();
         player = new AssetPlayer(atlas);
+        wall = new AssetWall(atlas);
+        floor = new AssetFloor(atlas);
+        brick = new AssetBrick(atlas);
+        bomb = new AssetBomb(atlas);
+        explosion = new AssetExplosion(atlas);
     }
 
 
@@ -85,9 +95,14 @@ public class Assets implements AssetErrorListener, Disposable {
 
     public class AssetBrick {
         public final TextureRegion texture;
+        public final TextureRegion[] breaking;
 
         public AssetBrick(TextureAtlas atlas) {
-            this.texture = atlas.findRegion("brick");
+            AtlasRegion region = atlas.findRegion("brick");
+            TextureRegion[][] regions = region.split(region.getRegionWidth() / 6, region.getRegionHeight());
+            this.breaking = new TextureRegion[5];
+            texture = regions[0][0];
+            System.arraycopy(regions[0], 1, breaking, 0, 5);
         }
     }
 

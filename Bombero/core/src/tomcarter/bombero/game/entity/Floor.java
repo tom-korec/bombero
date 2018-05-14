@@ -2,11 +2,11 @@ package tomcarter.bombero.game.entity;
 
 import tomcarter.bombero.utils.Assets;
 
-public class Brick extends GameObject {
+public class Floor extends GameObject {
 
-    public Brick(float positionX, float positionY) {
+    public Floor(int positionX, int positionY) {
         super();
-        region = Assets.instance.brick.texture;
+        region = Assets.instance.floor.texture;
         position.set(positionX, positionY);
         dimension.set( 1f, 1f);
     }
