@@ -1,5 +1,6 @@
 package tomcarter.bombero.game.logic;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import tomcarter.bombero.game.entity.*;
 
@@ -9,6 +10,7 @@ import java.util.List;
 public class Level {
     private final int width;
     private final int height;
+    private LevelMap map;
 
     private Player player;
     private List<Wall> walls;
@@ -21,10 +23,15 @@ public class Level {
 
 
     public Level(int width, int height, Player player, List<Wall> walls, List<Brick> bricks, List<Floor> floors) {
+        List<GameObject> staticGameObjects = new ArrayList<GameObject>(walls);
+        staticGameObjects.addAll(bricks);
+        map = new LevelMap(width, height, staticGameObjects);
+
         this.width = width;
         this.height = height;
 
         this.player = player;
+        this.player.setContext(map);
         this.walls = new ArrayList<Wall>(walls);
         this.bricks = new ArrayList<Brick>(bricks);
         this.floors = new ArrayList<Floor>(floors);

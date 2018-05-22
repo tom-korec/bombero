@@ -20,7 +20,7 @@ public abstract class GameObject {
         origin = new Vector2();
         scale = new Vector2(1, 1);
         rotation = 0;
-        bounds = new Rectangle();
+        bounds = new Rectangle(positionX, positionY, dimension.x, dimension.y);
         region = null;
     }
 
@@ -36,11 +36,42 @@ public abstract class GameObject {
         return position;
     }
 
+    public float getCenterX() {
+        return position.x + dimension.x;
+    }
+
+    public float getCenterY() {
+        return position.y + dimension.y;
+    }
+
+    public int getNormalizedPositionX() {
+        return (int) (position.x + dimension.x / 2);
+    }
+
+    public int getNormalizedPositionY() {
+        return (int) (position.y + dimension.y / 2);
+    }
+
     public Vector2 getDimension() {
         return dimension;
     }
 
+    public Vector2 getMiddleDimension() {
+        return new Vector2(dimension).scl(0.5f);
+    }
+
+    public Vector2 getCenter(){
+        return new Vector2(position).add(getMiddleDimension());
+    }
+
     public Rectangle getBounds() {
         return bounds;
+    }
+
+    public boolean collidesWith(GameObject other){
+        if (other != null){
+            System.out.println("This: " + this.bounds + ", Other: " + other.bounds);
+        }
+        return other != null && other.bounds.overlaps(this.bounds);
     }
 }

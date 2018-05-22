@@ -7,8 +7,9 @@ public class Wall extends GameObject {
 
     public Wall(float positionX, float positionY) {
         super(positionX, positionY);
-        region = Assets.instance.wall.texture;
         dimension.set( 1f, 1f);
+
+        region = Assets.instance.wall.texture;
     }
 
     @Override
