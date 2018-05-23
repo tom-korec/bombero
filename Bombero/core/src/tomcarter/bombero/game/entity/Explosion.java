@@ -2,34 +2,42 @@ package tomcarter.bombero.game.entity;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import tomcarter.bombero.game.logic.LevelMap;
 import tomcarter.bombero.utils.Assets;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Explosion extends GameObject {
+    private LevelMap context;
+
     private static final float STARTER_FRAME_TIME = 0.2f;
     private static final float DEFAULT_FRAME_TIME = 0.05f;
     private float currentFrameTime;
     private int frameIndex;
 
-    private ExplosionPart center;
+    private int maxSize;
     private ExplosionPart[] left;
     private ExplosionPart[] right;
     private ExplosionPart[] up;
     private ExplosionPart[] down;
 
-    public Explosion(int positionX, int positionY, int size) {
+    private List<GameObject> destroyed;
+
+    public Explosion(LevelMap context, int positionX, int positionY, int size) {
         super(positionX, positionY);
         region = Assets.instance.explosion.center[0];
 
-        left = new ExplosionPart[size];
-        right = new ExplosionPart[size];
-        up = new ExplosionPart[size];
-        down = new ExplosionPart[size];
+        this.context = context;
+        this.maxSize = size;
 
-        createLeft(size);
-        createRight(size);
-        createUp(size);
-        createDown(size);
+        destroyed = new ArrayList<GameObject>();
+
+        createLeft();
+        createRight();
+        createUp();
+        createDown();
 
         currentFrameTime = STARTER_FRAME_TIME;
         frameIndex = 0;
@@ -81,8 +89,30 @@ public class Explosion extends GameObject {
         }
     }
 
+    public List<GameObject> getDestroyed() {
+        return destroyed;
+    }
 
-    private void createLeft(int size){
+    private int getPartSize(int right, int up){
+        int size = 0;
+        int x = (int) position.x;
+        int y = (int) position.y;
+        for (int i = 1; i <= maxSize; ++i){
+            if (!context.isEmpty(x + right * i, y + up * i)){
+                if (context.isBrick(x + right * i, y + up * i)){
+                    ((Brick) context.at(x + right * i, y + up * i)).explode();
+                }
+                break;
+            }
+            ++size;
+        }
+        return size;
+    }
+
+    private void createLeft(){
+        int size = getPartSize(-1, 0);
+        left = new ExplosionPart[size];
+
         for (int i = 1; i <= size; ++i) {
             ExplosionPart part;
             if (i == size){
@@ -96,7 +126,10 @@ public class Explosion extends GameObject {
         }
     }
 
-    private void createRight(int size){
+    private void createRight(){
+        int size = getPartSize(1, 0);
+        right = new ExplosionPart[size];
+
         for (int i = 1; i <= size; ++i) {
             ExplosionPart part;
             if (i == size){
@@ -109,7 +142,10 @@ public class Explosion extends GameObject {
         }
     }
 
-    private void createUp(int size){
+    private void createUp(){
+        int size = getPartSize(0, 1);
+        up = new ExplosionPart[size];
+
         for (int i = 1; i <= size; ++i) {
             ExplosionPart part;
             if (i == size){
@@ -122,7 +158,10 @@ public class Explosion extends GameObject {
         }
     }
 
-    private void createDown(int size){
+    private void createDown(){
+        int size = getPartSize(0, -1);
+        down = new ExplosionPart[size];
+
         for (int i = 1; i <= size; ++i) {
             ExplosionPart part;
             if (i == size){

@@ -15,6 +15,8 @@ public class Constants {
 
 
     public static final String LEVEL1 = "levels/level_1.png";
+    public static final String LEVEL2 = "levels/level_2.png";
+    public static final String LEVEL_DEFAULT = "levels/level_basic.png";
 
 
     public static final String TEXTURE_ATLAS = "images/textures.atlas";

@@ -12,6 +12,7 @@ public class Player extends GameObject {
     private static final float START_FRAME_TIME = 0.05f;
     private static final float DEFAULT_FRAME_TIME = 0.1f;
     private static final float DEFAULT_SPEED = 2.5f;
+    private static final float DEFAULT_SIDE_SPEED = DEFAULT_SPEED / 2;
     private float currentFrameTime;
     private int frameIndex;
 
@@ -55,8 +56,8 @@ public class Player extends GameObject {
         if (isMoving) {
             directionMultiplier.set(direction.getX(), direction.getY());
             position.mulAdd(directionMultiplier, speed*delta);
+            bounds.set(position.x + 0.05f, position.y + + 0.05f, dimension.x - 0.05f, dimension.y - 0.05f);
             handleCollisions();
-            bounds.set(position.x, position.y, dimension.x, dimension.y);
             animate(delta);
         }
     }
@@ -110,14 +111,14 @@ public class Player extends GameObject {
 
         if (left){
             if (context.isBrickOrWall(x-1, y+1)){
-                float sideSpeed = DEFAULT_SPEED * Gdx.graphics.getDeltaTime() / 5;
+                float sideSpeed = DEFAULT_SIDE_SPEED * Gdx.graphics.getDeltaTime();
                 position.set(position.x + sideSpeed, y+1 - dimension.y);
             }
         }
 
         if (right){
             if (context.isBrickOrWall(x+1, y+1)){
-                float sideSpeed = DEFAULT_SPEED * Gdx.graphics.getDeltaTime() / 5;
+                float sideSpeed = DEFAULT_SIDE_SPEED * Gdx.graphics.getDeltaTime();
                 position.set(position.x - sideSpeed, y+1 - dimension.y);
             }
         }
@@ -140,14 +141,14 @@ public class Player extends GameObject {
 
         if (left){
             if (context.isBrickOrWall(x-1, y-1)){
-                float sideSpeed = DEFAULT_SPEED * Gdx.graphics.getDeltaTime() / 5;
+                float sideSpeed = DEFAULT_SIDE_SPEED * Gdx.graphics.getDeltaTime();
                 position.set(position.x + sideSpeed, y);
             }
         }
 
         if (right){
             if (context.isBrickOrWall(x+1, y-1)){
-                float sideSpeed = DEFAULT_SPEED * Gdx.graphics.getDeltaTime() / 5;
+                float sideSpeed = DEFAULT_SIDE_SPEED * Gdx.graphics.getDeltaTime();
                 position.set(position.x - sideSpeed, y);
             }
         }
@@ -165,19 +166,19 @@ public class Player extends GameObject {
         boolean down = context.overlapsField(this, x, y-1);
 
         if (context.isBrickOrWall(x-1, y)){
-            position.set(x, position.y);
+            position.set((float) x, position.y);
         }
 
         if (up){
             if (context.isBrickOrWall(x-1, y+1) && !context.isBrickOrWall(x-1, y)){
-                float sideSpeed = DEFAULT_SPEED * Gdx.graphics.getDeltaTime() / 5;
+                float sideSpeed = DEFAULT_SIDE_SPEED * Gdx.graphics.getDeltaTime();
                 position.set(x, position.y - sideSpeed);
             }
         }
 
         if (down){
             if (context.isBrickOrWall(x-1, y-1) && !context.isBrickOrWall(x-1, y)){
-                float sideSpeed = DEFAULT_SPEED * Gdx.graphics.getDeltaTime() / 5;
+                float sideSpeed = DEFAULT_SIDE_SPEED * Gdx.graphics.getDeltaTime();
                 position.set(x, position.y + sideSpeed);
             }
         }
@@ -200,14 +201,14 @@ public class Player extends GameObject {
 
         if (up){
             if (context.isBrickOrWall(x+1, y+1) && !context.isBrickOrWall(x+1, y)){
-                float sideSpeed = DEFAULT_SPEED * Gdx.graphics.getDeltaTime() / 5;
+                float sideSpeed = DEFAULT_SIDE_SPEED * Gdx.graphics.getDeltaTime();
                 position.set(x + 1 - dimension.x, position.y - sideSpeed);
             }
         }
 
         if (down){
             if (context.isBrickOrWall(x+1, y-1) && !context.isBrickOrWall(x+1, y)){
-                float sideSpeed = DEFAULT_SPEED * Gdx.graphics.getDeltaTime() / 5;
+                float sideSpeed = DEFAULT_SIDE_SPEED * Gdx.graphics.getDeltaTime();
                 position.set(x + 1 - dimension.x, position.y + sideSpeed);
             }
         }

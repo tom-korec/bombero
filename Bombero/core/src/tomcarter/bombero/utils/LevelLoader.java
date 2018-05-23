@@ -35,6 +35,8 @@ public class LevelLoader {
         }
     }
 
+    Level level;
+
     private Pixmap pixmap;
     private int width;
     private int height;
@@ -47,11 +49,12 @@ public class LevelLoader {
 
     public Level load (String filename){
         init(filename);
+        level = new Level(width, height);
         loadEntities();
         Gdx.app.debug(TAG, "level '" + filename + "' loaded");
 
-        Level loadedLevel = new Level(width, height, player, walls, bricks, floors);
-        return loadedLevel;
+        level.init(player, walls, bricks, floors);
+        return level;
     }
 
 
@@ -85,7 +88,7 @@ public class LevelLoader {
                     Wall wall = new Wall(pixelX, pixelY);
                     walls.add(wall);
                 } else if (PixelType.BRICK.sameColor(currentPixel)) {
-                    Brick brick = new Brick(pixelX, pixelY);
+                    Brick brick = new Brick(pixelX, pixelY, level);
                     bricks.add(brick);
                 } else if (PixelType.FLOOR.sameColor(currentPixel)) {
                     Floor floor = new Floor(pixelX, pixelY);

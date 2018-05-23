@@ -23,7 +23,7 @@ public class Bombero implements ApplicationListener {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		// Load assets
 		Assets.instance.init(new AssetManager());
-		controller = new WorldController(Constants.LEVEL1);
+		controller = new WorldController(Constants.LEVEL2);
 		renderer = new WorldRenderer(controller);
 	}
 

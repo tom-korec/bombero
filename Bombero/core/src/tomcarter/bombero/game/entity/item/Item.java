@@ -1,4 +1,9 @@
 package tomcarter.bombero.game.entity.item;
 
-public abstract class Item {
+import tomcarter.bombero.game.entity.GameObject;
+
+public abstract class Item extends GameObject {
+    public Item(float positionX, float positionY) {
+        super(positionX, positionY);
+    }
 }

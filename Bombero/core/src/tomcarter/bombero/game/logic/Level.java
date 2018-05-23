@@ -3,8 +3,10 @@ package tomcarter.bombero.game.logic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import tomcarter.bombero.game.entity.*;
+import tomcarter.bombero.game.entity.item.Gate;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Level {
@@ -21,14 +23,15 @@ public class Level {
     private List<Explosion> explosions;
     private List<Explosion> endedExplosions;
 
+    public Level(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
 
-    public Level(int width, int height, Player player, List<Wall> walls, List<Brick> bricks, List<Floor> floors) {
+    public void init(Player player, List<Wall> walls, List<Brick> bricks, List<Floor> floors) {
         List<GameObject> staticGameObjects = new ArrayList<GameObject>(walls);
         staticGameObjects.addAll(bricks);
         map = new LevelMap(width, height, staticGameObjects);
-
-        this.width = width;
-        this.height = height;
 
         this.player = player;
         this.player.setContext(map);
@@ -44,18 +47,41 @@ public class Level {
 
     public void update(float delta){
         player.update(delta);
+        updateBombs(delta);
+        updateExplosions(delta);
+        updateBricks(delta);
+
+        handleExplodedBombs();
+        handleEndedExplosions();
+    }
+
+    private void updateBombs(float delta){
         for(Bomb bomb : bombs){
             bomb.update(delta);
         }
+    }
 
+    private void updateExplosions(float delta){
         for (Explosion explosion : explosions){
             explosion.update(delta);
             if (explosion.isOver()){
                 endedExplosions.add(explosion);
             }
         }
-        handleExplodedBombs();
-        handleEndedExplosions();
+    }
+
+    private void updateBricks(float delta){
+        for (Iterator<Brick> iterator = bricks.iterator(); iterator.hasNext();) {
+            Brick brick = iterator.next();
+            if (brick.isDestroyed()) {
+                iterator.remove();
+                deleteBrick(brick);
+            }
+        }
+
+        for(Brick brick : bricks){
+            brick.update(delta);
+        }
     }
 
     private void handleEndedExplosions(){
@@ -66,7 +92,7 @@ public class Level {
     private void handleExplodedBombs(){
         bombs.removeAll(justExploded);
         for (Bomb bomb : justExploded){
-            Explosion explosion = new Explosion((int) bomb.getPosition().x, (int) bomb.getPosition().y, bomb.getSize());
+            Explosion explosion = new Explosion(map, (int) bomb.getPosition().x, (int) bomb.getPosition().y, bomb.getSize());
             explosions.add(explosion);
         }
         justExploded.clear();
@@ -84,6 +110,26 @@ public class Level {
 
     public void explode(Bomb bomb){
         justExploded.add(bomb);
+    }
+
+    public void addFloor(int x, int y){
+        floors.add(new Floor(x, y));
+    }
+
+    public void deleteBrick(Brick brick){
+        int x = brick.getNormalizedPositionX();
+        int y = brick.getNormalizedPositionY();
+
+        GameObject hiddenObject = brick.getHiddenObject();
+        if (hiddenObject != null){
+            if (hiddenObject instanceof Gate){
+                //do something
+            }
+        }
+        else {
+            map.set(x, y, null);
+//            floors.add(new Floor(x, y));
+        }
     }
 
     public Player getPlayer() {
