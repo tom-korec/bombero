@@ -6,6 +6,7 @@ import tomcarter.bombero.game.entity.Brick;
 import tomcarter.bombero.game.entity.Floor;
 import tomcarter.bombero.game.entity.Player;
 import tomcarter.bombero.game.entity.Wall;
+import tomcarter.bombero.game.entity.item.Gate;
 import tomcarter.bombero.game.logic.Level;
 
 import java.util.ArrayList;
@@ -18,8 +19,10 @@ public class LevelLoader {
         PLAYER_SPAWN(0xFF, 0x0, 0x0), //red
         WALL(0x0, 0x0, 0x0), // black
         BRICK(0x66, 0x33, 0x0), // green
-        FLOOR(0xFF, 0xFF, 0xFF); // white
-
+        FLOOR(0xFF, 0xFF, 0xFF), // white
+        GATE(0x0, 0xFF, 0x0),
+        FIRE_POWERUP(0xFF, 0xAA, 0x0),
+        BOMB_POWERUP(0x0, 0x0, 0xFF);
         private int color;
 
         private PixelType (int r, int g, int b) {
@@ -88,6 +91,17 @@ public class LevelLoader {
                     Wall wall = new Wall(pixelX, pixelY);
                     walls.add(wall);
                 } else if (PixelType.BRICK.sameColor(currentPixel)) {
+                    Brick brick = new Brick(pixelX, pixelY, level);
+                    bricks.add(brick);
+                } else if (PixelType.GATE.sameColor(currentPixel)) {
+                    Brick brick = new Brick(pixelX, pixelY, level);
+                    Gate gate = new Gate(pixelX, pixelY);
+                    brick.setHiddenObject(gate);
+                    bricks.add(brick);
+                } else if (PixelType.FIRE_POWERUP.sameColor(currentPixel)) {
+                    Brick brick = new Brick(pixelX, pixelY, level);
+                    bricks.add(brick);
+                } else if (PixelType.BOMB_POWERUP.sameColor(currentPixel)) {
                     Brick brick = new Brick(pixelX, pixelY, level);
                     bricks.add(brick);
                 } else if (PixelType.FLOOR.sameColor(currentPixel)) {

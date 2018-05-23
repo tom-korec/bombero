@@ -19,10 +19,16 @@ public class Assets implements AssetErrorListener, Disposable {
     private AssetManager assetManager;
 
     public AssetFonts fonts;
+
     public AssetPlayer player;
+
     public AssetWall wall;
     public AssetFloor floor;
     public AssetBrick brick;
+
+    public AssetGate gate;
+    public AssetPowerUp powerUp;
+
     public AssetBomb bomb;
     public AssetExplosion explosion;
 
@@ -40,6 +46,8 @@ public class Assets implements AssetErrorListener, Disposable {
         wall = new AssetWall(atlas);
         floor = new AssetFloor(atlas);
         brick = new AssetBrick(atlas);
+        gate = new AssetGate(atlas);
+        powerUp = new AssetPowerUp(atlas);
         bomb = new AssetBomb(atlas);
         explosion = new AssetExplosion(atlas);
     }
@@ -103,6 +111,31 @@ public class Assets implements AssetErrorListener, Disposable {
             this.breaking = new TextureRegion[5];
             texture = regions[0][0];
             System.arraycopy(regions[0], 1, breaking, 0, 5);
+        }
+    }
+
+    public class AssetGate {
+        public final TextureRegion[] textures;
+
+        public AssetGate(TextureAtlas atlas) {
+            AtlasRegion region = atlas.findRegion("teleporter");
+            TextureRegion[][] regions = region.split(region.getRegionWidth() / 2, region.getRegionHeight());
+            this.textures = new TextureRegion[2];
+            System.arraycopy(regions[0], 0, textures, 0, 2);
+        }
+    }
+
+    public class AssetPowerUp {
+        public final TextureRegion[] fire;
+        public final TextureRegion[] bomb;
+
+        public AssetPowerUp(TextureAtlas atlas) {
+            AtlasRegion region = atlas.findRegion("items");
+            TextureRegion[][] regions = region.split(region.getRegionWidth() / 2, region.getRegionHeight() / 5);
+            this.fire = new TextureRegion[2];
+            this.bomb = new TextureRegion[2];
+            System.arraycopy(regions[0], 0, fire, 0, 2);
+            System.arraycopy(regions[1], 0, bomb, 0, 2);
         }
     }
 

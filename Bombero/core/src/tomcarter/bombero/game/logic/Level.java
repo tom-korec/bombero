@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import tomcarter.bombero.game.entity.*;
 import tomcarter.bombero.game.entity.item.Gate;
+import tomcarter.bombero.game.entity.item.Item;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,6 +16,7 @@ public class Level {
     private LevelMap map;
 
     private Player player;
+    private List<Item> items;
     private List<Wall> walls;
     private List<Brick> bricks;
     private List<Floor> floors;
@@ -38,6 +40,7 @@ public class Level {
         this.walls = new ArrayList<Wall>(walls);
         this.bricks = new ArrayList<Brick>(bricks);
         this.floors = new ArrayList<Floor>(floors);
+        this.items = new ArrayList<Item>();
         bombs = new ArrayList<Bomb>();
         justExploded = new ArrayList<Bomb>();
 
@@ -116,20 +119,15 @@ public class Level {
         floors.add(new Floor(x, y));
     }
 
+    public void addItem(Item item){
+        items.add(item);
+    }
+
     public void deleteBrick(Brick brick){
         int x = brick.getNormalizedPositionX();
         int y = brick.getNormalizedPositionY();
-
         GameObject hiddenObject = brick.getHiddenObject();
-        if (hiddenObject != null){
-            if (hiddenObject instanceof Gate){
-                //do something
-            }
-        }
-        else {
-            map.set(x, y, null);
-//            floors.add(new Floor(x, y));
-        }
+        map.set(x, y, hiddenObject);
     }
 
     public Player getPlayer() {
@@ -139,6 +137,7 @@ public class Level {
     public List<GameObject> getGameObjects(){
         ArrayList<GameObject> objects = new ArrayList<GameObject>();
         objects.addAll(floors);
+        objects.addAll(items);
         objects.addAll(bricks);
         objects.addAll(walls);
         objects.addAll(bombs);

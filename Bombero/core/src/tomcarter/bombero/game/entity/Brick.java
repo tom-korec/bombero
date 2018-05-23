@@ -1,5 +1,6 @@
 package tomcarter.bombero.game.entity;
 
+import tomcarter.bombero.game.entity.item.Item;
 import tomcarter.bombero.game.logic.Level;
 import tomcarter.bombero.utils.Assets;
 
@@ -8,7 +9,7 @@ public class Brick extends GameObject {
     private static final float DEFAULT_FRAME_TIME = 0.05f;
 
     private Level level;
-    private GameObject hiddenObject;
+    private Item hiddenObject;
 
     private boolean exploded;
     private float frameTime;
@@ -28,7 +29,7 @@ public class Brick extends GameObject {
         return hiddenObject;
     }
 
-    public void setHiddenObject(GameObject hiddenObject) {
+    public void setHiddenObject(Item hiddenObject) {
         this.hiddenObject = hiddenObject;
     }
 
@@ -50,7 +51,12 @@ public class Brick extends GameObject {
 
     @Override
     public void explode() {
-        level.addFloor(getNormalizedPositionX(), getNormalizedPositionY());
+        if (hiddenObject == null){
+            level.addFloor(getNormalizedPositionX(), getNormalizedPositionY());
+        }
+        else {
+            level.addItem(hiddenObject);
+        }
 
         exploded = true;
         frameIndex = 0;
