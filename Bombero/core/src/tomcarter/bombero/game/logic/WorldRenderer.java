@@ -61,9 +61,6 @@ public class WorldRenderer implements Disposable {
             object.render(batch);
         }
 
-        //renderPlayer(batch);
-
-
         batch.end();
     }
 
@@ -71,7 +68,9 @@ public class WorldRenderer implements Disposable {
         batch.setProjectionMatrix(cameraGUI.combined);
         batch.begin();
 
-        renderGameOver(batch);
+        if (renderGameOver){
+            renderGameOver(batch);
+        }
 
         batch.end();
     }

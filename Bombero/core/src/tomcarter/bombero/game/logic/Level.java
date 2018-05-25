@@ -60,9 +60,6 @@ public class Level {
         updateExplosions(delta);
         updateItems(delta);
         updateBricks(delta);
-
-        handleExplodedBombs();
-        handleEndedExplosions();
     }
 
     private void updatePlayer(float delta){
@@ -73,16 +70,25 @@ public class Level {
     }
 
     private void updateBombs(float delta){
-        for(Bomb bomb : bombs){
+        for (Iterator<Bomb> iterator = bombs.iterator(); iterator.hasNext();) {
+            Bomb bomb = iterator.next();
             bomb.update(delta);
+            if (bomb.isDestroyed()){
+                Explosion explosion = new Explosion(this, (int) bomb.getPosition().x, (int) bomb.getPosition().y, bomb.getSize());
+                explosions.add(explosion);
+                iterator.remove();
+                deleteObjectFromMap(bomb);
+            }
         }
+
     }
 
     private void updateExplosions(float delta){
-        for (Explosion explosion : explosions){
+        for (Iterator<Explosion> iterator = explosions.iterator(); iterator.hasNext();) {
+            Explosion explosion = iterator.next();
             explosion.update(delta);
             if (explosion.isOver()){
-                endedExplosions.add(explosion);
+                iterator.remove();
             }
         }
     }
@@ -115,15 +121,6 @@ public class Level {
         endedExplosions.clear();
     }
 
-    private void handleExplodedBombs(){
-        bombs.removeAll(justExploded);
-        for (Bomb bomb : justExploded){
-            Explosion explosion = new Explosion(this, (int) bomb.getPosition().x, (int) bomb.getPosition().y, bomb.getSize());
-            explosions.add(explosion);
-        }
-        justExploded.clear();
-    }
-
     public int getBombsCount(){
         return bombs.size();
     }
@@ -132,14 +129,13 @@ public class Level {
         if (player.isExploded()){
             return;
         }
-        Vector2 position = new Vector2(player.getPosition()).add(new Vector2(player.getDimension()).scl(0.5f));
-        Bomb bomb = new Bomb( (int) position.x + 0.1f, (int) position.y + 0.1f,this, size);
+        int posX = player.getNormalizedPositionX();
+        int posY = player.getNormalizedPositionY();
+        Bomb bomb = new Bomb( posX, posY,this, size);
         bombs.add(bomb);
+        map.set(posX, posY, bomb);
     }
 
-    public void explode(Bomb bomb){
-        justExploded.add(bomb);
-    }
 
     public void addFloor(int x, int y){
         floors.add(new Floor(x, y));

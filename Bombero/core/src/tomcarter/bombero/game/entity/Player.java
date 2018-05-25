@@ -123,7 +123,6 @@ public class Player extends GameObject implements Explodable{
         int y = getNormalizedPositionY();
 
         if (map.isItem(x, y)){
-            System.out.println("it is");
             ((Item)map.at(x, y)).enter();
         }
     }

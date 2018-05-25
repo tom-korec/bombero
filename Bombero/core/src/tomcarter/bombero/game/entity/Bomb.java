@@ -4,7 +4,7 @@ import tomcarter.bombero.game.logic.Level;
 import tomcarter.bombero.utils.Assets;
 import tomcarter.bombero.utils.Constants;
 
-public class Bomb extends GameObject {
+public class Bomb extends GameObject implements Explodable{
     private static final float DEFAULT_FRAME_TIME = 0.4f;
     private static final int[] FRAME_INDEX_SEQUENCE = { 0, 1, 2, 1};
     private int size;
@@ -35,7 +35,6 @@ public class Bomb extends GameObject {
         currentFrameTime -= delta;
 
         if (timeToExplode < 0){
-            context.explode(this);
             return;
         }
 
@@ -50,7 +49,14 @@ public class Bomb extends GameObject {
         return size;
     }
 
-    //    public boolean didExplode(){
-//        return timeToExplode < 0;
-//    }
+
+    @Override
+    public void explode() {
+        timeToExplode = -1f;
+    }
+
+    @Override
+    public boolean isDestroyed() {
+        return timeToExplode < 0;
+    }
 }
