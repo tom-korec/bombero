@@ -2,6 +2,8 @@ package tomcarter.bombero.game.entity;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
+import tomcarter.bombero.game.logic.Level;
 import tomcarter.bombero.game.logic.LevelMap;
 import tomcarter.bombero.utils.Assets;
 
@@ -10,12 +12,17 @@ import java.util.List;
 
 
 public class Explosion extends GameObject {
-    private LevelMap context;
+    public static final float FIRE_OFFSET = 0.15f;
+    private Level context;
+    private LevelMap map;
 
     private static final float STARTER_FRAME_TIME = 0.2f;
     private static final float DEFAULT_FRAME_TIME = 0.05f;
     private float currentFrameTime;
     private int frameIndex;
+
+    private Rectangle horizontal;
+    private Rectangle vertical;
 
     private int maxSize;
     private ExplosionPart[] left;
@@ -23,22 +30,22 @@ public class Explosion extends GameObject {
     private ExplosionPart[] up;
     private ExplosionPart[] down;
 
-    private List<GameObject> destroyed;
 
-    public Explosion(LevelMap context, int positionX, int positionY, int size) {
+    public Explosion(Level context, int positionX, int positionY, int size) {
         super(positionX, positionY);
         region = Assets.instance.explosion.center[0];
 
         this.context = context;
+        this.map = context.getMap();
         this.maxSize = size;
-
-        destroyed = new ArrayList<GameObject>();
 
         createLeft();
         createRight();
         createUp();
         createDown();
 
+        horizontal = createHorizontal();
+        vertical = createVertical();
         currentFrameTime = STARTER_FRAME_TIME;
         frameIndex = 0;
     }
@@ -46,7 +53,7 @@ public class Explosion extends GameObject {
     @Override
     public void update(float delta) {
         currentFrameTime -= delta;
-
+        checkCollisions();
         if (currentFrameTime < 0){
             ++frameIndex;
             currentFrameTime = DEFAULT_FRAME_TIME;
@@ -57,6 +64,13 @@ public class Explosion extends GameObject {
                 nextFrame(up, frameIndex);
                 nextFrame(down, frameIndex);
             }
+        }
+    }
+
+    public void checkCollisions(){
+        Player player = context.getPlayer();
+        if (horizontal.overlaps(player.bounds) || vertical.overlaps(player.bounds)){
+            player.explode();
         }
     }
 
@@ -89,19 +103,21 @@ public class Explosion extends GameObject {
         }
     }
 
-    public List<GameObject> getDestroyed() {
-        return destroyed;
-    }
-
     private int getPartSize(int right, int up){
         int size = 0;
         int x = (int) position.x;
         int y = (int) position.y;
         for (int i = 1; i <= maxSize; ++i){
-            if (!context.isEmpty(x + right * i, y + up * i)){
-                if (context.isBrick(x + right * i, y + up * i)){
-                    ((Brick) context.at(x + right * i, y + up * i)).explode();
+            int xPos = x + right * i;
+            int yPos = y + up * i;
+            GameObject object = map.at(xPos, yPos);
+            if (object != null){
+                if (object instanceof Explodable){
+                    ((Explodable) object).explode();
                 }
+//                if (context.isBrick(x + right * i, y + up * i)){
+//                    ((Brick) context.at(x + right * i, y + up * i)).explode();
+//                }
                 break;
             }
             ++size;
@@ -172,6 +188,24 @@ public class Explosion extends GameObject {
             }
             down[i-1] = part;
         }
+    }
+
+    private Rectangle createHorizontal(){
+        float posX = position.x - left.length + FIRE_OFFSET;
+        float posY = position.y + FIRE_OFFSET;
+        float width = left.length + dimension.x + right.length - 2 * FIRE_OFFSET;
+        float height = dimension.y - 2 * FIRE_OFFSET;
+
+        return new Rectangle(posX, posY, width, height);
+    }
+
+    private Rectangle createVertical(){
+        float posX = position.x + FIRE_OFFSET;
+        float posY = position.y - down.length + FIRE_OFFSET;
+        float width = dimension.x - 2 * FIRE_OFFSET;
+        float height = down.length + dimension.y + up.length - 2 * FIRE_OFFSET;
+
+        return new Rectangle(posX, posY, width, height);
     }
 
     public class ExplosionPart extends GameObject {

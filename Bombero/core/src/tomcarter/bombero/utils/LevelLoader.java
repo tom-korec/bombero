@@ -6,6 +6,8 @@ import tomcarter.bombero.game.entity.Brick;
 import tomcarter.bombero.game.entity.Floor;
 import tomcarter.bombero.game.entity.Player;
 import tomcarter.bombero.game.entity.Wall;
+import tomcarter.bombero.game.entity.item.BombPowerUp;
+import tomcarter.bombero.game.entity.item.FirePowerUp;
 import tomcarter.bombero.game.entity.item.Gate;
 import tomcarter.bombero.game.logic.Level;
 
@@ -55,8 +57,8 @@ public class LevelLoader {
         level = new Level(width, height);
         loadEntities();
         Gdx.app.debug(TAG, "level '" + filename + "' loaded");
-
         level.init(player, walls, bricks, floors);
+        player.setMap(level.getMap());
         return level;
     }
 
@@ -79,33 +81,38 @@ public class LevelLoader {
     }
 
     private void loadEntities() {
-        for (int pixelY = height - 1; pixelY >= 0; --pixelY) {
+        for (int pixelY = 0; pixelY < height; ++pixelY) {
+            int invY = height - 1 - pixelY;
             for (int pixelX = 0; pixelX < width; ++pixelX) {
                 int currentPixel = pixmap.getPixel(pixelX, pixelY);
 
                 if (PixelType.PLAYER_SPAWN.sameColor(currentPixel)) {
-                    player = new Player(pixelX, pixelY);
-                    Floor floor = new Floor(pixelX, pixelY);
+                    player = new Player(pixelX, invY, level);
+                    Floor floor = new Floor(pixelX, invY);
                     floors.add(floor);
                 } else if (PixelType.WALL.sameColor(currentPixel)) {
-                    Wall wall = new Wall(pixelX, pixelY);
+                    Wall wall = new Wall(pixelX, invY);
                     walls.add(wall);
                 } else if (PixelType.BRICK.sameColor(currentPixel)) {
-                    Brick brick = new Brick(pixelX, pixelY, level);
+                    Brick brick = new Brick(pixelX, invY, level);
                     bricks.add(brick);
                 } else if (PixelType.GATE.sameColor(currentPixel)) {
-                    Brick brick = new Brick(pixelX, pixelY, level);
-                    Gate gate = new Gate(pixelX, pixelY);
+                    Brick brick = new Brick(pixelX, invY, level);
+                    Gate gate = new Gate(pixelX, invY, level);
                     brick.setHiddenObject(gate);
                     bricks.add(brick);
                 } else if (PixelType.FIRE_POWERUP.sameColor(currentPixel)) {
-                    Brick brick = new Brick(pixelX, pixelY, level);
+                    Brick brick = new Brick(pixelX, invY, level);
+                    FirePowerUp firePowerUp = new FirePowerUp(pixelX, invY, level);
+                    brick.setHiddenObject(firePowerUp);
                     bricks.add(brick);
                 } else if (PixelType.BOMB_POWERUP.sameColor(currentPixel)) {
-                    Brick brick = new Brick(pixelX, pixelY, level);
+                    Brick brick = new Brick(pixelX, invY, level);
+                    BombPowerUp bombPowerUp = new BombPowerUp(pixelX, invY, level);
+                    brick.setHiddenObject(bombPowerUp);
                     bricks.add(brick);
                 } else if (PixelType.FLOOR.sameColor(currentPixel)) {
-                    Floor floor = new Floor(pixelX, pixelY);
+                    Floor floor = new Floor(pixelX, invY);
                     floors.add(floor);
                 } else {
                     int r = 0xff & (currentPixel >>> 24);

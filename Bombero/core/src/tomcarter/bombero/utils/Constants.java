@@ -8,7 +8,7 @@ public class Constants {
     public static final float VIEWPORT_GUI_HEIGHT = 600;
 
     public static final int STARTING_LIVES = 3;
-    public static final int STARTING_FIRE = 5;
+    public static final int STARTING_FIRE = 3;
     public static final int STARTING_BOMBS = 1;
 
     public static final float BOMB_TIME_TO_EXPLODE = 4f;

@@ -1,16 +1,19 @@
 package tomcarter.bombero.game.logic;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import tomcarter.bombero.game.entity.*;
-import tomcarter.bombero.game.entity.item.Gate;
+import tomcarter.bombero.game.entity.item.BombPowerUp;
+import tomcarter.bombero.game.entity.item.FirePowerUp;
 import tomcarter.bombero.game.entity.item.Item;
+
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class Level {
+    private WorldController context;
+
     private final int width;
     private final int height;
     private LevelMap map;
@@ -36,7 +39,6 @@ public class Level {
         map = new LevelMap(width, height, staticGameObjects);
 
         this.player = player;
-        this.player.setContext(map);
         this.walls = new ArrayList<Wall>(walls);
         this.bricks = new ArrayList<Brick>(bricks);
         this.floors = new ArrayList<Floor>(floors);
@@ -48,14 +50,26 @@ public class Level {
         endedExplosions = new ArrayList<Explosion>();
     }
 
+    public void setContext(WorldController context) {
+        this.context = context;
+    }
+
     public void update(float delta){
-        player.update(delta);
+        updatePlayer(delta);
         updateBombs(delta);
         updateExplosions(delta);
+        updateItems(delta);
         updateBricks(delta);
 
         handleExplodedBombs();
         handleEndedExplosions();
+    }
+
+    private void updatePlayer(float delta){
+        player.update(delta);
+        if (player.isDestroyed()){
+            context.gameOver();
+        }
     }
 
     private void updateBombs(float delta){
@@ -76,14 +90,23 @@ public class Level {
     private void updateBricks(float delta){
         for (Iterator<Brick> iterator = bricks.iterator(); iterator.hasNext();) {
             Brick brick = iterator.next();
+            brick.update(delta);
             if (brick.isDestroyed()) {
                 iterator.remove();
                 deleteBrick(brick);
             }
         }
+    }
 
-        for(Brick brick : bricks){
-            brick.update(delta);
+    private void updateItems(float delta){
+        for (Iterator<Item> iterator = items.iterator(); iterator.hasNext();){
+            Item item = iterator.next();
+            item.update(delta);
+
+            if (item.isDestroyed()){
+                iterator.remove();
+                deleteObjectFromMap(item);
+            }
         }
     }
 
@@ -95,7 +118,7 @@ public class Level {
     private void handleExplodedBombs(){
         bombs.removeAll(justExploded);
         for (Bomb bomb : justExploded){
-            Explosion explosion = new Explosion(map, (int) bomb.getPosition().x, (int) bomb.getPosition().y, bomb.getSize());
+            Explosion explosion = new Explosion(this, (int) bomb.getPosition().x, (int) bomb.getPosition().y, bomb.getSize());
             explosions.add(explosion);
         }
         justExploded.clear();
@@ -106,6 +129,9 @@ public class Level {
     }
 
     public void placeBomb(int size){
+        if (player.isExploded()){
+            return;
+        }
         Vector2 position = new Vector2(player.getPosition()).add(new Vector2(player.getDimension()).scl(0.5f));
         Bomb bomb = new Bomb( (int) position.x + 0.1f, (int) position.y + 0.1f,this, size);
         bombs.add(bomb);
@@ -126,12 +152,40 @@ public class Level {
     public void deleteBrick(Brick brick){
         int x = brick.getNormalizedPositionX();
         int y = brick.getNormalizedPositionY();
-        GameObject hiddenObject = brick.getHiddenObject();
+        Item hiddenObject = brick.getHiddenObject();
+        if (hiddenObject != null){
+            items.add(hiddenObject);
+        }
+
         map.set(x, y, hiddenObject);
+    }
+
+    public void deleteObjectFromMap(GameObject object){
+        int x = object.getNormalizedPositionX();
+        int y = object.getNormalizedPositionY();
+        Floor floor = new Floor(x, y);
+        floors.add(floor);
+        map.set(x, y, null);
     }
 
     public Player getPlayer() {
         return player;
+    }
+
+    public void addFirePowerUp(FirePowerUp powerUp){
+        context.addFirePowerUp();
+        items.remove(powerUp);
+        deleteObjectFromMap(powerUp);
+    }
+
+    public void addBombPowerUp(BombPowerUp powerUp){
+        context.addBombPowerUp();
+        items.remove(powerUp);
+        deleteObjectFromMap(powerUp);
+    }
+
+    public LevelMap getMap() {
+        return map;
     }
 
     public List<GameObject> getGameObjects(){

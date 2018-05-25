@@ -5,12 +5,15 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
+import tomcarter.bombero.game.Bombero;
 import tomcarter.bombero.game.entity.Player;
 import tomcarter.bombero.utils.Constants;
 import tomcarter.bombero.utils.LevelLoader;
 
 public class WorldController extends InputAdapter {
-    LevelLoader levelLoader;
+    private Bombero app;
+
+    private LevelLoader levelLoader;
     private Level level;
 
     private int livesLeft;
@@ -18,7 +21,8 @@ public class WorldController extends InputAdapter {
     private int fireSize;
     private int bombCount;
 
-    public WorldController(String level) {
+    public WorldController(String level, Bombero app) {
+        this.app = app;
         levelLoader = new LevelLoader();
         init();
         loadLevel(level);
@@ -35,6 +39,7 @@ public class WorldController extends InputAdapter {
     private void loadLevel(String level){
         this.level = levelLoader.load(level);
         levelLoader.finishLoading();
+        this.level.setContext(this);
     }
 
     public void update(float delta){
@@ -46,17 +51,31 @@ public class WorldController extends InputAdapter {
         return level;
     }
 
+    public void addFirePowerUp(){
+        ++fireSize;
+    }
+
+    public void addBombPowerUp(){
+        ++bombCount;
+    }
+
+
+    public void gameOver(){
+        if (--livesLeft < 0){
+            app.getRenderer().setRenderGameOver(true);
+        }
+        else{
+            loadLevel(Constants.LEVEL1);
+        }
+    }
+
+
     @Override
     public boolean keyUp(int keycode) {
         switch (keycode){
             case Keys.ESCAPE:
                 Gdx.app.exit();
                 break;
-//            case Keys.SPACE:
-//                if (level.getBombsCount() < bombCount){
-//                    level.placeBomb();
-//                }
-//                break;
         }
         return true;
     }

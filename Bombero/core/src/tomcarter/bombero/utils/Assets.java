@@ -68,6 +68,7 @@ public class Assets implements AssetErrorListener, Disposable {
         public final TextureRegion[] left;
         public final TextureRegion[] right;
         public final TextureRegion[] up;
+        public final TextureRegion[] death;
 
         public AssetPlayer(TextureAtlas atlas){
             AtlasRegion region = atlas.findRegion("player");
@@ -82,6 +83,11 @@ public class Assets implements AssetErrorListener, Disposable {
             System.arraycopy(regions[1], 0, left, 0, 4);
             System.arraycopy(regions[2], 0, right, 0, 4);
             System.arraycopy(regions[3], 0, up, 0, 4);
+
+            region = atlas.findRegion("playerDeath");
+            regions = region.split(region.getRegionWidth() / 8, region.getRegionHeight());
+            death = new TextureRegion[8];
+            System.arraycopy(regions[0], 0, death, 0, 8);
         }
     }
 
@@ -128,6 +134,7 @@ public class Assets implements AssetErrorListener, Disposable {
     public class AssetPowerUp {
         public final TextureRegion[] fire;
         public final TextureRegion[] bomb;
+        public final TextureRegion[] itemDestroy;
 
         public AssetPowerUp(TextureAtlas atlas) {
             AtlasRegion region = atlas.findRegion("items");
@@ -136,6 +143,11 @@ public class Assets implements AssetErrorListener, Disposable {
             this.bomb = new TextureRegion[2];
             System.arraycopy(regions[0], 0, fire, 0, 2);
             System.arraycopy(regions[1], 0, bomb, 0, 2);
+
+            region = atlas.findRegion("itemDestroy");
+            regions = region.split(region.getRegionWidth() / 7, region.getRegionHeight());
+            this.itemDestroy = new TextureRegion[7];
+            System.arraycopy(regions[0], 0, itemDestroy, 0, 7);
         }
     }
 

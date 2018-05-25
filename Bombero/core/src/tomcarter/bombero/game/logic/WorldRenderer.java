@@ -19,6 +19,8 @@ public class WorldRenderer implements Disposable {
     private SpriteBatch batch;
     private WorldController worldController;
 
+    private boolean renderGameOver;
+
     public WorldRenderer (WorldController worldController) {
         this.worldController = worldController;
         init();
@@ -30,7 +32,7 @@ public class WorldRenderer implements Disposable {
         camera = new OrthographicCamera(Constants.VIEWPORT_HEIGHT * ratio, Constants.VIEWPORT_HEIGHT);
         camera.position.set(Constants.VIEWPORT_HEIGHT * ratio /2, Constants.VIEWPORT_HEIGHT / 2, 0);
         camera.update();
-        cameraGUI = new OrthographicCamera(Constants.VIEWPORT_GUI_WIDTH, Constants.VIEWPORT_GUI_HEIGHT);
+        cameraGUI = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         cameraGUI.position.set(0, 0, 0);
         cameraGUI.setToOrtho(true); // flip y-axis
         cameraGUI.update();
@@ -65,30 +67,23 @@ public class WorldRenderer implements Disposable {
         batch.end();
     }
 
-    private void renderPlayer(SpriteBatch batch) {
-        TextureRegion region = Assets.instance.player.down[0];
-
-        batch.draw(region.getTexture(), 0, 0, 0.5f, 0.5f, 1, 1, 1, 1,
-                0, region.getRegionX(), region.getRegionY(), region.getRegionWidth(), region.getRegionHeight(),
-                false, false);
-    }
-
     private void renderGui (SpriteBatch batch) {
         batch.setProjectionMatrix(cameraGUI.combined);
         batch.begin();
 
-        // draw collected gold coins icon + text (anchored to top left edge)
-        renderGuiScore(batch);
+        renderGameOver(batch);
 
         batch.end();
     }
 
     private int i = 0;
 
-    private void renderGuiScore (SpriteBatch batch) {
+    private void renderGameOver(SpriteBatch batch){
+        Assets.instance.fonts.defaultFont.draw(batch, "Game over", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+    }
 
-
-        Assets.instance.fonts.defaultFont.draw(batch, "800", 20, 20);
+    public void setRenderGameOver(boolean renderGameOver) {
+        this.renderGameOver = renderGameOver;
     }
 
     @Override

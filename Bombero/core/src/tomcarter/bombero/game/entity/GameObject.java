@@ -74,6 +74,4 @@ public abstract class GameObject {
         }
         return other != null && other.bounds.overlaps(this.bounds);
     }
-
-    public void explode(){};
 }

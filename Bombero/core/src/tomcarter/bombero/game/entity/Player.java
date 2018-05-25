@@ -1,20 +1,29 @@
 package tomcarter.bombero.game.entity;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import tomcarter.bombero.game.entity.item.Item;
 import tomcarter.bombero.game.logic.Direction;
+import tomcarter.bombero.game.logic.Level;
 import tomcarter.bombero.game.logic.LevelMap;
 import tomcarter.bombero.utils.Assets;
 
-public class Player extends GameObject {
-    private LevelMap context;
+public class Player extends GameObject implements Explodable{
+    private Level context;
+    private LevelMap map;
 
     private static final float START_FRAME_TIME = 0.05f;
     private static final float DEFAULT_FRAME_TIME = 0.1f;
+    private static final float EXPLODE_FRAME_TIME = 0.15f;
+    private static final int EXPLODE_FRAMES = 8;
     private static final float DEFAULT_SPEED = 2.5f;
     private static final float DEFAULT_SIDE_SPEED = DEFAULT_SPEED / 2;
     private float currentFrameTime;
     private int frameIndex;
+
+    private boolean isExploded;
+    private TextureRegion explodedRegions[];
 
     private boolean isMoving;
     private Direction direction;
@@ -22,13 +31,15 @@ public class Player extends GameObject {
     private Vector2 directionMultiplier;
 
 
-
-    public Player(float positionX, float positionY){
+    public Player(float positionX, float positionY, Level context){
         super(positionX, positionY);
+
+        this.context = context;
+
         region = Assets.instance.player.down[0];
         dimension.set(0.8f, 0.8f);
 
-        bounds.set(0, 0, dimension.x, dimension.y);
+        isExploded = false;
 
         currentFrameTime = DEFAULT_FRAME_TIME;
         frameIndex = 0;
@@ -39,8 +50,8 @@ public class Player extends GameObject {
         direction = Direction.DOWN;
     }
 
-    public void setContext(LevelMap context) {
-        this.context = context;
+    public void setMap(LevelMap map) {
+        this.map = map;
     }
 
     public void setPosition(float x, float y){
@@ -53,7 +64,10 @@ public class Player extends GameObject {
 
     @Override
     public void update(float delta) {
-        if (isMoving) {
+        if (isExploded){
+            animateDeath(delta);
+        }
+        else if (isMoving) {
             directionMultiplier.set(direction.getX(), direction.getY());
             position.mulAdd(directionMultiplier, speed*delta);
             bounds.set(position.x + 0.05f, position.y + + 0.05f, dimension.x - 0.05f, dimension.y - 0.05f);
@@ -63,6 +77,10 @@ public class Player extends GameObject {
     }
 
     public void move(Direction direction){
+        if (isExploded){
+            return;
+        }
+
         boolean wasDirectionChanged = this.direction != direction;
         isMoving = true;
         this.direction = direction;
@@ -73,11 +91,17 @@ public class Player extends GameObject {
     }
 
     public void stop(){
+        if (isExploded){
+            return;
+        }
+
         isMoving = false;
         resetFrame();
     }
 
     private void handleCollisions(){
+        checkItems();
+
         switch (direction){
             case UP:
                 handleCollisionUp();
@@ -94,30 +118,40 @@ public class Player extends GameObject {
         }
     }
 
+    private void checkItems(){
+        int x = getNormalizedPositionX();
+        int y = getNormalizedPositionY();
+
+        if (map.isItem(x, y)){
+            System.out.println("it is");
+            ((Item)map.at(x, y)).enter();
+        }
+    }
+
     private void handleCollisionUp(){
         int x = getNormalizedPositionX();
         int y = getNormalizedPositionY();
 
-        if (!context.overlapsField(this, x, y+1)){
+        if (!map.overlapsField(this, x, y+1)){
             return;
         }
 
-        boolean left = context.overlapsField(this, x - 1, y);
-        boolean right = context.overlapsField(this, x + 1, y);
+        boolean left = map.overlapsField(this, x - 1, y);
+        boolean right = map.overlapsField(this, x + 1, y);
 
-        if (context.isBrickOrWall(x, y+1)){
+        if (map.isBrickOrWall(x, y+1)){
             position.set(position.x, y+1 - dimension.y);
         }
 
         if (left){
-            if (context.isBrickOrWall(x-1, y+1)){
+            if (map.isBrickOrWall(x-1, y+1)){
                 float sideSpeed = DEFAULT_SIDE_SPEED * Gdx.graphics.getDeltaTime();
                 position.set(position.x + sideSpeed, y+1 - dimension.y);
             }
         }
 
         if (right){
-            if (context.isBrickOrWall(x+1, y+1)){
+            if (map.isBrickOrWall(x+1, y+1)){
                 float sideSpeed = DEFAULT_SIDE_SPEED * Gdx.graphics.getDeltaTime();
                 position.set(position.x - sideSpeed, y+1 - dimension.y);
             }
@@ -128,26 +162,26 @@ public class Player extends GameObject {
         int x = getNormalizedPositionX();
         int y = getNormalizedPositionY();
 
-        if (!context.overlapsField(this, x, y-1)){
+        if (!map.overlapsField(this, x, y-1)){
             return;
         }
 
-        boolean left = context.overlapsField(this, x - 1, y);
-        boolean right = context.overlapsField(this, x + 1, y);
+        boolean left = map.overlapsField(this, x - 1, y);
+        boolean right = map.overlapsField(this, x + 1, y);
 
-        if (context.isBrickOrWall(x, y-1)){
+        if (map.isBrickOrWall(x, y-1)){
             position.set(position.x, y);
         }
 
         if (left){
-            if (context.isBrickOrWall(x-1, y-1)){
+            if (map.isBrickOrWall(x-1, y-1)){
                 float sideSpeed = DEFAULT_SIDE_SPEED * Gdx.graphics.getDeltaTime();
                 position.set(position.x + sideSpeed, y);
             }
         }
 
         if (right){
-            if (context.isBrickOrWall(x+1, y-1)){
+            if (map.isBrickOrWall(x+1, y-1)){
                 float sideSpeed = DEFAULT_SIDE_SPEED * Gdx.graphics.getDeltaTime();
                 position.set(position.x - sideSpeed, y);
             }
@@ -158,26 +192,26 @@ public class Player extends GameObject {
         int x = getNormalizedPositionX();
         int y = getNormalizedPositionY();
 
-        if (!context.overlapsField(this, x-1, y)){
+        if (!map.overlapsField(this, x-1, y)){
             return;
         }
 
-        boolean up = context.overlapsField(this, x, y+1);
-        boolean down = context.overlapsField(this, x, y-1);
+        boolean up = map.overlapsField(this, x, y+1);
+        boolean down = map.overlapsField(this, x, y-1);
 
-        if (context.isBrickOrWall(x-1, y)){
+        if (map.isBrickOrWall(x-1, y)){
             position.set((float) x, position.y);
         }
 
         if (up){
-            if (context.isBrickOrWall(x-1, y+1) && !context.isBrickOrWall(x-1, y)){
+            if (map.isBrickOrWall(x-1, y+1) && !map.isBrickOrWall(x-1, y)){
                 float sideSpeed = DEFAULT_SIDE_SPEED * Gdx.graphics.getDeltaTime();
                 position.set(x, position.y - sideSpeed);
             }
         }
 
         if (down){
-            if (context.isBrickOrWall(x-1, y-1) && !context.isBrickOrWall(x-1, y)){
+            if (map.isBrickOrWall(x-1, y-1) && !map.isBrickOrWall(x-1, y)){
                 float sideSpeed = DEFAULT_SIDE_SPEED * Gdx.graphics.getDeltaTime();
                 position.set(x, position.y + sideSpeed);
             }
@@ -188,26 +222,26 @@ public class Player extends GameObject {
         int x = getNormalizedPositionX();
         int y = getNormalizedPositionY();
 
-        if (!context.overlapsField(this, x+1, y)){
+        if (!map.overlapsField(this, x+1, y)){
             return;
         }
 
-        boolean up = context.overlapsField(this, x, y+1);
-        boolean down = context.overlapsField(this, x, y-1);
+        boolean up = map.overlapsField(this, x, y+1);
+        boolean down = map.overlapsField(this, x, y-1);
 
-        if (context.isBrickOrWall(x+1, y)){
+        if (map.isBrickOrWall(x+1, y)){
             position.set(x + 1 - dimension.x, position.y);
         }
 
         if (up){
-            if (context.isBrickOrWall(x+1, y+1) && !context.isBrickOrWall(x+1, y)){
+            if (map.isBrickOrWall(x+1, y+1) && !map.isBrickOrWall(x+1, y)){
                 float sideSpeed = DEFAULT_SIDE_SPEED * Gdx.graphics.getDeltaTime();
                 position.set(x + 1 - dimension.x, position.y - sideSpeed);
             }
         }
 
         if (down){
-            if (context.isBrickOrWall(x+1, y-1) && !context.isBrickOrWall(x+1, y)){
+            if (map.isBrickOrWall(x+1, y-1) && !map.isBrickOrWall(x+1, y)){
                 float sideSpeed = DEFAULT_SIDE_SPEED * Gdx.graphics.getDeltaTime();
                 position.set(x + 1 - dimension.x, position.y + sideSpeed);
             }
@@ -244,5 +278,33 @@ public class Player extends GameObject {
             frameIndex = ++frameIndex % 4;
             updateRegion();
         }
+    }
+
+    private void animateDeath(float delta){
+        currentFrameTime -= delta;
+        if (currentFrameTime < 0){
+            currentFrameTime = EXPLODE_FRAME_TIME;
+            if (++frameIndex < EXPLODE_FRAMES){
+                region = explodedRegions[frameIndex];
+            }
+        }
+    }
+
+    @Override
+    public void explode() {
+        isExploded = true;
+        frameIndex = 0;
+        currentFrameTime = 0;
+        explodedRegions = Assets.instance.player.death;
+        region = explodedRegions[0];
+    }
+
+    @Override
+    public boolean isDestroyed() {
+        return isExploded && frameIndex == EXPLODE_FRAMES;
+    }
+
+    public boolean isExploded(){
+        return isExploded;
     }
 }
