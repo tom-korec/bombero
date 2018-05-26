@@ -2,7 +2,7 @@ package tomcarter.bombero.utils;
 
 public class Constants {
     public static final float VIEWPORT_WIDTH = 15;
-    public static final float VIEWPORT_HEIGHT = 15;
+    public static final float VIEWPORT_HEIGHT = 17;
 
     public static final float VIEWPORT_GUI_WIDTH = 800;
     public static final float VIEWPORT_GUI_HEIGHT = 600;
@@ -20,4 +20,9 @@ public class Constants {
 
 
     public static final String TEXTURE_ATLAS = "images/textures.atlas";
+    public static final String FONT_DEFAULT = "fonts/arial-15.fnt";
+    public static final String FONT_CENTURY_GOTHIC24 = "fonts/cgothic24.fnt";
+    public static final String FONT_CENTURY_GOTHIC32 = "fonts/cgothic32.fnt";
+    public static final String FONT_CENTURY_GOTHIC48 = "fonts/cgothic48.fnt";
+    public static final String FONT_CENTURY_GOTHIC64 = "fonts/cgothic64.fnt";
 }

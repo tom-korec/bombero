@@ -68,6 +68,8 @@ public class WorldRenderer implements Disposable {
         batch.setProjectionMatrix(cameraGUI.combined);
         batch.begin();
 
+        Assets.instance.fonts.fontL.draw(batch, "GUI goes here", 20, 20);
+
         if (renderGameOver){
             renderGameOver(batch);
         }

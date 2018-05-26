@@ -57,10 +57,26 @@ public class Assets implements AssetErrorListener, Disposable {
 
     public class AssetFonts {
         public final BitmapFont defaultFont;
+        public final BitmapFont fontXS;
+        public final BitmapFont fontS;
+        public final BitmapFont fontM;
+        public final BitmapFont fontL;
 
         public AssetFonts () {
-            defaultFont = new BitmapFont(Gdx.files.internal("arial-15.fnt"), true);
+            defaultFont = new BitmapFont(Gdx.files.internal(Constants.FONT_DEFAULT), true);
             defaultFont.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
+            fontXS = new BitmapFont(Gdx.files.internal(Constants.FONT_CENTURY_GOTHIC24), true);
+            fontXS.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
+            fontS = new BitmapFont(Gdx.files.internal(Constants.FONT_CENTURY_GOTHIC32), true);
+            fontS.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
+            fontM = new BitmapFont(Gdx.files.internal(Constants.FONT_CENTURY_GOTHIC48), true);
+            fontM.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
+            fontL = new BitmapFont(Gdx.files.internal(Constants.FONT_CENTURY_GOTHIC64), true);
+            fontL.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         }
     }
 
