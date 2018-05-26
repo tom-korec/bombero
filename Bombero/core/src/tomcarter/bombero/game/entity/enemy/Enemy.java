@@ -2,10 +2,11 @@ package tomcarter.bombero.game.entity.enemy;
 
 import tomcarter.bombero.game.entity.Explodable;
 import tomcarter.bombero.game.entity.GameObject;
+import tomcarter.bombero.game.entity.Player;
 import tomcarter.bombero.game.entity.enemy.strategy.EnemyStrategy;
 import tomcarter.bombero.game.logic.Direction;
-import tomcarter.bombero.game.logic.Level;
-import tomcarter.bombero.game.logic.LevelMap;
+import tomcarter.bombero.game.logic.level.Level;
+import tomcarter.bombero.game.logic.level.LevelMap;
 
 import java.util.Random;
 
@@ -13,7 +14,6 @@ public abstract class Enemy extends GameObject implements Explodable{
     protected EnemyStrategy strategy;
     protected Level context;
     protected LevelMap map;
-
 
     protected float currentFrameTime;
     protected int frameIndex;
@@ -47,5 +47,12 @@ public abstract class Enemy extends GameObject implements Explodable{
                 return Direction.LEFT;
         }
         return Direction.LEFT;
+    }
+
+    protected void checkCollisionWithPlayer(){
+        Player player = context.getPlayer();
+        if (player.getBounds().overlaps(bounds)){
+            player.explode();
+        }
     }
 }

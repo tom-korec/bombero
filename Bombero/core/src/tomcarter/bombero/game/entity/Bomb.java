@@ -1,6 +1,6 @@
 package tomcarter.bombero.game.entity;
 
-import tomcarter.bombero.game.logic.Level;
+import tomcarter.bombero.game.logic.level.Level;
 import tomcarter.bombero.utils.Assets;
 import tomcarter.bombero.utils.Constants;
 

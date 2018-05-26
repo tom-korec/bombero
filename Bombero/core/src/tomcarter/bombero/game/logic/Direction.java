@@ -1,10 +1,73 @@
 package tomcarter.bombero.game.logic;
 
 public enum Direction {
-    DOWN( 0, -1),
-    LEFT( -1, 0),
-    RIGHT( 1, 0),
-    UP( 0, 1);
+    DOWN( 0, -1) {
+        @Override
+        public Direction opposite() {
+            return UP;
+        }
+
+        @Override
+        public Direction nextClockwise() {
+            return LEFT;
+        }
+
+        @Override
+        public Direction nextAntiClockwise() {
+            return RIGHT;
+        }
+    },
+
+    LEFT( -1, 0) {
+        @Override
+        public Direction opposite() {
+            return RIGHT;
+        }
+
+        @Override
+        public Direction nextClockwise() {
+            return UP;
+        }
+
+        @Override
+        public Direction nextAntiClockwise() {
+            return DOWN;
+        }
+    },
+
+    RIGHT( 1, 0) {
+        @Override
+        public Direction opposite() {
+            return LEFT;
+        }
+
+        @Override
+        public Direction nextClockwise() {
+            return DOWN;
+        }
+
+        @Override
+        public Direction nextAntiClockwise() {
+            return UP;
+        }
+    },
+
+    UP( 0, 1) {
+        @Override
+        public Direction opposite() {
+            return DOWN;
+        }
+
+        @Override
+        public Direction nextClockwise() {
+            return RIGHT;
+        }
+
+        @Override
+        public Direction nextAntiClockwise() {
+            return LEFT;
+        }
+    };
 
     private int x;
     private int y;
@@ -22,16 +85,9 @@ public enum Direction {
         return y;
     }
 
-    public Direction opposite(Direction direction){
-        switch (direction){
-            case UP:
-                return Direction.DOWN;
-            case DOWN:
-                return Direction.UP;
-            case LEFT:
-                return Direction.RIGHT;
-            default:
-                return Direction.LEFT;
-        }
-    }
+    public abstract Direction opposite();
+
+    public abstract Direction nextClockwise();
+
+    public abstract Direction nextAntiClockwise();
 }

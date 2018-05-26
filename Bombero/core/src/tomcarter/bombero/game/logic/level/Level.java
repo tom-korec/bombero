@@ -1,12 +1,11 @@
-package tomcarter.bombero.game.logic;
+package tomcarter.bombero.game.logic.level;
 
 import tomcarter.bombero.game.entity.*;
 import tomcarter.bombero.game.entity.enemy.Enemy;
-import tomcarter.bombero.game.entity.enemy.PotatoEnemy;
 import tomcarter.bombero.game.entity.item.BombPowerUp;
 import tomcarter.bombero.game.entity.item.FirePowerUp;
 import tomcarter.bombero.game.entity.item.Item;
-import tomcarter.bombero.game.logic.level.LevelType;
+import tomcarter.bombero.game.logic.WorldController;
 
 
 import java.util.ArrayList;
@@ -63,7 +62,14 @@ public class Level {
     }
 
     public void update(float delta){
-        updatePlayer(delta);
+        player.update(delta);
+        if (player.isDestroyed()){
+            player = null;
+            context.gameOver();
+            return;
+        }
+
+//        updatePlayer(delta);
         updateEnemies(delta);
         updateBombs(delta);
         updateExplosions(delta);
@@ -74,6 +80,7 @@ public class Level {
     private void updatePlayer(float delta){
         player.update(delta);
         if (player.isDestroyed()){
+            player = null;
             context.gameOver();
         }
     }
@@ -180,7 +187,9 @@ public class Level {
         map.set(x, y, null);
     }
 
-
+    public void nextLevel(){
+        context.nextLevel();
+    }
 
     public void addFirePowerUp(FirePowerUp powerUp){
         context.addFirePowerUp();
@@ -192,6 +201,10 @@ public class Level {
         context.addBombPowerUp();
         items.remove(powerUp);
         deleteObjectFromMap(powerUp);
+    }
+
+    public LevelType getLevelType() {
+        return levelType;
     }
 
     public LevelMap getMap() {
@@ -213,7 +226,9 @@ public class Level {
         objects.addAll(bricks);
         objects.addAll(walls);
         objects.addAll(bombs);
-        objects.add(player);
+        if (player != null){
+            objects.add(player);
+        }
         objects.addAll(enemies);
         objects.addAll(explosions);
         return objects;

@@ -1,4 +1,4 @@
-package tomcarter.bombero.game.logic;
+package tomcarter.bombero.game.logic.level;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;

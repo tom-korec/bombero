@@ -1,6 +1,6 @@
 package tomcarter.bombero.game.entity.enemy;
 
-import tomcarter.bombero.game.logic.Level;
+import tomcarter.bombero.game.logic.level.Level;
 
 public class PigEnemy extends Enemy {
     public PigEnemy(float positionX, float positionY, Level context) {

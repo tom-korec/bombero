@@ -1,6 +1,6 @@
 package tomcarter.bombero.game.entity.enemy;
 
-import tomcarter.bombero.game.logic.Level;
+import tomcarter.bombero.game.logic.level.Level;
 
 public class CloudEnemy extends Enemy {
     public CloudEnemy(float positionX, float positionY, Level context) {

@@ -1,12 +1,11 @@
 package tomcarter.bombero.game.entity;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import tomcarter.bombero.game.entity.item.Item;
 import tomcarter.bombero.game.logic.Direction;
-import tomcarter.bombero.game.logic.Level;
-import tomcarter.bombero.game.logic.LevelMap;
+import tomcarter.bombero.game.logic.level.Level;
+import tomcarter.bombero.game.logic.level.LevelMap;
 import tomcarter.bombero.utils.Assets;
 import tomcarter.bombero.utils.MathHelper;
 
@@ -16,8 +15,14 @@ public class Player extends GameObject implements Explodable{
 
     private static final float START_FRAME_TIME = 0.05f;
     private static final float DEFAULT_FRAME_TIME = 0.1f;
+
     private static final float EXPLODE_FRAME_TIME = 0.15f;
     private static final int EXPLODE_FRAMES = 8;
+
+    private static final float TRANSPORT_FRAME_TIME = 0.1f;
+    private static final float TRANSPORT_START_TIME = 3f;
+    private float transportTime;
+
     private static final float DEFAULT_SPEED = 2.5f;
     private static final float DEFAULT_SIDE_SPEED = DEFAULT_SPEED / 2;
     private float currentFrameTime;
@@ -25,6 +30,8 @@ public class Player extends GameObject implements Explodable{
 
     private boolean isExploded;
     private TextureRegion explodedRegions[];
+
+    private boolean isTransporting;
 
     private boolean isMoving;
     private Direction direction;
@@ -42,6 +49,7 @@ public class Player extends GameObject implements Explodable{
         dimension.set(1f, 1f);
 
         isExploded = false;
+        isTransporting = false;
 
         currentFrameTime = DEFAULT_FRAME_TIME;
         frameIndex = 0;
@@ -70,6 +78,9 @@ public class Player extends GameObject implements Explodable{
         if (isExploded){
             animateDeath(delta);
         }
+        else if (isTransporting){
+            animateTransport(delta);
+        }
         else if (isMoving) {
             currentSpeed = speed * delta;
             directionMultiplier.set(direction.getX(), direction.getY());
@@ -81,7 +92,7 @@ public class Player extends GameObject implements Explodable{
     }
 
     public void move(Direction direction){
-        if (isExploded){
+        if (isExploded || isTransporting){
             return;
         }
 
@@ -95,7 +106,7 @@ public class Player extends GameObject implements Explodable{
     }
 
     public void stop(){
-        if (isExploded){
+        if (isExploded || isTransporting){
             return;
         }
 
@@ -331,6 +342,29 @@ public class Player extends GameObject implements Explodable{
                 region = explodedRegions[frameIndex];
             }
         }
+    }
+
+    private void animateTransport(float delta){
+        currentFrameTime -= delta;
+        transportTime -= delta;
+
+        if (transportTime < 0){
+            context.nextLevel();
+            return;
+        }
+
+        if (currentFrameTime < 0){
+            currentFrameTime = TRANSPORT_FRAME_TIME;
+            direction = direction.nextClockwise();
+            updateRegion();
+        }
+    }
+
+    public void beginTransport(){
+        isTransporting = true;
+        currentFrameTime = TRANSPORT_FRAME_TIME;
+        transportTime = TRANSPORT_START_TIME;
+        frameIndex = 0;
     }
 
     @Override

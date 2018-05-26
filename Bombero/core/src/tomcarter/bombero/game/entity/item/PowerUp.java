@@ -2,7 +2,7 @@ package tomcarter.bombero.game.entity.item;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import tomcarter.bombero.game.logic.Level;
+import tomcarter.bombero.game.logic.level.Level;
 import tomcarter.bombero.utils.Assets;
 
 public abstract class PowerUp extends Item {

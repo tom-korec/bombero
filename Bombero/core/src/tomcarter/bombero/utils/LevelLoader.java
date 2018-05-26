@@ -9,7 +9,7 @@ import tomcarter.bombero.game.entity.Wall;
 import tomcarter.bombero.game.entity.item.BombPowerUp;
 import tomcarter.bombero.game.entity.item.FirePowerUp;
 import tomcarter.bombero.game.entity.item.Gate;
-import tomcarter.bombero.game.logic.Level;
+import tomcarter.bombero.game.logic.level.Level;
 import tomcarter.bombero.game.logic.level.LevelType;
 
 import java.util.ArrayList;

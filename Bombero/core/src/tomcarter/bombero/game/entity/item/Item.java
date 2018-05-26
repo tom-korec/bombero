@@ -3,7 +3,7 @@ package tomcarter.bombero.game.entity.item;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import tomcarter.bombero.game.entity.Explodable;
 import tomcarter.bombero.game.entity.GameObject;
-import tomcarter.bombero.game.logic.Level;
+import tomcarter.bombero.game.logic.level.Level;
 
 public abstract class Item extends GameObject implements Explodable {
     protected TextureRegion[] regions;

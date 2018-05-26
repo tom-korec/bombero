@@ -2,11 +2,10 @@ package tomcarter.bombero.game.entity.enemy;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import tomcarter.bombero.game.entity.Bomb;
 import tomcarter.bombero.game.entity.Explodable;
 import tomcarter.bombero.game.logic.Direction;
-import tomcarter.bombero.game.logic.Level;
+import tomcarter.bombero.game.logic.level.Level;
 import tomcarter.bombero.utils.Assets;
 
 public class PotatoEnemy extends Enemy implements Explodable{
@@ -46,6 +45,7 @@ public class PotatoEnemy extends Enemy implements Explodable{
             animateDeath(delta);
             return;
         }
+        checkCollisionWithPlayer();
         checkCollisionWithBomb();
         if (canChangeDirection()){
             direction = getNextDirection();
@@ -67,7 +67,7 @@ public class PotatoEnemy extends Enemy implements Explodable{
         if (map.isBomb(nextX, nextY)){
             Bomb bomb = (Bomb) map.at(nextX, nextY);
             if (Math.abs(getCenter().dst(bomb.getCenter())) <= 1f){
-                direction = direction.opposite(direction);
+                direction = direction.opposite();
             }
             blockedMovement = -1f;
         }

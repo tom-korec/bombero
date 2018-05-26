@@ -9,6 +9,11 @@ public enum LevelType {
         public EnemyType[] getEnemies() {
             return ENEMIES_LVL1;
         }
+
+        @Override
+        public LevelType next() {
+            return LEVEL2;
+        }
     },
 
     LEVEL2(Constants.PATH_LEVEL2, 2){
@@ -16,11 +21,21 @@ public enum LevelType {
         public EnemyType[] getEnemies() {
             return ENEMIES_LVL2;
         }
+
+        @Override
+        public LevelType next() {
+            return LEVEL3;
+        }
     },
     LEVEL3(Constants.PATH_LEVEL3, 3){
         @Override
         public EnemyType[] getEnemies() {
             return ENEMIES_LVL3;
+        }
+
+        @Override
+        public LevelType next() {
+            return LEVEL4;
         }
     },
     LEVEL4(Constants.PATH_LEVEL4, 4){
@@ -28,11 +43,21 @@ public enum LevelType {
         public EnemyType[] getEnemies() {
             return ENEMIES_LVL4;
         }
+
+        @Override
+        public LevelType next() {
+            return LEVEL5;
+        }
     },
     LEVEL5(Constants.PATH_LEVEL5, 5){
         @Override
         public EnemyType[] getEnemies() {
             return ENEMIES_LVL4;
+        }
+
+        @Override
+        public LevelType next() {
+            return LEVEL6;
         }
     },
     LEVEL6(Constants.PATH_LEVEL6, 6){
@@ -40,11 +65,21 @@ public enum LevelType {
         public EnemyType[] getEnemies() {
             return ENEMIES_LVL4;
         }
+
+        @Override
+        public LevelType next() {
+            return LEVEL7;
+        }
     },
     LEVEL7(Constants.PATH_LEVEL7, 7){
         @Override
         public EnemyType[] getEnemies() {
             return ENEMIES_LVL4;
+        }
+
+        @Override
+        public LevelType next() {
+            return LEVEL8;
         }
     },
     LEVEL8(Constants.PATH_LEVEL8, 8){
@@ -52,10 +87,15 @@ public enum LevelType {
         public EnemyType[] getEnemies() {
             return ENEMIES_LVL4;
         }
+
+        @Override
+        public LevelType next() {
+            return null;
+        }
     };
 
     private static final EnemyType[] ENEMIES_LVL1 = {
-            EnemyType.POTATO, EnemyType.POTATO, EnemyType.POTATO
+            EnemyType.POTATO, //EnemyType.POTATO, EnemyType.POTATO
     };
 
     private static final EnemyType[] ENEMIES_LVL2 = {
@@ -88,6 +128,6 @@ public enum LevelType {
 
     public abstract EnemyType[] getEnemies();
 
-
+    public abstract LevelType next();
 
 }

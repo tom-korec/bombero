@@ -5,12 +5,15 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import tomcarter.bombero.game.Bombero;
 import tomcarter.bombero.game.entity.Player;
+import tomcarter.bombero.game.logic.level.Level;
 import tomcarter.bombero.game.logic.level.LevelType;
 import tomcarter.bombero.utils.Constants;
 import tomcarter.bombero.utils.LevelLoader;
 
 public class WorldController extends InputAdapter {
     private Bombero app;
+
+    private boolean paused;
 
     private LevelLoader levelLoader;
     private Level level;
@@ -32,6 +35,7 @@ public class WorldController extends InputAdapter {
         score = 0;
         fireSize = Constants.STARTING_FIRE;
         bombCount = Constants.STARTING_BOMBS;
+        paused = false;
         Gdx.input.setInputProcessor(this);
     }
 
@@ -41,13 +45,39 @@ public class WorldController extends InputAdapter {
         this.level.setContext(this);
     }
 
+    public void nextLevel(){
+        LevelType next = level.getLevelType().next();
+        if (next != null){
+            loadLevel(next);
+        }
+        else{
+            // won - last level completed
+        }
+    }
+
+    public void gameOver(){
+        if (--livesLeft < 0){
+            app.getRenderer().setRenderGameOver(true);
+            paused = true;
+        }
+        else{
+            loadLevel(level.getLevelType());
+        }
+    }
+
     public void update(float delta){
-        handleInput();
-        level.update(delta);
+        if (!paused){
+            handleInput();
+            level.update(delta);
+        }
     }
 
     public Level getLevel(){
         return level;
+    }
+
+    public void addScore(int score){
+        this.score += score;
     }
 
     public void addFirePowerUp(){
@@ -59,15 +89,9 @@ public class WorldController extends InputAdapter {
     }
 
 
-    public void gameOver(){
-        if (--livesLeft < 0){
-            app.getRenderer().setRenderGameOver(true);
-        }
-        else{
-            loadLevel(LevelType.LEVEL1);
-        }
+    public boolean isPaused() {
+        return paused;
     }
-
 
     @Override
     public boolean keyUp(int keycode) {
@@ -75,11 +99,23 @@ public class WorldController extends InputAdapter {
             case Keys.ESCAPE:
                 Gdx.app.exit();
                 break;
+            case Keys.P:
+                paused = !paused;
         }
         return true;
     }
 
     private void handleInput(){
+        handlePlayerMovementInput();
+
+        if (Gdx.input.isKeyJustPressed(Keys.SPACE)){
+            if (level.getBombsCount() < bombCount){
+                level.placeBomb(fireSize);
+            }
+        }
+    }
+
+    private void handlePlayerMovementInput(){
         Player player = level.getPlayer();
         if (Gdx.input.isKeyPressed(Keys.DOWN)){
             player.move(Direction.DOWN);
@@ -95,12 +131,6 @@ public class WorldController extends InputAdapter {
         }
         else {
             player.stop();
-        }
-
-        if (Gdx.input.isKeyJustPressed(Keys.SPACE)){
-            if (level.getBombsCount() < bombCount){
-                level.placeBomb(fireSize);
-            }
         }
     }
 }

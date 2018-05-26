@@ -1,6 +1,7 @@
 package tomcarter.bombero.game.entity.item;
 
-import tomcarter.bombero.game.logic.Level;
+import tomcarter.bombero.game.entity.Player;
+import tomcarter.bombero.game.logic.level.Level;
 import tomcarter.bombero.utils.Assets;
 
 public class Gate extends Item {
@@ -22,12 +23,19 @@ public class Gate extends Item {
                 region = regions[(++frameIndex % FRAMES)];
             }
         }
+        else{
+            if (context.getEnemies().size() == 0){
+                opened = true;
+            }
+        }
     }
 
     @Override
     public void enter() {
         if (opened){
-            // next level
+            Player player = context.getPlayer();
+            player.setPosition(position.x, position.y);
+            player.beginTransport();
         }
     }
 

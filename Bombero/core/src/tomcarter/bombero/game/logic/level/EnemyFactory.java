@@ -1,13 +1,13 @@
-package tomcarter.bombero.game.logic;
+package tomcarter.bombero.game.logic.level;
 
 import tomcarter.bombero.game.entity.enemy.Enemy;
 import tomcarter.bombero.game.entity.enemy.PotatoEnemy;
 import tomcarter.bombero.game.logic.level.EnemyType;
+import tomcarter.bombero.game.logic.level.Level;
+import tomcarter.bombero.game.logic.level.LevelMap;
 import tomcarter.bombero.game.logic.level.LevelType;
 import tomcarter.bombero.utils.Int2D;
 
-import java.awt.*;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;

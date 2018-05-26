@@ -4,12 +4,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import tomcarter.bombero.game.entity.enemy.Enemy;
-import tomcarter.bombero.game.logic.Level;
-import tomcarter.bombero.game.logic.LevelMap;
+import tomcarter.bombero.game.logic.level.Level;
+import tomcarter.bombero.game.logic.level.LevelMap;
 import tomcarter.bombero.utils.Assets;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class Explosion extends GameObject {
