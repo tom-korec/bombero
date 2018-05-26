@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import tomcarter.bombero.utils.Int2D;
 
 public abstract class GameObject {
     protected Vector2 position;
@@ -66,5 +67,9 @@ public abstract class GameObject {
 
     public Rectangle getBounds() {
         return bounds;
+    }
+
+    public Int2D getNormalizedPosition(){
+        return new Int2D((int) (position.x + dimension.x / 2), (int) (position.y + dimension.y / 2));
     }
 }

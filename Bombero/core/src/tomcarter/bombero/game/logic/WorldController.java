@@ -1,12 +1,11 @@
 package tomcarter.bombero.game.logic;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.math.Vector2;
 import tomcarter.bombero.game.Bombero;
 import tomcarter.bombero.game.entity.Player;
+import tomcarter.bombero.game.logic.level.LevelType;
 import tomcarter.bombero.utils.Constants;
 import tomcarter.bombero.utils.LevelLoader;
 
@@ -21,11 +20,11 @@ public class WorldController extends InputAdapter {
     private int fireSize;
     private int bombCount;
 
-    public WorldController(String level, Bombero app) {
+    public WorldController(LevelType levelType, Bombero app) {
         this.app = app;
         levelLoader = new LevelLoader();
         init();
-        loadLevel(level);
+        loadLevel(levelType);
     }
 
     private void init(){
@@ -36,8 +35,8 @@ public class WorldController extends InputAdapter {
         Gdx.input.setInputProcessor(this);
     }
 
-    private void loadLevel(String level){
-        this.level = levelLoader.load(level);
+    private void loadLevel(LevelType levelType){
+        this.level = levelLoader.load(levelType);
         levelLoader.finishLoading();
         this.level.setContext(this);
     }
@@ -65,7 +64,7 @@ public class WorldController extends InputAdapter {
             app.getRenderer().setRenderGameOver(true);
         }
         else{
-            loadLevel(Constants.LEVEL1);
+            loadLevel(LevelType.LEVEL1);
         }
     }
 

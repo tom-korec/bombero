@@ -14,8 +14,14 @@ public class Constants {
     public static final float BOMB_TIME_TO_EXPLODE = 4f;
 
 
-    public static final String LEVEL1 = "levels/level_1.png";
-    public static final String LEVEL2 = "levels/level_2.png";
+    public static final String PATH_LEVEL1 = "levels/level_1.png";
+    public static final String PATH_LEVEL2 = "levels/level_2.png";
+    public static final String PATH_LEVEL3 = "levels/level_3.png";
+    public static final String PATH_LEVEL4 = "levels/level_4.png";
+    public static final String PATH_LEVEL5 = "levels/level_5.png";
+    public static final String PATH_LEVEL6 = "levels/level_6.png";
+    public static final String PATH_LEVEL7 = "levels/level_7.png";
+    public static final String PATH_LEVEL8 = "levels/level_8.png";
     public static final String LEVEL_DEFAULT = "levels/level_basic.png";
 
 

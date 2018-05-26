@@ -1,17 +1,14 @@
 package tomcarter.bombero.game;
 
 import com.badlogic.gdx.Application;
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import tomcarter.bombero.game.logic.level.LevelType;
 import tomcarter.bombero.game.logic.WorldController;
 import tomcarter.bombero.game.logic.WorldRenderer;
 import tomcarter.bombero.utils.Assets;
-import tomcarter.bombero.utils.Constants;
 
 public class Bombero implements ApplicationListener {
 	private WorldController controller;
@@ -23,13 +20,13 @@ public class Bombero implements ApplicationListener {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		// Load assets
 		Assets.instance.init(new AssetManager());
-		controller = new WorldController(Constants.LEVEL1, this);
+
+		controller = new WorldController(LevelType.LEVEL1, this);
 		renderer = new WorldRenderer(controller);
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		//renderer.resize(width, height);
 	}
 
 	@Override

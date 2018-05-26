@@ -10,6 +10,7 @@ import tomcarter.bombero.game.entity.item.BombPowerUp;
 import tomcarter.bombero.game.entity.item.FirePowerUp;
 import tomcarter.bombero.game.entity.item.Gate;
 import tomcarter.bombero.game.logic.Level;
+import tomcarter.bombero.game.logic.level.LevelType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,11 +53,11 @@ public class LevelLoader {
     private List<Floor> floors;
 
 
-    public Level load (String filename){
-        init(filename);
-        level = new Level(width, height);
+    public Level load (LevelType levelType){
+        init(levelType.getPath());
+        level = new Level(width, height, levelType);
         loadEntities();
-        Gdx.app.debug(TAG, "level '" + filename + "' loaded");
+        Gdx.app.debug(TAG, "level '" + levelType.getPath() + "' loaded");
         level.init(player, walls, bricks, floors);
         player.setMap(level.getMap());
         return level;

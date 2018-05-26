@@ -6,6 +6,7 @@ import tomcarter.bombero.game.entity.enemy.PotatoEnemy;
 import tomcarter.bombero.game.entity.item.BombPowerUp;
 import tomcarter.bombero.game.entity.item.FirePowerUp;
 import tomcarter.bombero.game.entity.item.Item;
+import tomcarter.bombero.game.logic.level.LevelType;
 
 
 import java.util.ArrayList;
@@ -14,6 +15,9 @@ import java.util.List;
 
 public class Level {
     private WorldController context;
+    private LevelType levelType;
+
+    private long timeLeft;
 
     private final int width;
     private final int height;
@@ -28,9 +32,11 @@ public class Level {
     private List<Bomb> bombs;
     private List<Explosion> explosions;
 
-    public Level(int width, int height) {
+    public Level(int width, int height, LevelType type) {
         this.width = width;
         this.height = height;
+
+        this.levelType = type;
     }
 
     public void init(Player player, List<Wall> walls, List<Brick> bricks, List<Floor> floors) {
@@ -39,14 +45,15 @@ public class Level {
         map = new LevelMap(width, height, staticGameObjects);
 
         this.player = player;
-        this.enemies = new ArrayList<Enemy>();
+
+        EnemyFactory factory = new EnemyFactory(this);
+
+        this.enemies = factory.createEnemies(levelType);
         this.walls = new ArrayList<Wall>(walls);
         this.bricks = new ArrayList<Brick>(bricks);
         this.floors = new ArrayList<Floor>(floors);
         this.items = new ArrayList<Item>();
         this.bombs = new ArrayList<Bomb>();
-
-        enemies.add(new PotatoEnemy(3f, 10f, this));
 
         explosions = new ArrayList<Explosion>();
     }

@@ -1,13 +1,18 @@
 package tomcarter.bombero.game.logic;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import tomcarter.bombero.game.entity.Bomb;
 import tomcarter.bombero.game.entity.Brick;
 import tomcarter.bombero.game.entity.GameObject;
 import tomcarter.bombero.game.entity.Wall;
 import tomcarter.bombero.game.entity.item.Item;
+import tomcarter.bombero.utils.Int2D;
 
+import java.awt.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class LevelMap {
     private GameObject[][] staticMap;
@@ -57,5 +62,28 @@ public class LevelMap {
     public boolean overlapsField(GameObject object, int x, int y){
         Rectangle field = new Rectangle(x, y, 1, 1);
         return object.getBounds().overlaps(field);
+    }
+
+    public Set<Int2D> getEmptyFieldsAwayFromField(Int2D awayFrom, int count){
+        Set<Int2D> fields = new HashSet<Int2D>();
+
+        while (fields.size() < count){
+            fields.add(getRandomEmptyField(awayFrom));
+        }
+        return fields;
+    }
+
+    private Int2D getRandomEmptyField(Int2D awayFrom){
+        int x;
+        int y;
+        Int2D field = new Int2D();
+        while (true){
+            x = MathUtils.random(staticMap.length - 1);
+            y = MathUtils.random(staticMap[0].length - 1);
+            field.set(x, y);
+            if (isEmpty(x, y) && field.distance(awayFrom) > 4){
+                return field;
+            }
+        }
     }
 }
