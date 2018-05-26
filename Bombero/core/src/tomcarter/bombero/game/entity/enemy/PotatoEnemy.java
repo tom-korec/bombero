@@ -16,6 +16,7 @@ public class PotatoEnemy extends Enemy implements Explodable{
     private Direction direction;
 
     private static final float SPEED = 1f;
+    private boolean blocked;
     private float blockedMovement;
 
     private static final float EXPLODED_FRAME_TIME = 0.3f;
@@ -28,7 +29,9 @@ public class PotatoEnemy extends Enemy implements Explodable{
         dimension.set(0.95f, 0.95f);
 
         direction = getRandomDirection();
+        blocked = false;
         blockedMovement = 0f;
+
 
         isExploded = false;
 
@@ -88,7 +91,7 @@ public class PotatoEnemy extends Enemy implements Explodable{
 
     private Direction chooseRandomDirection(){
         Direction direction = Direction.LEFT;
-        int length;
+        int length = 0;
         for (int i = 0; i < 10; ++i){
             direction = getRandomDirection();
             length = getPathLength(direction.getX(), direction.getY());
@@ -97,6 +100,9 @@ public class PotatoEnemy extends Enemy implements Explodable{
                 break;
             }
         }
+
+        blockIfStuck(length);
+
         return direction;
     }
 
@@ -122,6 +128,8 @@ public class PotatoEnemy extends Enemy implements Explodable{
             last = current;
         }
 
+        blockIfStuck(last);
+
         if (last > 10){
             last -= 2;
         }
@@ -133,6 +141,13 @@ public class PotatoEnemy extends Enemy implements Explodable{
         blockedMovement = last - 0.05f;
 
         return direction;
+    }
+
+    private void blockIfStuck(int pathLength){
+        if (pathLength == 0){
+            blockedMovement = 1f;
+            blocked = true;
+        }
     }
 
     private int getPathLength(int left, int up){
@@ -166,6 +181,14 @@ public class PotatoEnemy extends Enemy implements Explodable{
         float addX = direction.getX() * SPEED * delta;
         float addY = direction.getY() * SPEED * delta;
         blockedMovement -= (Math.abs(addX) + Math.abs(addY));
+
+        if (blocked){
+            if (blockedMovement < 0){
+                blocked = false;
+            }
+            return;
+        }
+
         position.add(addX, addY);
     }
 
