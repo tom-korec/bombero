@@ -8,6 +8,7 @@ import tomcarter.bombero.game.logic.Direction;
 import tomcarter.bombero.game.logic.Level;
 import tomcarter.bombero.game.logic.LevelMap;
 import tomcarter.bombero.utils.Assets;
+import tomcarter.bombero.utils.MathHelper;
 
 public class Player extends GameObject implements Explodable{
     private Level context;
@@ -28,6 +29,7 @@ public class Player extends GameObject implements Explodable{
     private boolean isMoving;
     private Direction direction;
     private float speed;
+    private float currentSpeed;
     private Vector2 directionMultiplier;
 
 
@@ -37,7 +39,7 @@ public class Player extends GameObject implements Explodable{
         this.context = context;
 
         region = Assets.instance.player.down[0];
-        dimension.set(0.8f, 0.8f);
+        dimension.set(1f, 1f);
 
         isExploded = false;
 
@@ -45,6 +47,7 @@ public class Player extends GameObject implements Explodable{
         frameIndex = 0;
 
         speed = DEFAULT_SPEED;
+
         isMoving = false;
         directionMultiplier = new Vector2();
         direction = Direction.DOWN;
@@ -68,8 +71,9 @@ public class Player extends GameObject implements Explodable{
             animateDeath(delta);
         }
         else if (isMoving) {
+            currentSpeed = speed * delta;
             directionMultiplier.set(direction.getX(), direction.getY());
-            position.mulAdd(directionMultiplier, speed*delta);
+            position.mulAdd(directionMultiplier, currentSpeed);
             bounds.set(position.x + 0.05f, position.y + + 0.05f, dimension.x - 0.05f, dimension.y - 0.05f);
             handleCollisions();
             animate(delta);
@@ -143,16 +147,26 @@ public class Player extends GameObject implements Explodable{
         }
 
         if (left){
-            if (map.isBrickOrWall(x-1, y+1)){
-                float sideSpeed = DEFAULT_SIDE_SPEED * Gdx.graphics.getDeltaTime();
-                position.set(position.x + sideSpeed, y+1 - dimension.y);
+            if (map.isBrickOrWall(x-1, y+1) && !map.isBrickOrWall(x, y+1)){
+                float difference = MathHelper.fractionalPart(position.x);
+                if(difference > 0.75){
+                    position.set(position.x + currentSpeed, position.y);
+                }
+                else {
+                    position.set(position.x + currentSpeed, y+1 - dimension.y);
+                }
             }
         }
 
         if (right){
-            if (map.isBrickOrWall(x+1, y+1)){
-                float sideSpeed = DEFAULT_SIDE_SPEED * Gdx.graphics.getDeltaTime();
-                position.set(position.x - sideSpeed, y+1 - dimension.y);
+            if (map.isBrickOrWall(x+1, y+1) && !map.isBrickOrWall(x, y+1)){
+                float difference = MathHelper.fractionalPart(position.x + dimension.x);
+                if(difference < 0.25){
+                    position.set(position.x - currentSpeed, position.y);
+                }
+                else {
+                    position.set(position.x - currentSpeed, y+1 - dimension.y);
+                }
             }
         }
     }
@@ -173,16 +187,26 @@ public class Player extends GameObject implements Explodable{
         }
 
         if (left){
-            if (map.isBrickOrWall(x-1, y-1)){
-                float sideSpeed = DEFAULT_SIDE_SPEED * Gdx.graphics.getDeltaTime();
-                position.set(position.x + sideSpeed, y);
+            if (map.isBrickOrWall(x-1, y-1)  && !map.isBrickOrWall(x, y-1)){
+                float difference = MathHelper.fractionalPart(position.x);
+                if(difference > 0.75){
+                    position.set(position.x + currentSpeed, position.y);
+                }
+                else {
+                    position.set(position.x + currentSpeed, y);
+                }
             }
         }
 
         if (right){
-            if (map.isBrickOrWall(x+1, y-1)){
-                float sideSpeed = DEFAULT_SIDE_SPEED * Gdx.graphics.getDeltaTime();
-                position.set(position.x - sideSpeed, y);
+            if (map.isBrickOrWall(x+1, y-1)  && !map.isBrickOrWall(x, y-1)){
+                float difference = MathHelper.fractionalPart(position.x + dimension.x);
+                if(difference < 0.25){
+                    position.set(position.x - currentSpeed, position.y);
+                }
+                else {
+                    position.set(position.x - currentSpeed, y);
+                }
             }
         }
     }
@@ -204,15 +228,25 @@ public class Player extends GameObject implements Explodable{
 
         if (up){
             if (map.isBrickOrWall(x-1, y+1) && !map.isBrickOrWall(x-1, y)){
-                float sideSpeed = DEFAULT_SIDE_SPEED * Gdx.graphics.getDeltaTime();
-                position.set(x, position.y - sideSpeed);
+                float difference = MathHelper.fractionalPart(position.y + dimension.y);
+                if(difference < 0.25){
+                    position.set(position.x, position.y - currentSpeed);
+                }
+                else {
+                    position.set(x, position.y - currentSpeed);
+                }
             }
         }
 
         if (down){
             if (map.isBrickOrWall(x-1, y-1) && !map.isBrickOrWall(x-1, y)){
-                float sideSpeed = DEFAULT_SIDE_SPEED * Gdx.graphics.getDeltaTime();
-                position.set(x, position.y + sideSpeed);
+                float difference = MathHelper.fractionalPart(position.y);
+                if (difference > 0.75){
+                    position.set(position.x, position.y + currentSpeed);
+                }
+                else{
+                    position.set(x, position.y + currentSpeed);
+                }
             }
         }
     }
@@ -234,15 +268,25 @@ public class Player extends GameObject implements Explodable{
 
         if (up){
             if (map.isBrickOrWall(x+1, y+1) && !map.isBrickOrWall(x+1, y)){
-                float sideSpeed = DEFAULT_SIDE_SPEED * Gdx.graphics.getDeltaTime();
-                position.set(x + 1 - dimension.x, position.y - sideSpeed);
+                float difference = MathHelper.fractionalPart(position.y + dimension.y);
+                if(difference < 0.25){
+                    position.set(position.x, position.y - currentSpeed);
+                }
+                else {
+                    position.set(x + 1 - dimension.x, position.y - currentSpeed);
+                }
             }
         }
 
         if (down){
             if (map.isBrickOrWall(x+1, y-1) && !map.isBrickOrWall(x+1, y)){
-                float sideSpeed = DEFAULT_SIDE_SPEED * Gdx.graphics.getDeltaTime();
-                position.set(x + 1 - dimension.x, position.y + sideSpeed);
+                float difference = MathHelper.fractionalPart(position.y);
+                if (difference > 0.75){
+                    position.set(position.x, position.y + currentSpeed);
+                }
+                else{
+                    position.set(x + 1 - dimension.x, position.y + currentSpeed);
+                }
             }
         }
     }
