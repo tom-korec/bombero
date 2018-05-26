@@ -1,7 +1,8 @@
 package tomcarter.bombero.game.logic;
 
-import com.badlogic.gdx.math.Vector2;
 import tomcarter.bombero.game.entity.*;
+import tomcarter.bombero.game.entity.enemy.Enemy;
+import tomcarter.bombero.game.entity.enemy.PotatoEnemy;
 import tomcarter.bombero.game.entity.item.BombPowerUp;
 import tomcarter.bombero.game.entity.item.FirePowerUp;
 import tomcarter.bombero.game.entity.item.Item;
@@ -19,14 +20,13 @@ public class Level {
     private LevelMap map;
 
     private Player player;
+    private List<Enemy> enemies;
     private List<Item> items;
     private List<Wall> walls;
     private List<Brick> bricks;
     private List<Floor> floors;
     private List<Bomb> bombs;
-    private List<Bomb> justExploded;
     private List<Explosion> explosions;
-    private List<Explosion> endedExplosions;
 
     public Level(int width, int height) {
         this.width = width;
@@ -39,15 +39,16 @@ public class Level {
         map = new LevelMap(width, height, staticGameObjects);
 
         this.player = player;
+        this.enemies = new ArrayList<Enemy>();
         this.walls = new ArrayList<Wall>(walls);
         this.bricks = new ArrayList<Brick>(bricks);
         this.floors = new ArrayList<Floor>(floors);
         this.items = new ArrayList<Item>();
-        bombs = new ArrayList<Bomb>();
-        justExploded = new ArrayList<Bomb>();
+        this.bombs = new ArrayList<Bomb>();
+
+        enemies.add(new PotatoEnemy(3f, 10f, this));
 
         explosions = new ArrayList<Explosion>();
-        endedExplosions = new ArrayList<Explosion>();
     }
 
     public void setContext(WorldController context) {
@@ -56,6 +57,7 @@ public class Level {
 
     public void update(float delta){
         updatePlayer(delta);
+        updateEnemies(delta);
         updateBombs(delta);
         updateExplosions(delta);
         updateItems(delta);
@@ -66,6 +68,17 @@ public class Level {
         player.update(delta);
         if (player.isDestroyed()){
             context.gameOver();
+        }
+    }
+
+    private void updateEnemies(float delta){
+        for (Iterator<Enemy> iterator = enemies.iterator(); iterator.hasNext();){
+            Enemy enemy = iterator.next();
+            enemy.update(delta);
+
+            if (enemy.isDestroyed()){
+                iterator.remove();
+            }
         }
     }
 
@@ -116,10 +129,6 @@ public class Level {
         }
     }
 
-    private void handleEndedExplosions(){
-        explosions.removeAll(endedExplosions);
-        endedExplosions.clear();
-    }
 
     public int getBombsCount(){
         return bombs.size();
@@ -164,9 +173,7 @@ public class Level {
         map.set(x, y, null);
     }
 
-    public Player getPlayer() {
-        return player;
-    }
+
 
     public void addFirePowerUp(FirePowerUp powerUp){
         context.addFirePowerUp();
@@ -184,6 +191,14 @@ public class Level {
         return map;
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
+    public List<Enemy> getEnemies() {
+        return enemies;
+    }
+
     public List<GameObject> getGameObjects(){
         ArrayList<GameObject> objects = new ArrayList<GameObject>();
         objects.addAll(floors);
@@ -192,6 +207,7 @@ public class Level {
         objects.addAll(walls);
         objects.addAll(bombs);
         objects.add(player);
+        objects.addAll(enemies);
         objects.addAll(explosions);
         return objects;
     }

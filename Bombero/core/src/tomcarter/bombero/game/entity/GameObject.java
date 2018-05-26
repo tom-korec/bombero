@@ -37,11 +37,11 @@ public abstract class GameObject {
     }
 
     public float getCenterX() {
-        return position.x + dimension.x;
+        return position.x + dimension.x / 2;
     }
 
     public float getCenterY() {
-        return position.y + dimension.y;
+        return position.y + dimension.y / 2;
     }
 
     public int getNormalizedPositionX() {
@@ -66,12 +66,5 @@ public abstract class GameObject {
 
     public Rectangle getBounds() {
         return bounds;
-    }
-
-    public boolean collidesWith(GameObject other){
-        if (other != null){
-            System.out.println("This: " + this.bounds + ", Other: " + other.bounds);
-        }
-        return other != null && other.bounds.overlaps(this.bounds);
     }
 }

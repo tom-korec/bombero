@@ -1,6 +1,7 @@
 package tomcarter.bombero.game.logic;
 
 import com.badlogic.gdx.math.Rectangle;
+import tomcarter.bombero.game.entity.Bomb;
 import tomcarter.bombero.game.entity.Brick;
 import tomcarter.bombero.game.entity.GameObject;
 import tomcarter.bombero.game.entity.Wall;
@@ -39,6 +40,10 @@ public class LevelMap {
 
     public boolean isItem(int x, int y){
         return !isEmpty(x, y) && staticMap[x][y] instanceof Item;
+    }
+
+    public boolean isBomb(int x, int y){
+        return !isEmpty(x, y) && staticMap[x][y] instanceof Bomb;
     }
 
     public GameObject at(int x, int y){

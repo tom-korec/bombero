@@ -3,6 +3,7 @@ package tomcarter.bombero.game.entity;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import tomcarter.bombero.game.entity.enemy.Enemy;
 import tomcarter.bombero.game.logic.Level;
 import tomcarter.bombero.game.logic.LevelMap;
 import tomcarter.bombero.utils.Assets;
@@ -67,11 +68,21 @@ public class Explosion extends GameObject {
         }
     }
 
-    public void checkCollisions(){
+    private void checkCollisions(){
         Player player = context.getPlayer();
-        if (horizontal.overlaps(player.bounds) || vertical.overlaps(player.bounds)){
+        if (didCollide(player)){
             player.explode();
         }
+
+        for(Enemy enemy : context.getEnemies()){
+            if (didCollide(enemy)){
+                enemy.explode();
+            }
+        }
+    }
+
+    private boolean didCollide(GameObject object){
+        return horizontal.overlaps(object.bounds) || vertical.overlaps(object.bounds);
     }
 
     public boolean isOver(){

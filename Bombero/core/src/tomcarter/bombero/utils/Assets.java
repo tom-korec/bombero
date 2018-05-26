@@ -21,6 +21,7 @@ public class Assets implements AssetErrorListener, Disposable {
     public AssetFonts fonts;
 
     public AssetPlayer player;
+    public AssetEnemy enemies;
 
     public AssetWall wall;
     public AssetFloor floor;
@@ -43,6 +44,7 @@ public class Assets implements AssetErrorListener, Disposable {
 
         fonts = new AssetFonts();
         player = new AssetPlayer(atlas);
+        enemies = new AssetEnemy(atlas);
         wall = new AssetWall(atlas);
         floor = new AssetFloor(atlas);
         brick = new AssetBrick(atlas);
@@ -57,7 +59,6 @@ public class Assets implements AssetErrorListener, Disposable {
         public final BitmapFont defaultFont;
 
         public AssetFonts () {
-            // create three fonts using Libgdx's 15px bitmap font
             defaultFont = new BitmapFont(Gdx.files.internal("arial-15.fnt"), true);
             defaultFont.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         }
@@ -88,6 +89,17 @@ public class Assets implements AssetErrorListener, Disposable {
             regions = region.split(region.getRegionWidth() / 8, region.getRegionHeight());
             death = new TextureRegion[8];
             System.arraycopy(regions[0], 0, death, 0, 8);
+        }
+    }
+
+    public class AssetEnemy {
+        public final TextureRegion potato[];
+
+        public AssetEnemy(TextureAtlas atlas) {
+            AtlasRegion region = atlas.findRegion("enemyPotato");
+            TextureRegion[][] regions = region.split(region.getRegionWidth() / 5, region.getRegionHeight());
+            this.potato = new TextureRegion[5];
+            System.arraycopy(regions[0], 0, potato, 0, 5);
         }
     }
 

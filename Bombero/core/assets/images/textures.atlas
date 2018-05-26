@@ -18,6 +18,13 @@ brick
   orig: 192, 32
   offset: 0, 0
   index: -1
+enemyPotato
+  rotate: false
+  xy: 198, 75
+  size: 80, 18
+  orig: 80, 18
+  offset: 0, 0
+  index: -1
 explosion
   rotate: false
   xy: 2, 27
@@ -69,14 +76,14 @@ suddenDeathShadow
   index: -1
 teleporter
   rotate: false
-  xy: 198, 61
+  xy: 198, 41
   size: 64, 32
   orig: 64, 32
   offset: 0, 0
   index: -1
 wall
   rotate: false
-  xy: 198, 27
+  xy: 292, 121
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
