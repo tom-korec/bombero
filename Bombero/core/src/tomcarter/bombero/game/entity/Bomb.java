@@ -17,8 +17,7 @@ public class Bomb extends GameObject implements Explodable{
     public Bomb(float positionX, float positionY, Level context, int size) {
         super(positionX, positionY);
         region = Assets.instance.bomb.textures[0];
-        dimension.set( 0.8f, 0.8f);
-        origin.set(0.4f, 0.4f);
+        dimension.set( 1f, 1f);
 
         this.context = context;
 

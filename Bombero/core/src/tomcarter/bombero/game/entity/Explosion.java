@@ -40,10 +40,10 @@ public class Explosion extends GameObject {
         this.map = context.getMap();
         this.maxSize = size;
 
-        createLeft();
-        createRight();
-        createUp();
-        createDown();
+        left = createSideFire(-1, 0);
+        right = createSideFire(1,0);
+        up = createSideFire(0,1);
+        down = createSideFire(0,-1);
 
         horizontal = createHorizontal();
         vertical = createVertical();
@@ -136,68 +136,44 @@ public class Explosion extends GameObject {
         return size;
     }
 
-    private void createLeft(){
-        int size = getPartSize(-1, 0);
-        left = new ExplosionPart[size];
+    private ExplosionPart[] createSideFire(int right, int up){
+        int size = getPartSize(right, up);
+        TextureRegion[] bodyTextures = getTexturesForBody(right);
+        ExplosionPart[] sideFire = new ExplosionPart[size];
 
         for (int i = 1; i <= size; ++i) {
             ExplosionPart part;
-            if (i == size){
-                part = new ExplosionPart((int) position.x - i, (int) position.y, Assets.instance.explosion.leftEnd);
+            int x = (int) position.x + right * i;
+            int y = (int) position.y + up * i;
+
+            if (i == maxSize){
+                part = new ExplosionPart(x, y, getTexturesForEnd(right, up));
             }
             else {
-                part = new ExplosionPart((int) position.x - i, (int) position.y, Assets.instance.explosion.horizontal);
+                part = new ExplosionPart(x, y, bodyTextures);
             }
 
-            left[i-1] = part;
+            sideFire[i-1] = part;
         }
+        return sideFire;
     }
 
-    private void createRight(){
-        int size = getPartSize(1, 0);
-        right = new ExplosionPart[size];
-
-        for (int i = 1; i <= size; ++i) {
-            ExplosionPart part;
-            if (i == size){
-                part = new ExplosionPart((int) position.x + i, (int) position.y, Assets.instance.explosion.rightEnd);
-            }
-            else {
-                part = new ExplosionPart((int) position.x + i, (int) position.y, Assets.instance.explosion.horizontal);
-            }
-            right[i-1] = part;
-        }
+    private TextureRegion[] getTexturesForBody(int right){
+        return right == 0 ? Assets.instance.explosion.vertical : Assets.instance.explosion.horizontal;
     }
 
-    private void createUp(){
-        int size = getPartSize(0, 1);
-        up = new ExplosionPart[size];
-
-        for (int i = 1; i <= size; ++i) {
-            ExplosionPart part;
-            if (i == size){
-                part = new ExplosionPart((int) position.x, (int) position.y + i, Assets.instance.explosion.upEnd);
-            }
-            else {
-                part = new ExplosionPart((int) position.x, (int) position.y + i, Assets.instance.explosion.vertical);
-            }
-            up[i-1] = part;
+    private TextureRegion[] getTexturesForEnd(int right, int up){
+        if (right == -1){
+            return Assets.instance.explosion.leftEnd;
         }
-    }
-
-    private void createDown(){
-        int size = getPartSize(0, -1);
-        down = new ExplosionPart[size];
-
-        for (int i = 1; i <= size; ++i) {
-            ExplosionPart part;
-            if (i == size){
-                part = new ExplosionPart((int) position.x, (int) position.y - i, Assets.instance.explosion.downEnd);
-            }
-            else {
-                part = new ExplosionPart((int) position.x, (int) position.y - i, Assets.instance.explosion.vertical);
-            }
-            down[i-1] = part;
+        else if (right == 1){
+            return Assets.instance.explosion.rightEnd;
+        }
+        else if (up == 1){
+            return Assets.instance.explosion.upEnd;
+        }
+        else {
+            return Assets.instance.explosion.downEnd;
         }
     }
 
