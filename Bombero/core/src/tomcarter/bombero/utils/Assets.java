@@ -19,6 +19,7 @@ public class Assets implements AssetErrorListener, Disposable {
     private AssetManager assetManager;
 
     public AssetFonts fonts;
+    public AssetGui gui;
 
     public AssetPlayer player;
     public AssetEnemy enemies;
@@ -43,6 +44,7 @@ public class Assets implements AssetErrorListener, Disposable {
         TextureAtlas atlas = assetManager.get(Constants.TEXTURE_ATLAS);
 
         fonts = new AssetFonts();
+        gui = new AssetGui(atlas);
         player = new AssetPlayer(atlas);
         enemies = new AssetEnemy(atlas);
         wall = new AssetWall(atlas);
@@ -78,6 +80,17 @@ public class Assets implements AssetErrorListener, Disposable {
             fontL = new BitmapFont(Gdx.files.internal(Constants.FONT_CENTURY_GOTHIC64), true);
             fontL.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         }
+    }
+
+    public class AssetGui {
+        public final TextureRegion life;
+        public final TextureRegion score;
+
+        public AssetGui(TextureAtlas atlas) {
+            this.life = atlas.findRegion("guiLife");
+            this.score = atlas.findRegion("guiScore");
+        }
+
     }
 
     public class AssetPlayer {

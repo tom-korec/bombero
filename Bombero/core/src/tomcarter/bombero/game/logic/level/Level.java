@@ -6,6 +6,7 @@ import tomcarter.bombero.game.entity.item.BombPowerUp;
 import tomcarter.bombero.game.entity.item.FirePowerUp;
 import tomcarter.bombero.game.entity.item.Item;
 import tomcarter.bombero.game.logic.WorldController;
+import tomcarter.bombero.utils.Constants;
 
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class Level {
     private WorldController context;
     private LevelType levelType;
 
-    private long timeLeft;
+    private float timeLeft;
 
     private final int width;
     private final int height;
@@ -36,6 +37,7 @@ public class Level {
         this.height = height;
 
         this.levelType = type;
+        this.timeLeft = Constants.LEVEL_TIME;
     }
 
     public void init(Player player, List<Wall> walls, List<Brick> bricks, List<Floor> floors) {
@@ -62,14 +64,18 @@ public class Level {
     }
 
     public void update(float delta){
+        updateTime(delta);
+
         player.update(delta);
+        if (player.isTransporting()){
+            return;
+        }
         if (player.isDestroyed()){
             player = null;
             context.gameOver();
             return;
         }
 
-//        updatePlayer(delta);
         updateEnemies(delta);
         updateBombs(delta);
         updateExplosions(delta);
@@ -77,10 +83,9 @@ public class Level {
         updateBricks(delta);
     }
 
-    private void updatePlayer(float delta){
-        player.update(delta);
-        if (player.isDestroyed()){
-            player = null;
+    private void updateTime(float delta){
+        timeLeft -= delta;
+        if (timeLeft < 0){
             context.gameOver();
         }
     }
@@ -92,6 +97,7 @@ public class Level {
 
             if (enemy.isDestroyed()){
                 iterator.remove();
+                context.addScore(enemy.getScore());
             }
         }
     }
@@ -205,6 +211,10 @@ public class Level {
 
     public LevelType getLevelType() {
         return levelType;
+    }
+
+    public float getTimeLeft() {
+        return timeLeft;
     }
 
     public LevelMap getMap() {

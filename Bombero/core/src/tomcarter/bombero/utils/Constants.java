@@ -7,9 +7,15 @@ public class Constants {
     public static final float VIEWPORT_GUI_WIDTH = 800;
     public static final float VIEWPORT_GUI_HEIGHT = 600;
 
+    public static final float LEVEL_TIME = 5 * 60;
+
     public static final int STARTING_LIVES = 3;
-    public static final int STARTING_FIRE = 3;
+    public static final int STARTING_FIRE_INDEX = 0;
+    public static final int[] FIRE_SIZES = new int[]{1,3,5,6};
+
     public static final int STARTING_BOMBS = 1;
+
+
 
     public static final float BOMB_TIME_TO_EXPLODE = 4f;
 

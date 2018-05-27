@@ -21,6 +21,7 @@ public class WorldController extends InputAdapter {
     private int livesLeft;
     private int score;
     private int fireSize;
+    private int fireIndex;
     private int bombCount;
 
     public WorldController(LevelType levelType, Bombero app) {
@@ -33,7 +34,8 @@ public class WorldController extends InputAdapter {
     private void init(){
         livesLeft = Constants.STARTING_LIVES;
         score = 0;
-        fireSize = Constants.STARTING_FIRE;
+        fireIndex = Constants.STARTING_FIRE_INDEX;
+        fireSize = Constants.FIRE_SIZES[fireIndex];
         bombCount = Constants.STARTING_BOMBS;
         paused = false;
         Gdx.input.setInputProcessor(this);
@@ -76,12 +78,21 @@ public class WorldController extends InputAdapter {
         return level;
     }
 
+    public int getScore(){
+        return score;
+    }
+
+    public int getLivesLeft() {
+        return livesLeft;
+    }
+
     public void addScore(int score){
         this.score += score;
     }
 
     public void addFirePowerUp(){
-        ++fireSize;
+        ++fireIndex;
+        fireSize = Constants.FIRE_SIZES[fireIndex];
     }
 
     public void addBombPowerUp(){

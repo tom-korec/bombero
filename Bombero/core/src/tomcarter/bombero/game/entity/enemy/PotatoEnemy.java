@@ -193,6 +193,11 @@ public class PotatoEnemy extends Enemy implements Explodable{
     }
 
     @Override
+    public int getScore() {
+        return 200;
+    }
+
+    @Override
     public void explode() {
         if (isExploded){
             return;

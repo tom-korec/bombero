@@ -1,5 +1,6 @@
 package tomcarter.bombero.game.entity.enemy;
 
+import com.badlogic.gdx.math.Rectangle;
 import tomcarter.bombero.game.entity.Explodable;
 import tomcarter.bombero.game.entity.GameObject;
 import tomcarter.bombero.game.entity.Player;
@@ -27,6 +28,8 @@ public abstract class Enemy extends GameObject implements Explodable{
         frameIndex = 0;
     }
 
+    public abstract int getScore();
+
     public abstract void explode();
 
     public abstract boolean isDestroyed();
@@ -51,7 +54,7 @@ public abstract class Enemy extends GameObject implements Explodable{
 
     protected void checkCollisionWithPlayer(){
         Player player = context.getPlayer();
-        if (player.getBounds().overlaps(bounds)){
+        if ( player.getCenter().dst(getCenter()) < 0.8f){
             player.explode();
         }
     }

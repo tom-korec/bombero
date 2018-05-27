@@ -10,7 +10,7 @@ import tomcarter.bombero.utils.Assets;
 
 
 public class Explosion extends GameObject {
-    public static final float FIRE_OFFSET = 0.15f;
+    public static final float FIRE_OFFSET = 0.2f;
     private Level context;
     private LevelMap map;
 

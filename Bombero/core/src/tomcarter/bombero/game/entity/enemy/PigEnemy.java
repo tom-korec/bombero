@@ -8,6 +8,11 @@ public class PigEnemy extends Enemy {
     }
 
     @Override
+    public int getScore() {
+        return 1000;
+    }
+
+    @Override
     public void explode() {
 
     }

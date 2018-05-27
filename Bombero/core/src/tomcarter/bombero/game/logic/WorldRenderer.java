@@ -68,7 +68,10 @@ public class WorldRenderer implements Disposable {
         batch.setProjectionMatrix(cameraGUI.combined);
         batch.begin();
 
-        Assets.instance.fonts.fontL.draw(batch, "GUI goes here", 20, 20);
+        renderTimeLeft(batch);
+        renderLivesLeft(batch);
+        renderScore(batch);
+        renderHighscore(batch);
 
         if (renderGameOver){
             renderGameOver(batch);
@@ -80,7 +83,54 @@ public class WorldRenderer implements Disposable {
         batch.end();
     }
 
-    private int i = 0;
+    private void renderTimeLeft(SpriteBatch batch){
+        int time = (int) worldController.getLevel().getTimeLeft();
+        int minutes = time / 60;
+        int seconds = time % 60;
+
+        Assets.instance.fonts.fontL.draw(batch, "" + minutes + " : " + getStandardizedNumber(seconds, 2), 450, 50);
+    }
+
+    private void renderLivesLeft(SpriteBatch batch){
+        int lives = worldController.getLivesLeft();
+        int posX = 750;
+
+        for (int i = 1; i <= Constants.STARTING_LIVES; ++i){
+            if (i > lives){
+                batch.setColor(0.3f, 0.3f, 0.3f, 0.5f);
+            }
+            batch.draw(Assets.instance.gui.life, posX, 40, 32, 32, 64 ,64, 1, 1, 180);
+            posX += 70;
+        }
+        batch.setColor(1,1,1,1);
+    }
+
+    private void renderScore(SpriteBatch batch){
+        int score = worldController.getScore();
+
+        Assets.instance.fonts.fontL.draw(batch, "SC:", 50, 50);
+        Assets.instance.fonts.fontM.draw(batch, "" + getStandardizedNumber(score, 5), 160, 60);
+    }
+
+    private String getStandardizedNumber(int number, int dec){
+        String result = "" + number;
+
+        int div = 10;
+
+        for (int i = 1; i < dec; ++i){
+            if (number / div == 0){
+                result = "0" + result;
+            }
+            div *=10;
+        }
+        return result;
+    }
+
+    private void renderHighscore(SpriteBatch batch){
+        batch.draw(Assets.instance.gui.score, 1100, 40, 32, 32, 64 ,64, 1, 1, 180);
+        Assets.instance.fonts.fontL.draw(batch, ":", 1164, 50);
+        Assets.instance.fonts.fontM.draw(batch, "00000", 1195, 60);
+    }
 
     private void renderGameOver(SpriteBatch batch){
 //        batch.setColor(0, 0, 0, 1);

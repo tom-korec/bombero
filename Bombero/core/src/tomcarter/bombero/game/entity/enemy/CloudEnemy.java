@@ -14,6 +14,11 @@ public class CloudEnemy extends Enemy {
 
 
     @Override
+    public int getScore() {
+        return 500;
+    }
+
+    @Override
     public void explode() {
 
     }

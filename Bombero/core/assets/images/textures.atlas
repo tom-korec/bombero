@@ -39,6 +39,20 @@ floor
   orig: 32, 32
   offset: 0, 0
   index: -1
+guiLife
+  rotate: false
+  xy: 326, 198
+  size: 22, 23
+  orig: 22, 23
+  offset: 0, 0
+  index: -1
+guiScore
+  rotate: false
+  xy: 483, 230
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
 itemDestroy
   rotate: false
   xy: 132, 223

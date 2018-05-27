@@ -95,7 +95,7 @@ public enum LevelType {
     };
 
     private static final EnemyType[] ENEMIES_LVL1 = {
-            EnemyType.POTATO, //EnemyType.POTATO, EnemyType.POTATO
+            EnemyType.POTATO, EnemyType.POTATO, EnemyType.POTATO
     };
 
     private static final EnemyType[] ENEMIES_LVL2 = {
