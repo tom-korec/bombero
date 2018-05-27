@@ -85,7 +85,7 @@ public class Player extends GameObject implements Explodable{
             currentSpeed = speed * delta;
             directionMultiplier.set(direction.getX(), direction.getY());
             position.mulAdd(directionMultiplier, currentSpeed);
-            bounds.set(position.x + 0.05f, position.y + + 0.05f, dimension.x - 0.05f, dimension.y - 0.05f);
+            bounds.set(position.x + 0.05f, position.y + 0.05f, dimension.x - 0.05f, dimension.y - 0.05f);
             handleCollisions();
             animate(delta);
         }
@@ -159,25 +159,13 @@ public class Player extends GameObject implements Explodable{
 
         if (left){
             if (map.isBrickOrWall(x-1, y+1) && !map.isBrickOrWall(x, y+1)){
-                float difference = MathHelper.fractionalPart(position.x);
-                if(difference > 0.75){
-                    position.set(position.x + currentSpeed, position.y);
-                }
-                else {
-                    position.set(position.x + currentSpeed, y+1 - dimension.y);
-                }
+                position.set(position.x + currentSpeed, position.y);
             }
         }
 
         if (right){
             if (map.isBrickOrWall(x+1, y+1) && !map.isBrickOrWall(x, y+1)){
-                float difference = MathHelper.fractionalPart(position.x + dimension.x);
-                if(difference < 0.25){
-                    position.set(position.x - currentSpeed, position.y);
-                }
-                else {
-                    position.set(position.x - currentSpeed, y+1 - dimension.y);
-                }
+                position.set(position.x - currentSpeed, position.y);
             }
         }
     }
@@ -194,30 +182,18 @@ public class Player extends GameObject implements Explodable{
         boolean right = map.overlapsField(this, x + 1, y);
 
         if (map.isBrickOrWall(x, y-1)){
-            position.set(position.x, y);
+            position.set(position.x, y - 0.05f);
         }
 
         if (left){
             if (map.isBrickOrWall(x-1, y-1)  && !map.isBrickOrWall(x, y-1)){
-                float difference = MathHelper.fractionalPart(position.x);
-                if(difference > 0.75){
-                    position.set(position.x + currentSpeed, position.y);
-                }
-                else {
-                    position.set(position.x + currentSpeed, y);
-                }
+                position.set(position.x + currentSpeed, position.y);
             }
         }
 
         if (right){
             if (map.isBrickOrWall(x+1, y-1)  && !map.isBrickOrWall(x, y-1)){
-                float difference = MathHelper.fractionalPart(position.x + dimension.x);
-                if(difference < 0.25){
-                    position.set(position.x - currentSpeed, position.y);
-                }
-                else {
-                    position.set(position.x - currentSpeed, y);
-                }
+                position.set(position.x - currentSpeed, position.y);
             }
         }
     }
@@ -239,25 +215,13 @@ public class Player extends GameObject implements Explodable{
 
         if (up){
             if (map.isBrickOrWall(x-1, y+1) && !map.isBrickOrWall(x-1, y)){
-                float difference = MathHelper.fractionalPart(position.y + dimension.y);
-                if(difference < 0.25){
-                    position.set(position.x, position.y - currentSpeed);
-                }
-                else {
-                    position.set(x, position.y - currentSpeed);
-                }
+                position.set(position.x, position.y - currentSpeed);
             }
         }
 
         if (down){
             if (map.isBrickOrWall(x-1, y-1) && !map.isBrickOrWall(x-1, y)){
-                float difference = MathHelper.fractionalPart(position.y);
-                if (difference > 0.75){
-                    position.set(position.x, position.y + currentSpeed);
-                }
-                else{
-                    position.set(x, position.y + currentSpeed);
-                }
+                position.set(position.x, position.y + currentSpeed);
             }
         }
     }
@@ -279,25 +243,13 @@ public class Player extends GameObject implements Explodable{
 
         if (up){
             if (map.isBrickOrWall(x+1, y+1) && !map.isBrickOrWall(x+1, y)){
-                float difference = MathHelper.fractionalPart(position.y + dimension.y);
-                if(difference < 0.25){
-                    position.set(position.x, position.y - currentSpeed);
-                }
-                else {
-                    position.set(x + 1 - dimension.x, position.y - currentSpeed);
-                }
+                position.set(position.x, position.y - currentSpeed);
             }
         }
 
         if (down){
             if (map.isBrickOrWall(x+1, y-1) && !map.isBrickOrWall(x+1, y)){
-                float difference = MathHelper.fractionalPart(position.y);
-                if (difference > 0.75){
-                    position.set(position.x, position.y + currentSpeed);
-                }
-                else{
-                    position.set(x + 1 - dimension.x, position.y + currentSpeed);
-                }
+                position.set(position.x, position.y + currentSpeed);
             }
         }
     }
@@ -383,5 +335,9 @@ public class Player extends GameObject implements Explodable{
 
     public boolean isExploded(){
         return isExploded;
+    }
+
+    public boolean isTransporting() {
+        return isTransporting;
     }
 }
