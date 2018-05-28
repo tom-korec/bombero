@@ -74,6 +74,8 @@ public class Assets implements AssetErrorListener, Disposable {
         public final BitmapFont fontS;
         public final BitmapFont fontM;
         public final BitmapFont fontL;
+        public final BitmapFont menuSelected;
+        public final BitmapFont menuDefault;
 
         public AssetFonts () {
             defaultFont = new BitmapFont(Gdx.files.internal(Constants.FONT_DEFAULT), true);
@@ -90,6 +92,12 @@ public class Assets implements AssetErrorListener, Disposable {
 
             fontL = new BitmapFont(Gdx.files.internal(Constants.FONT_CENTURY_GOTHIC64), true);
             fontL.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
+            menuSelected = new BitmapFont(Gdx.files.internal(Constants.FONT_CENTURY_GOTHIC_MENU_SELECTED), true);
+            menuSelected.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
+            menuDefault = new BitmapFont(Gdx.files.internal(Constants.FONT_CENTURY_GOTHIC_MENU_DEFAULT), true);
+            menuDefault.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         }
     }
 

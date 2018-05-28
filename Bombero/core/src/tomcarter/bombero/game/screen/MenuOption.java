@@ -6,11 +6,11 @@ import tomcarter.bombero.utils.Assets;
 
 public abstract class MenuOption {
     private String text;
-    private int x;
-    private int y;
+    private float x;
+    private float y;
     private boolean selected;
 
-    public MenuOption(String text, int x, int y, boolean selected) {
+    public MenuOption(String text, float x, float y, boolean selected) {
         this.text = text;
         this.x = x;
         this.y = y;
@@ -26,10 +26,8 @@ public abstract class MenuOption {
     }
 
     public void render(SpriteBatch batch){
-        BitmapFont font = selected ? Assets.instance.fonts.fontL : Assets.instance.fonts.fontM;
-        font.setColor(0,0,0, 1f);
+        BitmapFont font = selected ? Assets.instance.fonts.menuSelected : Assets.instance.fonts.menuDefault;
         font.draw(batch, text, x, y);
-        font.setColor(1,1,1, 1f);
     }
 
     public abstract void execute();

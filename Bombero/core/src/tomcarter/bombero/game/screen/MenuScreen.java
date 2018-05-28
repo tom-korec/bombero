@@ -1,21 +1,24 @@
 package tomcarter.bombero.game.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import tomcarter.bombero.game.Bombero;
 import tomcarter.bombero.game.logic.level.LevelType;
 import tomcarter.bombero.utils.Assets;
+import tomcarter.bombero.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MenuScreen extends InputScreen{
-    private int width;
-    private int height;
+    private final int width;
+    private final int height;
+    private final float widthPercent;
+    private final float heightPercent;
     private OrthographicCamera camera;
     private SpriteBatch batch;
 
@@ -28,6 +31,9 @@ public class MenuScreen extends InputScreen{
     public MenuScreen() {
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
+
+        widthPercent = width / 100f;
+        heightPercent = height / 100f;
 
         camera = new OrthographicCamera(width, height);
         camera.position.set(0,0,0);
@@ -45,7 +51,7 @@ public class MenuScreen extends InputScreen{
     private void initMainMenuOptions(){
         menuOptions = new ArrayList<MenuOption>();
 
-        selected = new MenuOption("New game", 400, 650, true) {
+        selected = new MenuOption("New game", 14*widthPercent, 55*heightPercent, true) {
             @Override
             public void execute() {
                 GameScreen.instance.newGame();
@@ -55,7 +61,7 @@ public class MenuScreen extends InputScreen{
         menuOptions.add(selected);
 
         menuOptions.add(
-                new MenuOption("Select level", 400, 750, false) {
+                new MenuOption("Select level", 14*widthPercent, 65*heightPercent, false) {
                     @Override
                     public void execute() {
                         initSelectLevelOptions();
@@ -64,7 +70,7 @@ public class MenuScreen extends InputScreen{
         );
 
         menuOptions.add(
-                new MenuOption("Exit", 400, 850, false) {
+                new MenuOption("Exit", 14*widthPercent, 75*heightPercent, false) {
                     @Override
                     public void execute() {
                         Gdx.app.exit();
@@ -144,6 +150,7 @@ public class MenuScreen extends InputScreen{
         batch.begin();
         batch.draw(background, 0, 0, width, height, 0,0, background.getWidth(), background.getHeight(), false, true);
         batch.setProjectionMatrix(camera.combined);
+
         for (MenuOption option : menuOptions){
             option.render(batch);
         }
