@@ -10,6 +10,7 @@ import tomcarter.bombero.game.Bombero;
 import tomcarter.bombero.game.logic.level.LevelType;
 import tomcarter.bombero.utils.Assets;
 import tomcarter.bombero.utils.Constants;
+import tomcarter.bombero.utils.DataManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,6 @@ public class MenuScreen extends InputScreen{
 
     private List<MenuOption> menuOptions;
     private MenuOption selected;
-
 
     private Texture background;
 
@@ -82,7 +82,9 @@ public class MenuScreen extends InputScreen{
     private void initSelectLevelOptions(){
         menuOptions = new ArrayList<MenuOption>();
 
-        selected = new MenuOption("1", 400, 980, true) {
+        int levelsAvailable = 8;//DataManager.getNumberOfCompletedLevels();
+
+        selected = new MenuOption("1", widthPercent * 20, heightPercent * 82, true) {
             @Override
             public void execute() {
                 GameScreen.instance.newGame();
@@ -91,38 +93,23 @@ public class MenuScreen extends InputScreen{
         };
         menuOptions.add(selected);
 
-        menuOptions.add(
-                new MenuOption("2", 450, 980, false) {
+        for (int i = 2; i <= levelsAvailable; ++i){
+            float x = widthPercent * 17 + widthPercent * 3 * i;
+            float y = i % 2 == 0 ? heightPercent * 88 : heightPercent * 82;
+            final int levelNumber = i;
+            menuOptions.add(
+                new MenuOption("" + levelNumber, x, y, false) {
                     @Override
                     public void execute() {
-                        GameScreen.instance.selectLevel(LevelType.LEVEL2);
+                        GameScreen.instance.selectLevel(LevelType.valueOf(levelNumber));
                         Bombero.showGameScreen();
                     }
                 }
-        );
+            );
+        }
 
         menuOptions.add(
-                new MenuOption("3", 500, 980, false) {
-                    @Override
-                    public void execute() {
-                        GameScreen.instance.selectLevel(LevelType.LEVEL3);
-                        Bombero.showGameScreen();
-                    }
-                }
-        );
-
-        menuOptions.add(
-                new MenuOption("4", 550, 980, false) {
-                    @Override
-                    public void execute() {
-                        GameScreen.instance.selectLevel(LevelType.LEVEL4);
-                        Bombero.showGameScreen();
-                    }
-                }
-        );
-
-        menuOptions.add(
-                new MenuOption("Back", 1300, 980, false) {
+                new MenuOption("Back", 65*widthPercent, 85*heightPercent, false) {
                     @Override
                     public void execute() {
                         initMainMenuOptions();
@@ -158,7 +145,6 @@ public class MenuScreen extends InputScreen{
         batch.end();
     }
 
-
     @Override
     public boolean keyUp(int keycode) {
         switch (keycode){
@@ -182,11 +168,8 @@ public class MenuScreen extends InputScreen{
         return true;
     }
 
-
-
-
     @Override
     public void dispose() {
-
+        batch.dispose();
     }
 }

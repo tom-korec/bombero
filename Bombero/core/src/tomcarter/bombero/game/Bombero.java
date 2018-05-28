@@ -12,6 +12,7 @@ import tomcarter.bombero.game.logic.WorldRenderer;
 import tomcarter.bombero.game.screen.GameScreen;
 import tomcarter.bombero.game.screen.MenuScreen;
 import tomcarter.bombero.utils.Assets;
+import tomcarter.bombero.utils.DataManager;
 
 public class Bombero extends Game {
 	private static Bombero instance;
@@ -24,6 +25,7 @@ public class Bombero extends Game {
 	public void create () {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		Assets.instance.init(new AssetManager());
+		DataManager.init();
 		setScreen(new MenuScreen());
 	}
 

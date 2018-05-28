@@ -313,6 +313,7 @@ public class Player extends GameObject implements Explodable{
     }
 
     public void beginTransport(){
+        context.levelPassed();
         isTransporting = true;
         currentFrameTime = TRANSPORT_FRAME_TIME;
         transportTime = TRANSPORT_START_TIME;

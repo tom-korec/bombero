@@ -3,6 +3,9 @@ package tomcarter.bombero.game.logic.level;
 import tomcarter.bombero.game.entity.enemy.Enemy;
 import tomcarter.bombero.utils.Constants;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum LevelType {
     LEVEL1(Constants.PATH_LEVEL1, 1){
         @Override
@@ -109,6 +112,18 @@ public enum LevelType {
     private static final EnemyType[] ENEMIES_LVL4 = {
             EnemyType.POTATO, EnemyType.POTATO, EnemyType.POTATO, EnemyType.PIG, EnemyType.CLOUD
     };
+
+    private static Map<Integer, LevelType> map = new HashMap<Integer, LevelType>();
+
+    static {
+        for (LevelType levelType : LevelType.values()) {
+            map.put(levelType.number, levelType);
+        }
+    }
+
+    public static LevelType valueOf(int levelNumber) {
+        return map.get(levelNumber);
+    }
 
     private String path;
     private int number;

@@ -8,6 +8,7 @@ import tomcarter.bombero.game.logic.level.Level;
 import tomcarter.bombero.game.logic.level.LevelType;
 import tomcarter.bombero.game.screen.GameScreen;
 import tomcarter.bombero.utils.Constants;
+import tomcarter.bombero.utils.DataManager;
 import tomcarter.bombero.utils.LevelLoader;
 
 public class WorldController extends InputAdapter {
@@ -51,10 +52,11 @@ public class WorldController extends InputAdapter {
     }
 
     private void initLevel(LevelType levelType){
-        score = 0;
-        livesLeft = Constants.NEW_GAME_LIVES;
-        fireSize = Constants.NEW_GAME_FIRE_SIZE;
-        bombCount = Constants.NEW_GAME_BOMB_COUNT;
+        int levelNumber = levelType.getNumber();
+        score = DataManager.getLevelScore(levelNumber);
+        livesLeft = DataManager.getLevelLivesLeft(levelNumber);
+        fireSize = DataManager.getLevelFireSize(levelNumber);
+        bombCount = DataManager.getLevelBombCount(levelNumber);
         loadLevel(levelType);
     }
 
@@ -66,7 +68,9 @@ public class WorldController extends InputAdapter {
 
     public void nextLevel(){
         LevelType next = level.getLevelType().next();
+
         if (next != null){
+            DataManager.saveLevelData(next.getNumber(), score, livesLeft, fireSize, bombCount);
             loadLevel(next);
         }
         else{
@@ -114,7 +118,6 @@ public class WorldController extends InputAdapter {
     public void addBombPowerUp(){
         ++bombCount;
     }
-
 
     public boolean isPaused() {
         return paused;

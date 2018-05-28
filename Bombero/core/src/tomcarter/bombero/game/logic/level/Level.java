@@ -193,6 +193,14 @@ public class Level {
         map.set(x, y, null);
     }
 
+    public void levelPassed(){
+        int score = (int) (timeLeft * 10);
+        if (bricks.size() == 0){
+            score += 500;
+        }
+        context.addScore(score);
+    }
+
     public void nextLevel(){
         context.nextLevel();
     }
