@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Disposable;
 import tomcarter.bombero.game.entity.GameObject;
 import tomcarter.bombero.utils.Assets;
 import tomcarter.bombero.utils.Constants;
+import tomcarter.bombero.utils.DataManager;
 
 public class WorldRenderer implements Disposable {
 
@@ -107,7 +108,16 @@ public class WorldRenderer implements Disposable {
         int score = worldController.getScore();
 
         Assets.instance.fonts.fontL.draw(batch, "SC:", 50, 50);
-        Assets.instance.fonts.fontM.draw(batch, "" + getStandardizedNumber(score, 5), 160, 60);
+        Assets.instance.fonts.fontM.draw(batch, getStandardizedNumber(score, 5), 160, 60);
+    }
+
+    private void renderHighscore(SpriteBatch batch){
+        int score = DataManager.getHighscore();
+        if (score != -1){
+            batch.draw(Assets.instance.gui.score, 1100, 40, 32, 32, 64 ,64, 1, 1, 180);
+            Assets.instance.fonts.fontL.draw(batch, ":", 1164, 50);
+            Assets.instance.fonts.fontM.draw(batch, getStandardizedNumber(score, 5), 1195, 60);
+        }
     }
 
     private String getStandardizedNumber(int number, int dec){
@@ -124,11 +134,7 @@ public class WorldRenderer implements Disposable {
         return result;
     }
 
-    private void renderHighscore(SpriteBatch batch){
-        batch.draw(Assets.instance.gui.score, 1100, 40, 32, 32, 64 ,64, 1, 1, 180);
-        Assets.instance.fonts.fontL.draw(batch, ":", 1164, 50);
-        Assets.instance.fonts.fontM.draw(batch, "00000", 1195, 60);
-    }
+
 
     private void renderGameOver(SpriteBatch batch){
 //        batch.setColor(0, 0, 0, 1);

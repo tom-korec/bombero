@@ -1,6 +1,7 @@
 package tomcarter.bombero.utils;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Net;
 import com.badlogic.gdx.Preferences;
 
 
@@ -15,13 +16,17 @@ public class DataManager {
     private static DataManager instance;
 
     private Preferences data;
+    private int highscore;
+
 
     public static void init(){
         instance = new DataManager();
+        fetchHighscore();
     }
 
     private DataManager() {
         data = Gdx.app.getPreferences(PREFERENCES);
+        highscore = -1;
     }
 
     private static Preferences getStorage(){
@@ -30,6 +35,7 @@ public class DataManager {
 
     public static void reset(){
         getStorage().clear();
+        getStorage().flush();
     }
 
     public static void saveLevelData(int levelNumber, int score, int livesLeft, int fireSize, int bombCount){
@@ -78,6 +84,10 @@ public class DataManager {
         return getStorage().getInteger(scoreKey);
     }
 
+    public static int getHighscore(){
+        return instance.highscore;
+    }
+
     public static int getLevelLivesLeft(int levelNumber){
         String lifeKey = getKey(DATA_LEVEL_LIFE_LEFT, levelNumber);
         return getStorage().getInteger(lifeKey);
@@ -97,4 +107,46 @@ public class DataManager {
         return prefix + "." + number;
     }
 
+
+    public static void fetchHighscore(){
+        Net.HttpRequest request = new Net.HttpRequest(Net.HttpMethods.GET);
+        request.setUrl("https://quiet-coast-77581.herokuapp.com/highScore");
+        Gdx.net.sendHttpRequest(request, new Net.HttpResponseListener() {
+            @Override
+            public void handleHttpResponse(Net.HttpResponse httpResponse) {
+                instance.highscore = Integer.parseInt(httpResponse.getResultAsString());
+            }
+
+            @Override
+            public void failed(Throwable t) {
+                instance.highscore = -1;
+            }
+
+            @Override
+            public void cancelled() {
+
+            }
+        });
+    }
+
+    public static void postHighscore(final int highscore){
+        Net.HttpRequest request = new Net.HttpRequest(Net.HttpMethods.POST);
+        request.setUrl("https://quiet-coast-77581.herokuapp.com/highScore/" + highscore);
+        Gdx.net.sendHttpRequest(request, new Net.HttpResponseListener() {
+            @Override
+            public void handleHttpResponse(Net.HttpResponse httpResponse) {
+                instance.highscore = highscore;
+            }
+
+            @Override
+            public void failed(Throwable t) {
+
+            }
+
+            @Override
+            public void cancelled() {
+
+            }
+        });
+    }
 }

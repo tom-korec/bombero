@@ -160,7 +160,7 @@ public class Level {
         }
         int posX = player.getNormalizedPositionX();
         int posY = player.getNormalizedPositionY();
-        
+
         if (!map.isBomb(posX, posY)){
             Bomb bomb = new Bomb( posX, posY,this, size);
             bombs.add(bomb);

@@ -71,6 +71,10 @@ public class WorldController extends InputAdapter {
 
         if (next != null){
             DataManager.saveLevelData(next.getNumber(), score, livesLeft, fireSize, bombCount);
+            int currentHS = DataManager.getHighscore();
+            if (score > currentHS){
+                DataManager.postHighscore(score);
+            }
             loadLevel(next);
         }
         else{
