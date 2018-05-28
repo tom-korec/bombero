@@ -78,12 +78,21 @@ public class WorldController extends InputAdapter {
         }
     }
 
-    public void gameOver(){
+    public void loseLife(){
         if (--livesLeft < 0){
             app.getRenderer().setRenderGameOver(true);
             paused = true;
         }
         else{
+            LevelType levelType = level.getLevelType();
+            if (levelType.getNumber() == 1){
+                fireSize = Constants.NEW_GAME_FIRE_SIZE;
+                bombCount = Constants.NEW_GAME_BOMB_COUNT;
+            }
+            else{
+                fireSize = DataManager.getLevelFireSize(levelType.getNumber());
+                bombCount = DataManager.getLevelBombCount(levelType.getNumber());
+            }
             loadLevel(level.getLevelType());
         }
     }

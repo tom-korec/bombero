@@ -82,7 +82,7 @@ public class MenuScreen extends InputScreen{
     private void initSelectLevelOptions(){
         menuOptions = new ArrayList<MenuOption>();
 
-        int levelsAvailable = 8;//DataManager.getNumberOfCompletedLevels();
+        int levelsAvailable = DataManager.getNumberOfCompletedLevels();
 
         selected = new MenuOption("1", widthPercent * 20, heightPercent * 82, true) {
             @Override

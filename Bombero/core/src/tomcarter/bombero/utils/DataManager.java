@@ -28,6 +28,10 @@ public class DataManager {
         return instance.data;
     }
 
+    public static void reset(){
+        getStorage().clear();
+    }
+
     public static void saveLevelData(int levelNumber, int score, int livesLeft, int fireSize, int bombCount){
         Preferences storage = getStorage();
 

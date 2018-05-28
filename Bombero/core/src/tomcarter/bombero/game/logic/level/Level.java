@@ -72,7 +72,7 @@ public class Level {
         }
         if (player.isDestroyed()){
             player = null;
-            context.gameOver();
+            context.loseLife();
             return;
         }
 
@@ -86,7 +86,7 @@ public class Level {
     private void updateTime(float delta){
         timeLeft -= delta;
         if (timeLeft < 0){
-            context.gameOver();
+            context.loseLife();
         }
     }
 
@@ -160,9 +160,12 @@ public class Level {
         }
         int posX = player.getNormalizedPositionX();
         int posY = player.getNormalizedPositionY();
-        Bomb bomb = new Bomb( posX, posY,this, size);
-        bombs.add(bomb);
-        map.set(posX, posY, bomb);
+        
+        if (!map.isBomb(posX, posY)){
+            Bomb bomb = new Bomb( posX, posY,this, size);
+            bombs.add(bomb);
+            map.set(posX, posY, bomb);
+        }
     }
 
 

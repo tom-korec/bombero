@@ -40,7 +40,7 @@ public abstract class PowerUp extends Item {
     @Override
     public void render(SpriteBatch batch) {
         super.render(batch);
-        if (destroyed){
+        if (destroyed && destroyFrameIndex != DESTROY_FRAMES){
             region = destroyedRegions[destroyFrameIndex];
             super.render(batch);
             region = regions[0];
