@@ -210,7 +210,7 @@ public class Player extends GameObject implements Explodable{
         boolean down = map.overlapsField(this, x, y-1);
 
         if (map.isBrickOrWall(x-1, y)){
-            position.set((float) x, position.y);
+            position.set(x - 0.05f, position.y);
         }
 
         if (up){

@@ -9,11 +9,9 @@ public class Constants {
 
     public static final float LEVEL_TIME = 5 * 60;
 
-    public static final int STARTING_LIVES = 3;
-    public static final int STARTING_FIRE_INDEX = 0;
-    public static final int[] FIRE_SIZES = new int[]{1,3,5,6};
-
-    public static final int STARTING_BOMBS = 1;
+    public static final int NEW_GAME_LIVES = 3;
+    public static final int NEW_GAME_FIRE_SIZE = 1;
+    public static final int NEW_GAME_BOMB_COUNT = 1;
 
 
 
@@ -32,6 +30,7 @@ public class Constants {
 
 
     public static final String TEXTURE_ATLAS = "images/textures.atlas";
+    public static final String TEXTURE_BACKGROUND = "images/menu/background.png";
     public static final String FONT_DEFAULT = "fonts/arial-15.fnt";
     public static final String FONT_CENTURY_GOTHIC24 = "fonts/cgothic24.fnt";
     public static final String FONT_CENTURY_GOTHIC32 = "fonts/cgothic32.fnt";

@@ -3,15 +3,15 @@ package tomcarter.bombero.game.logic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
-import tomcarter.bombero.game.Bombero;
 import tomcarter.bombero.game.entity.Player;
 import tomcarter.bombero.game.logic.level.Level;
 import tomcarter.bombero.game.logic.level.LevelType;
+import tomcarter.bombero.game.screen.GameScreen;
 import tomcarter.bombero.utils.Constants;
 import tomcarter.bombero.utils.LevelLoader;
 
 public class WorldController extends InputAdapter {
-    private Bombero app;
+    private GameScreen app;
 
     private boolean paused;
 
@@ -21,24 +21,41 @@ public class WorldController extends InputAdapter {
     private int livesLeft;
     private int score;
     private int fireSize;
-    private int fireIndex;
     private int bombCount;
 
-    public WorldController(LevelType levelType, Bombero app) {
-        this.app = app;
-        levelLoader = new LevelLoader();
-        init();
-        loadLevel(levelType);
+
+
+    public WorldController(GameScreen app) {
+        init(app);
+        initNewGame();
     }
 
-    private void init(){
-        livesLeft = Constants.STARTING_LIVES;
-        score = 0;
-        fireIndex = Constants.STARTING_FIRE_INDEX;
-        fireSize = Constants.FIRE_SIZES[fireIndex];
-        bombCount = Constants.STARTING_BOMBS;
+    public WorldController(GameScreen app, LevelType levelType) {
+        init(app);
+        initLevel(levelType);
+    }
+
+    private void init(GameScreen app){
+        this.app = app;
+        levelLoader = new LevelLoader();
         paused = false;
         Gdx.input.setInputProcessor(this);
+    }
+
+    private void initNewGame(){
+        score = 0;
+        livesLeft = Constants.NEW_GAME_LIVES;
+        fireSize = Constants.NEW_GAME_FIRE_SIZE;
+        bombCount = Constants.NEW_GAME_BOMB_COUNT;
+        loadLevel(LevelType.LEVEL1);
+    }
+
+    private void initLevel(LevelType levelType){
+        score = 0;
+        livesLeft = Constants.NEW_GAME_LIVES;
+        fireSize = Constants.NEW_GAME_FIRE_SIZE;
+        bombCount = Constants.NEW_GAME_BOMB_COUNT;
+        loadLevel(levelType);
     }
 
     private void loadLevel(LevelType levelType){
@@ -91,8 +108,7 @@ public class WorldController extends InputAdapter {
     }
 
     public void addFirePowerUp(){
-        ++fireIndex;
-        fireSize = Constants.FIRE_SIZES[fireIndex];
+        ++fireSize;
     }
 
     public void addBombPowerUp(){

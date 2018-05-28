@@ -2,9 +2,7 @@ package tomcarter.bombero.game.logic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Disposable;
 import tomcarter.bombero.game.entity.GameObject;
 import tomcarter.bombero.utils.Assets;
@@ -95,7 +93,7 @@ public class WorldRenderer implements Disposable {
         int lives = worldController.getLivesLeft();
         int posX = 750;
 
-        for (int i = 1; i <= Constants.STARTING_LIVES; ++i){
+        for (int i = 1; i <= Constants.NEW_GAME_LIVES; ++i){
             if (i > lives){
                 batch.setColor(0.3f, 0.3f, 0.3f, 0.5f);
             }

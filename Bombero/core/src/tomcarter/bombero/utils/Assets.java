@@ -18,6 +18,7 @@ public class Assets implements AssetErrorListener, Disposable {
 
     private AssetManager assetManager;
 
+    public AssetMenu menu;
     public AssetFonts fonts;
     public AssetGui gui;
 
@@ -39,10 +40,12 @@ public class Assets implements AssetErrorListener, Disposable {
         this.assetManager = assetManager;
         assetManager.setErrorListener(this);
         assetManager.load(Constants.TEXTURE_ATLAS, TextureAtlas.class);
+        assetManager.load(Constants.TEXTURE_BACKGROUND, Texture.class);
         assetManager.finishLoading();
 
         TextureAtlas atlas = assetManager.get(Constants.TEXTURE_ATLAS);
 
+        menu = new AssetMenu();
         fonts = new AssetFonts();
         gui = new AssetGui(atlas);
         player = new AssetPlayer(atlas);
@@ -56,6 +59,14 @@ public class Assets implements AssetErrorListener, Disposable {
         explosion = new AssetExplosion(atlas);
     }
 
+
+    public class AssetMenu {
+        public final Texture background;
+
+        public AssetMenu() {
+            background = assetManager.get(Constants.TEXTURE_BACKGROUND);
+        }
+    }
 
     public class AssetFonts {
         public final BitmapFont defaultFont;
