@@ -31,7 +31,7 @@ public class LongestPath extends Movement {
             last = current;
         }
 
-        enemy.blockMovement(last);
+        enemy.blockMovement(last - 0.1f);
 
         return direction;
     }

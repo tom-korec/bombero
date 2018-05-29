@@ -36,7 +36,7 @@ public class PotatoEnemy extends Enemy implements Explodable{
     protected Direction chooseDirection(){
         int n = MathUtils.random(99);
 
-        if (n < 33){
+        if (n < 66){
             return randomPath.getDirection();
         }
         else {

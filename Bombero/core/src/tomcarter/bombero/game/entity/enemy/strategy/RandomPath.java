@@ -14,10 +14,10 @@ public class RandomPath extends Movement {
         Direction direction = getRandomDirection();
         int length = getPathLength(direction.getX(), direction.getY());
         while (length < 1){
-            System.out.println(length);
             direction = getRandomDirection();
             length = getPathLength(direction.getX(), direction.getY());
         }
+        enemy.blockMovement(length-0.01f);
         return direction;
     }
 }
