@@ -142,12 +142,19 @@ public class Assets implements AssetErrorListener, Disposable {
 
     public class AssetEnemy {
         public final TextureRegion potato[];
+        public final TextureRegion potatoExplosion[];
 
         public AssetEnemy(TextureAtlas atlas) {
             AtlasRegion region = atlas.findRegion("enemyPotato");
             TextureRegion[][] regions = region.split(region.getRegionWidth() / 5, region.getRegionHeight());
-            this.potato = new TextureRegion[5];
-            System.arraycopy(regions[0], 0, potato, 0, 5);
+            this.potato = new TextureRegion[3];
+            this.potatoExplosion = new TextureRegion[9];
+            System.arraycopy(regions[0], 0, potato, 0, 3);
+            System.arraycopy(regions[0], 3, potatoExplosion, 0, 2);
+
+            region = atlas.findRegion("enemyDeath");
+            regions = region.split(region.getRegionWidth() / 7, region.getRegionHeight());
+            System.arraycopy(regions[0], 0, potatoExplosion, 2, 7);
         }
     }
 
