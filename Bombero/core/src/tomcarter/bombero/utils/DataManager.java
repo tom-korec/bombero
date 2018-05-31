@@ -3,6 +3,7 @@ package tomcarter.bombero.utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.net.HttpRequestHeader;
 
 
 public class DataManager {
@@ -12,6 +13,8 @@ public class DataManager {
     private static final String DATA_LEVEL_LIFE_LEFT = "level.lifeLeft";
     private static final String DATA_LEVEL_FIRE_SIZE = "level.fireSize";
     private static final String DATA_LEVEL_BOMB_COUNT = "level.bombCount";
+    private static final String HIGH_SCORE_URL = "https://quiet-coast-77581.herokuapp.com/highScore/";
+    private static final String AUTHORIZATION = "Basic Ym9tYmVybzpib21iZXJvMTcxOA==";
 
     private static DataManager instance;
 
@@ -110,7 +113,8 @@ public class DataManager {
 
     public static void fetchHighscore(){
         Net.HttpRequest request = new Net.HttpRequest(Net.HttpMethods.GET);
-        request.setUrl("https://quiet-coast-77581.herokuapp.com/highScore");
+        request.setUrl(HIGH_SCORE_URL);
+        request.setHeader(HttpRequestHeader.Authorization, AUTHORIZATION);
         Gdx.net.sendHttpRequest(request, new Net.HttpResponseListener() {
             @Override
             public void handleHttpResponse(Net.HttpResponse httpResponse) {
@@ -131,7 +135,8 @@ public class DataManager {
 
     public static void postHighscore(final int highscore){
         Net.HttpRequest request = new Net.HttpRequest(Net.HttpMethods.POST);
-        request.setUrl("https://quiet-coast-77581.herokuapp.com/highScore/" + highscore);
+        request.setHeader(HttpRequestHeader.Authorization, AUTHORIZATION);
+        request.setUrl(HIGH_SCORE_URL + highscore);
         Gdx.net.sendHttpRequest(request, new Net.HttpResponseListener() {
             @Override
             public void handleHttpResponse(Net.HttpResponse httpResponse) {
