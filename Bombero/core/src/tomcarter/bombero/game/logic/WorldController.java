@@ -3,15 +3,18 @@ package tomcarter.bombero.game.logic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
+import tomcarter.bombero.game.Bombero;
 import tomcarter.bombero.game.entity.Player;
 import tomcarter.bombero.game.logic.level.Level;
 import tomcarter.bombero.game.logic.level.LevelType;
+import tomcarter.bombero.game.screen.CutSceneScreen;
 import tomcarter.bombero.game.screen.GameScreen;
+import tomcarter.bombero.game.screen.MenuScreen;
 import tomcarter.bombero.utils.Constants;
 import tomcarter.bombero.utils.DataManager;
 import tomcarter.bombero.utils.LevelLoader;
 
-public class WorldController extends InputAdapter {
+public class WorldController {
     private GameScreen app;
 
     private boolean paused;
@@ -40,7 +43,7 @@ public class WorldController extends InputAdapter {
         this.app = app;
         levelLoader = new LevelLoader();
         paused = false;
-        Gdx.input.setInputProcessor(this);
+
     }
 
     private void initNewGame(){
@@ -76,16 +79,16 @@ public class WorldController extends InputAdapter {
                 DataManager.postHighscore(score);
             }
             loadLevel(next);
+            Bombero.showScreen(new CutSceneScreen("Level " + next.getNumber(), 3, GameScreen.instance));
         }
         else{
-            // won - last level completed
+            Bombero.showScreen(new CutSceneScreen("YOU WON!", 10, new MenuScreen()));
         }
     }
 
     public void loseLife(){
         if (--livesLeft < 0){
-            app.getRenderer().setRenderGameOver(true);
-            paused = true;
+            Bombero.showScreen(new CutSceneScreen("GAME OVER!", 5, new MenuScreen()));
         }
         else{
             LevelType levelType = level.getLevelType();
@@ -98,6 +101,7 @@ public class WorldController extends InputAdapter {
                 bombCount = DataManager.getLevelBombCount(levelType.getNumber());
             }
             loadLevel(level.getLevelType());
+            Bombero.showScreen(new CutSceneScreen("Lives left: " + livesLeft, 3, GameScreen.instance));
         }
     }
 
@@ -136,7 +140,6 @@ public class WorldController extends InputAdapter {
         return paused;
     }
 
-    @Override
     public boolean keyUp(int keycode) {
         switch (keycode){
             case Keys.ESCAPE:

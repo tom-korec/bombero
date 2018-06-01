@@ -10,6 +10,7 @@ import tomcarter.bombero.game.logic.level.LevelType;
 import tomcarter.bombero.game.logic.WorldController;
 import tomcarter.bombero.game.logic.WorldRenderer;
 import tomcarter.bombero.game.screen.GameScreen;
+import tomcarter.bombero.game.screen.InputScreen;
 import tomcarter.bombero.game.screen.MenuScreen;
 import tomcarter.bombero.utils.Assets;
 import tomcarter.bombero.utils.DataManager;
@@ -29,8 +30,9 @@ public class Bombero extends Game {
 		setScreen(new MenuScreen());
 	}
 
-	public static void showGameScreen(){
-		instance.setScreen(GameScreen.instance);
+	public static void showScreen(InputScreen screen){
+		Gdx.input.setInputProcessor(screen);
+		instance.setScreen(screen);
 	}
 
 

@@ -2,24 +2,18 @@ package tomcarter.bombero.game.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import tomcarter.bombero.game.Bombero;
 import tomcarter.bombero.game.logic.level.LevelType;
 import tomcarter.bombero.utils.Assets;
-import tomcarter.bombero.utils.Constants;
 import tomcarter.bombero.utils.DataManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MenuScreen extends InputScreen{
-    private final int width;
-    private final int height;
-    private final float widthPercent;
-    private final float heightPercent;
     private OrthographicCamera camera;
     private SpriteBatch batch;
 
@@ -29,12 +23,7 @@ public class MenuScreen extends InputScreen{
     private Texture background;
 
     public MenuScreen() {
-        width = Gdx.graphics.getWidth();
-        height = Gdx.graphics.getHeight();
-
-        widthPercent = width / 100f;
-        heightPercent = height / 100f;
-
+        super();
         camera = new OrthographicCamera(width, height);
         camera.position.set(0,0,0);
         camera.setToOrtho(true);
@@ -55,7 +44,7 @@ public class MenuScreen extends InputScreen{
             @Override
             public void execute() {
                 GameScreen.instance.newGame();
-                Bombero.showGameScreen();
+                Bombero.showScreen(new CutSceneScreen("Level 1", 3, GameScreen.instance));
             }
         };
         menuOptions.add(selected);
@@ -88,7 +77,7 @@ public class MenuScreen extends InputScreen{
             @Override
             public void execute() {
                 GameScreen.instance.newGame();
-                Bombero.showGameScreen();
+                Bombero.showScreen(new CutSceneScreen("Level 1", 3000, GameScreen.instance));
             }
         };
         menuOptions.add(selected);
@@ -102,7 +91,7 @@ public class MenuScreen extends InputScreen{
                     @Override
                     public void execute() {
                         GameScreen.instance.selectLevel(LevelType.valueOf(levelNumber));
-                        Bombero.showGameScreen();
+                        Bombero.showScreen(new CutSceneScreen("Level " + levelNumber, 3, GameScreen.instance));
                     }
                 }
             );
@@ -135,9 +124,9 @@ public class MenuScreen extends InputScreen{
     @Override
     public void render(float delta) {
         batch.begin();
-        batch.draw(background, 0, 0, width, height, 0,0, background.getWidth(), background.getHeight(), false, true);
         batch.setProjectionMatrix(camera.combined);
 
+        batch.draw(background, 0, 0, width, height, 0,0, background.getWidth(), background.getHeight(), false, true);
         for (MenuOption option : menuOptions){
             option.render(batch);
         }

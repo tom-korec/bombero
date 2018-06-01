@@ -1,9 +1,23 @@
 package tomcarter.bombero.game.screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 
 public class InputScreen implements Screen, InputProcessor {
+    protected final int width;
+    protected final int height;
+    protected final float widthPercent;
+    protected final float heightPercent;
+
+    public InputScreen() {
+        width = Gdx.graphics.getWidth();
+        height = Gdx.graphics.getHeight();
+
+        widthPercent = width / 100f;
+        heightPercent = height / 100f;
+    }
+
     @Override
     public void show() {}
 
