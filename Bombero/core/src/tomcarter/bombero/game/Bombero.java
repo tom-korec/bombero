@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.GL20;
 import tomcarter.bombero.game.logic.level.LevelType;
 import tomcarter.bombero.game.logic.WorldController;
 import tomcarter.bombero.game.logic.WorldRenderer;
+import tomcarter.bombero.game.screen.CutSceneScreen;
 import tomcarter.bombero.game.screen.GameScreen;
 import tomcarter.bombero.game.screen.InputScreen;
 import tomcarter.bombero.game.screen.MenuScreen;

@@ -29,18 +29,17 @@ public class WorldController {
 
 
 
-    public WorldController(GameScreen app) {
-        init(app);
+    public WorldController() {
+        init();
         initNewGame();
     }
 
-    public WorldController(GameScreen app, LevelType levelType) {
-        init(app);
+    public WorldController(LevelType levelType) {
+        init();
         initLevel(levelType);
     }
 
-    private void init(GameScreen app){
-        this.app = app;
+    private void init(){
         levelLoader = new LevelLoader();
         paused = false;
 

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import tomcarter.bombero.game.Bombero;
 import tomcarter.bombero.game.logic.level.LevelType;
 import tomcarter.bombero.utils.Assets;
@@ -20,7 +21,7 @@ public class MenuScreen extends InputScreen{
     private List<MenuOption> menuOptions;
     private MenuOption selected;
 
-    private Texture background;
+    private TextureRegion background;
 
     public MenuScreen() {
         super();
@@ -126,7 +127,7 @@ public class MenuScreen extends InputScreen{
         batch.begin();
         batch.setProjectionMatrix(camera.combined);
 
-        batch.draw(background, 0, 0, width, height, 0,0, background.getWidth(), background.getHeight(), false, true);
+        batch.draw(background, 0, height, 0,0, width, height, 1,-1, 0);
         for (MenuOption option : menuOptions){
             option.render(batch);
         }

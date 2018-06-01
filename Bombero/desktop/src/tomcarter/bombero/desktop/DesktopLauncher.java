@@ -17,8 +17,8 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		if (rebuildAtlas) {
 			Settings settings = new Settings();
-			settings.maxWidth = 1024;
-			settings.maxHeight = 1024;
+			settings.maxWidth = 2048;
+			settings.maxHeight = 2048;
 			settings.debug = drawDebugOutline;
 			TexturePacker.process(settings, "../../desktop/assets-raw/images", "images", "textures");
 		}

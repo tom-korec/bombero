@@ -1,124 +1,138 @@
 
 textures.png
-size: 512,256
+size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+background
+  rotate: false
+  xy: 2, 382
+  size: 960, 640
+  orig: 960, 640
+  offset: 0, 0
+  index: -1
 bomb
   rotate: false
-  xy: 198, 61
+  xy: 2, 20
   size: 96, 32
   orig: 96, 32
   offset: 0, 0
   index: -1
 brick
   rotate: false
-  xy: 132, 189
+  xy: 2, 74
   size: 192, 32
   orig: 192, 32
   offset: 0, 0
   index: -1
 enemyCloud
   rotate: false
-  xy: 198, 23
+  xy: 2, 2
   size: 80, 16
   orig: 80, 16
   offset: 0, 0
   index: -1
 enemyDeath
   rotate: false
-  xy: 351, 233
+  xy: 2, 54
   size: 112, 18
   orig: 112, 18
   offset: 0, 0
   index: -1
 enemyPig
   rotate: false
-  xy: 198, 41
+  xy: 407, 118
   size: 80, 18
   orig: 80, 18
   offset: 0, 0
   index: -1
 enemyPotato
   rotate: false
-  xy: 351, 213
+  xy: 898, 268
   size: 80, 18
   orig: 80, 18
   offset: 0, 0
   index: -1
 explosion
   rotate: false
-  xy: 2, 27
+  xy: 702, 156
   size: 128, 224
   orig: 128, 224
   offset: 0, 0
   index: -1
 floor
   rotate: false
-  xy: 292, 155
+  xy: 964, 990
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 guiLife
   rotate: false
-  xy: 392, 188
+  xy: 196, 83
   size: 22, 23
   orig: 22, 23
   offset: 0, 0
   index: -1
 guiScore
   rotate: false
-  xy: 292, 98
+  xy: 832, 163
   size: 15, 21
   orig: 15, 21
   offset: 0, 0
   index: -1
 itemDestroy
   rotate: false
-  xy: 132, 223
+  xy: 2, 108
   size: 217, 28
   orig: 217, 28
   offset: 0, 0
   index: -1
 items
   rotate: false
-  xy: 132, 27
+  xy: 832, 220
   size: 64, 160
   orig: 64, 160
   offset: 0, 0
   index: -1
 player
   rotate: false
-  xy: 198, 95
+  xy: 898, 288
   size: 92, 92
   orig: 92, 92
   offset: 0, 0
   index: -1
 playerDeath
   rotate: false
-  xy: 2, 2
+  xy: 221, 113
   size: 184, 23
   orig: 184, 23
   offset: 0, 0
   index: -1
 suddenDeathShadow
   rotate: false
-  xy: 292, 121
+  xy: 898, 234
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 teleporter
   rotate: false
-  xy: 326, 179
+  xy: 832, 186
   size: 64, 32
   orig: 64, 32
   offset: 0, 0
   index: -1
+title
+  rotate: false
+  xy: 2, 138
+  size: 698, 242
+  orig: 698, 242
+  offset: 0, 0
+  index: -1
 wall
   rotate: false
-  xy: 326, 145
+  xy: 964, 956
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

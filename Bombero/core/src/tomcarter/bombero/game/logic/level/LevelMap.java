@@ -27,6 +27,14 @@ public class LevelMap {
         }
     }
 
+    public int getWidth(){
+        return staticMap.length;
+    }
+
+    public int getHeight(){
+        return staticMap[0].length;
+    }
+
     public boolean isBrickOrWall(int x, int y){
         return isBrick(x, y) || isWall(x, y);
     }

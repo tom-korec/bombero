@@ -13,6 +13,11 @@ public class WorldRenderer implements Disposable {
 
     private static final String TAG = WorldRenderer.class.getName();
 
+    private final int width;
+    private final int height;
+    private final float widthPercent;
+    private final float heightPercent;
+
     private OrthographicCamera camera;
     private OrthographicCamera cameraGUI;
     private SpriteBatch batch;
@@ -20,29 +25,41 @@ public class WorldRenderer implements Disposable {
 
     private boolean renderGameOver;
 
-    public WorldRenderer (WorldController worldController) {
+    public WorldRenderer (WorldController worldController, int width, int height) {
         this.worldController = worldController;
+        this.width = width;
+        this.height = height;
+        widthPercent = width / 100f;
+        heightPercent = height / 100f;
+
         init();
     }
 
     private void init () {
         batch = new SpriteBatch();
-        float ratio = Gdx.graphics.getWidth() / (float)Gdx.graphics.getHeight();
+
+        float ratio = calculateRatio();
+
         camera = new OrthographicCamera(Constants.VIEWPORT_HEIGHT * ratio, Constants.VIEWPORT_HEIGHT);
         camera.position.set(Constants.VIEWPORT_HEIGHT * ratio /2, Constants.VIEWPORT_HEIGHT / 2, 0);
         camera.update();
-        cameraGUI = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        cameraGUI = new OrthographicCamera(width, height);
         cameraGUI.position.set(0, 0, 0);
         cameraGUI.setToOrtho(true); // flip y-axis
         cameraGUI.update();
     }
 
-    public void resize(int width, int height){
-        System.out.println(""+ width + " " + height);
-        float ratio = width / (float)height;
+    private float calculateRatio(){
+        return width / (float) height;
+    }
 
-        camera = new OrthographicCamera(Constants.VIEWPORT_HEIGHT * ratio, Constants.VIEWPORT_HEIGHT);
-        camera.position.set(Constants.VIEWPORT_HEIGHT * ratio /2, Constants.VIEWPORT_HEIGHT / 2, 0);
+    public void centerMap(int arenaWidth){
+        float ratio = calculateRatio();
+        float totalWidth = Constants.VIEWPORT_HEIGHT * ratio;
+        float shift = (totalWidth - arenaWidth);
+
+        camera.position.set((totalWidth - shift) /2, camera.position.y, 0);
         camera.update();
     }
 
@@ -87,19 +104,20 @@ public class WorldRenderer implements Disposable {
         int minutes = time / 60;
         int seconds = time % 60;
 
-        Assets.instance.fonts.fontL.draw(batch, "" + minutes + " : " + getStandardizedNumber(seconds, 2), 450, 50);
+        Assets.instance.fonts.fontL.draw(batch, "" + minutes + " : " + getStandardizedNumber(seconds, 2),
+                35*widthPercent, 6*heightPercent);
     }
 
     private void renderLivesLeft(SpriteBatch batch){
         int lives = worldController.getLivesLeft();
-        int posX = 750;
+        float posX = 55*widthPercent;
 
         for (int i = 1; i <= Constants.NEW_GAME_LIVES; ++i){
             if (i > lives){
                 batch.setColor(0.3f, 0.3f, 0.3f, 0.5f);
             }
-            batch.draw(Assets.instance.gui.life, posX, 40, 32, 32, 64 ,64, 1, 1, 180);
-            posX += 70;
+            batch.draw(Assets.instance.gui.life, posX, 5*heightPercent, 32, 32, 64 ,64, 1, 1, 180);
+            posX += 4*widthPercent;
         }
         batch.setColor(1,1,1,1);
     }
@@ -107,16 +125,16 @@ public class WorldRenderer implements Disposable {
     private void renderScore(SpriteBatch batch){
         int score = worldController.getScore();
 
-        Assets.instance.fonts.fontL.draw(batch, "SC:", 50, 50);
-        Assets.instance.fonts.fontM.draw(batch, getStandardizedNumber(score, 5), 160, 60);
+        Assets.instance.fonts.fontL.draw(batch, "SC:", 10*widthPercent, 6*heightPercent);
+        Assets.instance.fonts.fontM.draw(batch, getStandardizedNumber(score, 5), 16*widthPercent, 7*heightPercent);
     }
 
     private void renderHighscore(SpriteBatch batch){
         int score = DataManager.getHighscore();
         if (score != -1){
-            batch.draw(Assets.instance.gui.score, 1100, 40, 32, 32, 64 ,64, 1, 1, 180);
-            Assets.instance.fonts.fontL.draw(batch, ":", 1164, 50);
-            Assets.instance.fonts.fontM.draw(batch, getStandardizedNumber(score, 5), 1195, 60);
+            batch.draw(Assets.instance.gui.score, 76*widthPercent, 5*heightPercent, 32, 32, 64 ,64, 1, 1, 180);
+            Assets.instance.fonts.fontL.draw(batch, ":", 80*widthPercent, 6*heightPercent);
+            Assets.instance.fonts.fontM.draw(batch, getStandardizedNumber(score, 5), 82*widthPercent, 7*heightPercent);
         }
     }
 

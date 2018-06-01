@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import tomcarter.bombero.game.Bombero;
 import tomcarter.bombero.utils.Assets;
 
@@ -18,6 +19,7 @@ public class CutSceneScreen extends InputScreen {
 
     private SpriteBatch batch;
     private OrthographicCamera camera;
+    private TextureRegion title;
 
     public CutSceneScreen(String text, float timeLeft, InputScreen next) {
         super();
@@ -32,6 +34,7 @@ public class CutSceneScreen extends InputScreen {
         camera.position.set(0, 0, 0);
         camera.setToOrtho(true);
         camera.update();
+        title = Assets.instance.menu.title;
 
         Gdx.input.setInputProcessor(this);
     }
@@ -47,8 +50,9 @@ public class CutSceneScreen extends InputScreen {
         batch.begin();
         batch.setProjectionMatrix(camera.combined);
 
-        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClearColor(0x11 / 256f, 0x11 / 256f, 0x11 / 256f, 0xFF / 256f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        batch.draw(title, 12.5f*widthPercent, 40*heightPercent, 0,0, 75*widthPercent, 40*heightPercent, 1,-1, 0);
         Assets.instance.fonts.menuSelected.draw(batch, text, (50-textShift)*widthPercent, 50*heightPercent);
         batch.end();
     }

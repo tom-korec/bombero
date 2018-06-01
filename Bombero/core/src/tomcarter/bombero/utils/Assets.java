@@ -45,7 +45,7 @@ public class Assets implements AssetErrorListener, Disposable {
 
         TextureAtlas atlas = assetManager.get(Constants.TEXTURE_ATLAS);
 
-        menu = new AssetMenu();
+        menu = new AssetMenu(atlas);
         fonts = new AssetFonts();
         gui = new AssetGui(atlas);
         player = new AssetPlayer(atlas);
@@ -61,10 +61,13 @@ public class Assets implements AssetErrorListener, Disposable {
 
 
     public class AssetMenu {
-        public final Texture background;
+        public final TextureRegion background;
+        public final TextureRegion title;
 
-        public AssetMenu() {
-            background = assetManager.get(Constants.TEXTURE_BACKGROUND);
+
+        public AssetMenu(TextureAtlas atlas) {
+            background = atlas.findRegion("background");
+            title = atlas.findRegion("title");
         }
     }
 
