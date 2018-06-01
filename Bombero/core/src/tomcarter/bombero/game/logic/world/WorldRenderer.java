@@ -23,8 +23,6 @@ public class WorldRenderer implements Disposable {
     private SpriteBatch batch;
     private WorldController worldController;
 
-    private boolean renderGameOver;
-
     public WorldRenderer (WorldController worldController, int width, int height) {
         this.worldController = worldController;
         this.width = width;
@@ -88,10 +86,7 @@ public class WorldRenderer implements Disposable {
         renderScore(batch);
         renderHighscore(batch);
 
-        if (renderGameOver){
-            renderGameOver(batch);
-        }
-        else if (worldController.isPaused()){
+        if (worldController.isPaused()){
             renderPaused(batch);
         }
 
@@ -154,17 +149,11 @@ public class WorldRenderer implements Disposable {
 
 
     private void renderGameOver(SpriteBatch batch){
-//        batch.setColor(0, 0, 0, 1);
         Assets.instance.fonts.fontL.draw(batch, "Game over", Gdx.graphics.getWidth() / 2 - 100, Gdx.graphics.getHeight() / 2);
     }
 
     private void renderPaused(SpriteBatch batch){
-//        batch.setColor(0, 0, 0, 1);
-        Assets.instance.fonts.fontL.draw(batch, "Paused", Gdx.graphics.getWidth() / 2 - 100, Gdx.graphics.getHeight() / 2);
-    }
-
-    public void setRenderGameOver(boolean renderGameOver) {
-        this.renderGameOver = renderGameOver;
+        Assets.instance.fonts.menuSelected.draw(batch, "Paused", 40*widthPercent, 50*heightPercent);
     }
 
     @Override

@@ -125,9 +125,6 @@ public class Explosion extends GameObject {
                 if (object instanceof Explodable){
                     ((Explodable) object).explode();
                 }
-//                if (context.isBrick(x + right * i, y + up * i)){
-//                    ((Brick) context.at(x + right * i, y + up * i)).explode();
-//                }
                 break;
             }
             ++size;

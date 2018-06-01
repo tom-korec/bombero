@@ -19,13 +19,11 @@ public class GameScreen extends InputScreen {
     public void newGame(){
         controller = new WorldController();
         renderer = new WorldRenderer(controller, width, height);
-        //renderer.centerMap(controller.getLevel().getMap().getWidth());
     }
 
     public void selectLevel(LevelType levelType){
         controller = new WorldController(levelType);
         renderer = new WorldRenderer(controller, width, height);
-
     }
 
     public WorldRenderer getRenderer() {

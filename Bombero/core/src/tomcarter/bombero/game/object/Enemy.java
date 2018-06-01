@@ -48,13 +48,6 @@ public abstract class Enemy extends GameObject implements Explodable{
         checkCollisionWithPlayer();
         checkCollisionWithBomb();
 
-        System.out.println("---------------------------");
-        System.out.println("X: " + position.x + ",Y: " + position.y);
-        System.out.println("InCenter: " + inCenter());
-        System.out.println("Choosing direction: " + (canChangeDirection() && canMove()));
-        System.out.println("Can move: " + canMove());
-
-
         if (inCenter()){
             if (canChangeDirection() && canMove()){
                 direction = chooseDirection();
