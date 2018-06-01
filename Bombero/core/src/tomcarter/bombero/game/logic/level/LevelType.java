@@ -55,7 +55,7 @@ public enum LevelType {
     LEVEL5(Constants.PATH_LEVEL5, 5){
         @Override
         public EnemyType[] getEnemies() {
-            return ENEMIES_LVL4;
+            return ENEMIES_LVL5;
         }
 
         @Override
@@ -66,7 +66,7 @@ public enum LevelType {
     LEVEL6(Constants.PATH_LEVEL6, 6){
         @Override
         public EnemyType[] getEnemies() {
-            return ENEMIES_LVL4;
+            return ENEMIES_LVL6;
         }
 
         @Override
@@ -77,7 +77,7 @@ public enum LevelType {
     LEVEL7(Constants.PATH_LEVEL7, 7){
         @Override
         public EnemyType[] getEnemies() {
-            return ENEMIES_LVL4;
+            return ENEMIES_LVL7;
         }
 
         @Override
@@ -88,7 +88,7 @@ public enum LevelType {
     LEVEL8(Constants.PATH_LEVEL8, 8){
         @Override
         public EnemyType[] getEnemies() {
-            return ENEMIES_LVL4;
+            return ENEMIES_LVL8;
         }
 
         @Override
@@ -102,16 +102,34 @@ public enum LevelType {
     };
 
     private static final EnemyType[] ENEMIES_LVL2 = {
-            EnemyType.POTATO, EnemyType.POTATO, EnemyType.POTATO, EnemyType.CLOUD
+            EnemyType.POTATO, EnemyType.POTATO, EnemyType.POTATO, EnemyType.POTATO, EnemyType.POTATO, EnemyType.CLOUD
     };
 
     private static final EnemyType[] ENEMIES_LVL3 = {
-            EnemyType.POTATO, EnemyType.POTATO, EnemyType.POTATO, EnemyType.POTATO, EnemyType.CLOUD
+            EnemyType.POTATO, EnemyType.POTATO, EnemyType.POTATO, EnemyType.CLOUD, EnemyType.CLOUD
     };
 
     private static final EnemyType[] ENEMIES_LVL4 = {
-            EnemyType.POTATO, EnemyType.POTATO, EnemyType.POTATO, EnemyType.PIG, EnemyType.CLOUD
+            EnemyType.CLOUD, EnemyType.CLOUD, EnemyType.CLOUD, EnemyType.CLOUD, EnemyType.CLOUD
     };
+
+    private static final EnemyType[] ENEMIES_LVL5 = {
+            EnemyType.POTATO, EnemyType.POTATO, EnemyType.CLOUD, EnemyType.CLOUD, EnemyType.PIG
+    };
+
+    private static final EnemyType[] ENEMIES_LVL6 = {
+            EnemyType.POTATO, EnemyType.PIG, EnemyType.CLOUD, EnemyType.CLOUD, EnemyType.PIG
+    };
+
+    private static final EnemyType[] ENEMIES_LVL7 = {
+            EnemyType.PIG, EnemyType.PIG, EnemyType.CLOUD, EnemyType.CLOUD, EnemyType.PIG
+    };
+
+    private static final EnemyType[] ENEMIES_LVL8 = {
+            EnemyType.PIG, EnemyType.PIG, EnemyType.PIG, EnemyType.PIG, EnemyType.PIG
+    };
+
+
 
     private static Map<Integer, LevelType> map = new HashMap<Integer, LevelType>();
 

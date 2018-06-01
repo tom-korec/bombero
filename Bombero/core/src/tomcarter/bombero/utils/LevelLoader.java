@@ -57,9 +57,9 @@ public class LevelLoader {
         init(levelType.getPath());
         level = new Level(width, height, levelType);
         loadEntities();
-        Gdx.app.debug(TAG, "level '" + levelType.getPath() + "' loaded");
         level.init(player, walls, bricks, floors);
         player.setMap(level.getMap());
+        Gdx.app.debug(TAG, "level '" + levelType.getPath() + "' loaded");
         return level;
     }
 

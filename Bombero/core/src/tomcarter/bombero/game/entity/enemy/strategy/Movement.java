@@ -18,8 +18,6 @@ public abstract class Movement {
         this.map = context.getMap();
     }
 
-    public abstract Direction getDirection();
-
     protected int getPathLength(int left, int up){
         int x = enemy.getNormalizedPositionX();
         int y = enemy.getNormalizedPositionY();

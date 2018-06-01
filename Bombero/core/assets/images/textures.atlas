@@ -18,6 +18,13 @@ brick
   orig: 192, 32
   offset: 0, 0
   index: -1
+enemyCloud
+  rotate: false
+  xy: 198, 23
+  size: 80, 16
+  orig: 80, 16
+  offset: 0, 0
+  index: -1
 enemyDeath
   rotate: false
   xy: 351, 233
@@ -25,9 +32,16 @@ enemyDeath
   orig: 112, 18
   offset: 0, 0
   index: -1
-enemyPotato
+enemyPig
   rotate: false
   xy: 198, 41
+  size: 80, 18
+  orig: 80, 18
+  offset: 0, 0
+  index: -1
+enemyPotato
+  rotate: false
+  xy: 351, 213
   size: 80, 18
   orig: 80, 18
   offset: 0, 0
@@ -48,14 +62,14 @@ floor
   index: -1
 guiLife
   rotate: false
-  xy: 292, 96
+  xy: 392, 188
   size: 22, 23
   orig: 22, 23
   offset: 0, 0
   index: -1
 guiScore
   rotate: false
-  xy: 326, 166
+  xy: 292, 98
   size: 15, 21
   orig: 15, 21
   offset: 0, 0
@@ -97,14 +111,14 @@ suddenDeathShadow
   index: -1
 teleporter
   rotate: false
-  xy: 198, 7
+  xy: 326, 179
   size: 64, 32
   orig: 64, 32
   offset: 0, 0
   index: -1
 wall
   rotate: false
-  xy: 326, 189
+  xy: 326, 145
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

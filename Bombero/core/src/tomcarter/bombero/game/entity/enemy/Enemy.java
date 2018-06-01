@@ -49,6 +49,13 @@ public abstract class Enemy extends GameObject implements Explodable{
         checkCollisionWithPlayer();
         checkCollisionWithBomb();
 
+//        System.out.println("---------------------------");
+//        System.out.println("X: " + position.x + ",Y: " + position.y);
+//        System.out.println("InCenter: " + inCenter());
+//        System.out.println("Choosing direction: " + (canChangeDirection() && canMove()));
+//        System.out.println("Can move: " + canMove());
+
+
         if (inCenter()){
             if (canChangeDirection() && canMove()){
                 direction = chooseDirection();
@@ -108,7 +115,7 @@ public abstract class Enemy extends GameObject implements Explodable{
         position.add(addX, addY);
     }
 
-    private boolean canMove(){
+    protected boolean canMove(){
         int x = getNormalizedPositionX();
         int y = getNormalizedPositionY();
 
@@ -122,7 +129,7 @@ public abstract class Enemy extends GameObject implements Explodable{
     private boolean inCenter(){
         float x = MathHelper.fractionalPart(getCenterX());
         float y = MathHelper.fractionalPart(getCenterY());
-        return x > 0.45f && x < 0.55f && y > 0.45f && y < 0.55f;
+        return x > 0.475f && x < 0.525f && y > 0.475f && y < 0.525f;
     }
 
     private void checkCollisionWithPlayer(){

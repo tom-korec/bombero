@@ -1,6 +1,8 @@
 package tomcarter.bombero.game.logic.level;
 
+import tomcarter.bombero.game.entity.enemy.CloudEnemy;
 import tomcarter.bombero.game.entity.enemy.Enemy;
+import tomcarter.bombero.game.entity.enemy.PigEnemy;
 import tomcarter.bombero.game.entity.enemy.PotatoEnemy;
 import tomcarter.bombero.game.logic.level.EnemyType;
 import tomcarter.bombero.game.logic.level.Level;
@@ -39,6 +41,12 @@ public class EnemyFactory {
     private Enemy placeEnemy(EnemyType type, int x, int y){
         Enemy enemy;
         switch (type){
+            case CLOUD:
+                enemy = new CloudEnemy(x, y, context);
+                break;
+            case PIG:
+                enemy = new PigEnemy(x, y, context);
+                break;
             case POTATO:
             default:
                 enemy = new PotatoEnemy(x, y, context);

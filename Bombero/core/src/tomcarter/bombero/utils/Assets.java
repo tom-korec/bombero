@@ -144,17 +144,39 @@ public class Assets implements AssetErrorListener, Disposable {
         public final TextureRegion potato[];
         public final TextureRegion potatoExplosion[];
 
+        public final TextureRegion cloud[];
+        public final TextureRegion cloudExplosion[];
+
+        public final TextureRegion pig[];
+        public final TextureRegion pigExplosion[];
+
         public AssetEnemy(TextureAtlas atlas) {
+            AtlasRegion regionDeath = atlas.findRegion("enemyDeath");
+            TextureRegion[][] regionsDeath = regionDeath.split(regionDeath.getRegionWidth() / 7, regionDeath.getRegionHeight());
+
             AtlasRegion region = atlas.findRegion("enemyPotato");
             TextureRegion[][] regions = region.split(region.getRegionWidth() / 5, region.getRegionHeight());
             this.potato = new TextureRegion[3];
             this.potatoExplosion = new TextureRegion[9];
             System.arraycopy(regions[0], 0, potato, 0, 3);
             System.arraycopy(regions[0], 3, potatoExplosion, 0, 2);
+            System.arraycopy(regionsDeath[0], 0, potatoExplosion, 2, 7);
 
-            region = atlas.findRegion("enemyDeath");
-            regions = region.split(region.getRegionWidth() / 7, region.getRegionHeight());
-            System.arraycopy(regions[0], 0, potatoExplosion, 2, 7);
+            region = atlas.findRegion("enemyCloud");
+            regions = region.split(region.getRegionWidth() / 5, region.getRegionHeight());
+            this.cloud = new TextureRegion[3];
+            this.cloudExplosion = new TextureRegion[9];
+            System.arraycopy(regions[0], 0, cloud, 0, 3);
+            System.arraycopy(regions[0], 3, cloudExplosion, 0, 2);
+            System.arraycopy(regionsDeath[0], 0, cloudExplosion, 2, 7);
+
+            region = atlas.findRegion("enemyPig");
+            regions = region.split(region.getRegionWidth() / 5, region.getRegionHeight());
+            this.pig = new TextureRegion[3];
+            this.pigExplosion = new TextureRegion[9];
+            System.arraycopy(regions[0], 0, pig, 0, 3);
+            System.arraycopy(regions[0], 3, pigExplosion, 0, 2);
+            System.arraycopy(regionsDeath[0], 0, pigExplosion, 2, 7);
         }
     }
 

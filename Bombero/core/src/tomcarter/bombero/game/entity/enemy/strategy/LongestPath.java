@@ -9,8 +9,7 @@ public class LongestPath extends Movement {
         super(enemy, context);
     }
 
-    @Override
-    public Direction getDirection() {
+    public Direction getLongestPathDirection() {
         Direction direction = Direction.LEFT;
         int last = getPathLength(-1, 0);
         int current = getPathLength(1,0);
