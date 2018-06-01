@@ -12,17 +12,18 @@ import tomcarter.bombero.utils.Assets;
 
 public class CutSceneScreen extends InputScreen {
     private String text;
+    private float textShift;
     private float timeLeft;
     private InputScreen next;
 
     private SpriteBatch batch;
     private OrthographicCamera camera;
-    private Texture background;
 
     public CutSceneScreen(String text, float timeLeft, InputScreen next) {
         super();
 
         this.text = text;
+        countShift();
         this.timeLeft = timeLeft;
         this.next = next;
 
@@ -31,7 +32,6 @@ public class CutSceneScreen extends InputScreen {
         camera.position.set(0, 0, 0);
         camera.setToOrtho(true);
         camera.update();
-        background = Assets.instance.menu.background;
 
         Gdx.input.setInputProcessor(this);
     }
@@ -39,9 +39,6 @@ public class CutSceneScreen extends InputScreen {
     @Override
     public void render(float delta) {
         timeLeft -= delta;
-
-
-
         if (timeLeft < 0){
             Bombero.showScreen(next);
             return;
@@ -52,9 +49,22 @@ public class CutSceneScreen extends InputScreen {
 
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        Assets.instance.fonts.menuSelected.draw(batch, text, 40*widthPercent, 50*heightPercent);
-
+        Assets.instance.fonts.menuSelected.draw(batch, text, (50-textShift)*widthPercent, 50*heightPercent);
         batch.end();
+    }
+
+
+    private void countShift(){
+        float shift = 0;
+        for(Character c : text.toCharArray()){
+            if (Character.isUpperCase(c)){
+                shift += 1.4;
+            }
+            else {
+                shift += 0.8f;
+            }
+        }
+        this.textShift = shift;
     }
 
     @Override
