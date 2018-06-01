@@ -5,11 +5,10 @@ import static com.badlogic.gdx.Input.Keys;
 
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import tomcarter.bombero.game.Bombero;
-import tomcarter.bombero.utils.Assets;
+import tomcarter.bombero.assets.Assets;
 
 public class CutSceneScreen extends InputScreen {
     private String text;

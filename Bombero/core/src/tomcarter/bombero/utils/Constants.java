@@ -21,10 +21,9 @@ public class Constants {
     public static final String PATH_LEVEL8 = "levels/level_8.png";
     public static final String LEVEL_DEFAULT = "levels/level_basic.png";
 
-
-    public static final String ICON = "../../core/assets/images/icon.png";
+    public static final String RAW_ASSETS = "assets-raw/images";
+    public static final String ICON = "images/icon.png";
     public static final String TEXTURE_ATLAS = "images/textures.atlas";
-    public static final String TEXTURE_BACKGROUND = "images/menu/background.png";
     public static final String FONT_DEFAULT = "fonts/arial-15.fnt";
     public static final String FONT_CENTURY_GOTHIC24 = "fonts/cgothic24.fnt";
     public static final String FONT_CENTURY_GOTHIC32 = "fonts/cgothic32.fnt";

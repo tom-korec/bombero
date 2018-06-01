@@ -2,7 +2,7 @@ package tomcarter.bombero.game.screen;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import tomcarter.bombero.utils.Assets;
+import tomcarter.bombero.assets.Assets;
 
 public abstract class MenuOption {
     private String text;

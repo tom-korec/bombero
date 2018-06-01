@@ -1,6 +1,5 @@
 package tomcarter.bombero.game.logic.level;
 
-import tomcarter.bombero.game.entity.enemy.Enemy;
 import tomcarter.bombero.utils.Constants;
 
 import java.util.HashMap;

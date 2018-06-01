@@ -2,14 +2,13 @@ package tomcarter.bombero.game.logic.level;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import tomcarter.bombero.game.entity.Bomb;
-import tomcarter.bombero.game.entity.Brick;
-import tomcarter.bombero.game.entity.GameObject;
-import tomcarter.bombero.game.entity.Wall;
-import tomcarter.bombero.game.entity.item.Item;
+import tomcarter.bombero.game.object.constant.Bomb;
+import tomcarter.bombero.game.object.constant.Brick;
+import tomcarter.bombero.game.object.GameObject;
+import tomcarter.bombero.game.object.constant.Wall;
+import tomcarter.bombero.game.object.Item;
 import tomcarter.bombero.utils.Int2D;
 
-import java.awt.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

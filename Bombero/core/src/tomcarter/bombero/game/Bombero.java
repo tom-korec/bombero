@@ -1,20 +1,13 @@
 package tomcarter.bombero.game;
 
 import com.badlogic.gdx.Application;
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.GL20;
-import tomcarter.bombero.game.logic.level.LevelType;
-import tomcarter.bombero.game.logic.WorldController;
-import tomcarter.bombero.game.logic.WorldRenderer;
-import tomcarter.bombero.game.screen.CutSceneScreen;
-import tomcarter.bombero.game.screen.GameScreen;
 import tomcarter.bombero.game.screen.InputScreen;
 import tomcarter.bombero.game.screen.MenuScreen;
-import tomcarter.bombero.utils.Assets;
-import tomcarter.bombero.utils.DataManager;
+import tomcarter.bombero.assets.Assets;
+import tomcarter.bombero.assets.DataManager;
 
 public class Bombero extends Game {
 	private static Bombero instance;

@@ -2,9 +2,8 @@ package tomcarter.bombero.game.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import tomcarter.bombero.game.Bombero;
-import tomcarter.bombero.game.logic.WorldController;
-import tomcarter.bombero.game.logic.WorldRenderer;
+import tomcarter.bombero.game.logic.world.WorldController;
+import tomcarter.bombero.game.logic.world.WorldRenderer;
 import tomcarter.bombero.game.logic.level.LevelType;
 
 public class GameScreen extends InputScreen {
@@ -20,12 +19,13 @@ public class GameScreen extends InputScreen {
     public void newGame(){
         controller = new WorldController();
         renderer = new WorldRenderer(controller, width, height);
-        renderer.centerMap(controller.getLevel().getMap().getWidth());
+        //renderer.centerMap(controller.getLevel().getMap().getWidth());
     }
 
     public void selectLevel(LevelType levelType){
         controller = new WorldController(levelType);
         renderer = new WorldRenderer(controller, width, height);
+
     }
 
     public WorldRenderer getRenderer() {

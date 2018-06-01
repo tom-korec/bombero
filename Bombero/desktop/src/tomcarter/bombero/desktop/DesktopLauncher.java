@@ -10,6 +10,8 @@ import com.badlogic.gdx.tools.texturepacker.TexturePacker.Settings;
 import tomcarter.bombero.game.Bombero;
 import tomcarter.bombero.utils.Constants;
 
+import java.awt.*;
+
 public class DesktopLauncher {
 	private static boolean rebuildAtlas = false;
 	private static boolean drawDebugOutline = false;
@@ -20,19 +22,18 @@ public class DesktopLauncher {
 			settings.maxWidth = 2048;
 			settings.maxHeight = 2048;
 			settings.debug = drawDebugOutline;
-			TexturePacker.process(settings, "../../desktop/assets-raw/images", "images", "textures");
+			TexturePacker.process(settings, Constants.RAW_ASSETS, "images", "textures");
 		}
+
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.fullscreen = true;
-		config.width = 1920;
-		config.height = 1080;
+		config.width = screenSize.width;
+		config.height = screenSize.height;
 		config.vSyncEnabled = true;
 		config.addIcon(Constants.ICON, Files.FileType.Internal);
+
 		new LwjglApplication(new Bombero(), config);
-//		config.fullscreen = true;
-//		config.width = Gdx.graphics.getWidth();
-//		config.height = Gdx.graphics.getHeight();
-//		config.vSyncEnabled = true;
 	}
 }

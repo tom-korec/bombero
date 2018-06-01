@@ -3,13 +3,12 @@ package tomcarter.bombero.game.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import tomcarter.bombero.game.Bombero;
 import tomcarter.bombero.game.logic.level.LevelType;
-import tomcarter.bombero.utils.Assets;
-import tomcarter.bombero.utils.DataManager;
+import tomcarter.bombero.assets.Assets;
+import tomcarter.bombero.assets.DataManager;
 
 import java.util.ArrayList;
 import java.util.List;

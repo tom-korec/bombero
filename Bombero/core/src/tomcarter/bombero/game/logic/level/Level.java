@@ -1,11 +1,17 @@
 package tomcarter.bombero.game.logic.level;
 
-import tomcarter.bombero.game.entity.*;
-import tomcarter.bombero.game.entity.enemy.Enemy;
-import tomcarter.bombero.game.entity.item.BombPowerUp;
-import tomcarter.bombero.game.entity.item.FirePowerUp;
-import tomcarter.bombero.game.entity.item.Item;
-import tomcarter.bombero.game.logic.WorldController;
+import tomcarter.bombero.game.object.*;
+import tomcarter.bombero.game.object.constant.Bomb;
+import tomcarter.bombero.game.object.constant.Brick;
+import tomcarter.bombero.game.object.constant.Floor;
+import tomcarter.bombero.game.object.constant.Wall;
+import tomcarter.bombero.game.object.dynamic.Explosion;
+import tomcarter.bombero.game.object.dynamic.Player;
+import tomcarter.bombero.game.object.Enemy;
+import tomcarter.bombero.game.object.constant.BombPowerUp;
+import tomcarter.bombero.game.object.constant.FirePowerUp;
+import tomcarter.bombero.game.object.Item;
+import tomcarter.bombero.game.logic.world.WorldController;
 import tomcarter.bombero.utils.Constants;
 
 
