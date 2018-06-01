@@ -26,16 +26,12 @@ public class LevelLoader {
         BOMB_POWERUP(0x0, 0x0, 0xFF);
         private int color;
 
-        private PixelType (int r, int g, int b) {
+        PixelType (int r, int g, int b) {
             color = r << 24 | g << 16 | b << 8 | 0xff;
         }
 
         public boolean sameColor (int color) {
             return this.color == color;
-        }
-
-        public int getColor () {
-            return color;
         }
     }
 

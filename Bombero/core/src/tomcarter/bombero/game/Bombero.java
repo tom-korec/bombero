@@ -21,7 +21,7 @@ public class Bombero extends Game {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		Assets.instance.init(new AssetManager());
 		DataManager.init();
-		setScreen(new MenuScreen());
+		setScreen(MenuScreen.initScreen());
 	}
 
 	public static void showScreen(InputScreen screen){

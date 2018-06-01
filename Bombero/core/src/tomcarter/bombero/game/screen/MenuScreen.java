@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MenuScreen extends InputScreen{
+    public static MenuScreen instance = new MenuScreen();
+
     private OrthographicCamera camera;
     private SpriteBatch batch;
 
@@ -29,43 +31,57 @@ public class MenuScreen extends InputScreen{
         camera.setToOrtho(true);
         camera.update();
         this.batch = new SpriteBatch();
-
         background = Assets.instance.menu.background;
 
-        initMainMenuOptions();
+    }
 
-        Gdx.input.setInputProcessor(this);
+    public static MenuScreen initScreen(){
+        instance.initMainMenuOptions();
+        Gdx.input.setInputProcessor(instance);
+        return instance;
     }
 
     private void initMainMenuOptions(){
+        final int levelsCompleted = DataManager.getNumberOfCompletedLevels();
         menuOptions = new ArrayList<MenuOption>();
 
-        selected = new MenuOption("New game", 14*widthPercent, 55*heightPercent, true) {
+        if (levelsCompleted >= 2){
+            MenuOption continueGame = new MenuOption("Continue", 14*widthPercent, 45*heightPercent, true) {
+                @Override
+                public void execute() {
+                    GameScreen.instance.selectLevel(LevelType.valueOf(levelsCompleted));
+                    Bombero.showScreen(new CutSceneScreen("Level " + levelsCompleted, 3, GameScreen.instance));
+                }
+            };
+            menuOptions.add(continueGame);
+        }
+
+        MenuOption newGame = new MenuOption("New game", 14*widthPercent, 55*heightPercent, levelsCompleted < 2) {
             @Override
             public void execute() {
                 GameScreen.instance.newGame();
                 Bombero.showScreen(new CutSceneScreen("Level 1", 3, GameScreen.instance));
             }
         };
-        menuOptions.add(selected);
 
-        menuOptions.add(
-                new MenuOption("Select level", 14*widthPercent, 65*heightPercent, false) {
-                    @Override
-                    public void execute() {
-                        initSelectLevelOptions();
-                    }
-                }
-        );
+        MenuOption selectLevel = new MenuOption("Select level", 14*widthPercent, 65*heightPercent, false) {
+            @Override
+            public void execute() {
+                initSelectLevelOptions();
+            }
+        };
 
-        menuOptions.add(
-                new MenuOption("Exit", 14*widthPercent, 75*heightPercent, false) {
-                    @Override
-                    public void execute() {
-                        Gdx.app.exit();
-                    }
-                }
-        );
+        MenuOption exit = new MenuOption("Exit", 14*widthPercent, 75*heightPercent, false) {
+            @Override
+            public void execute() {
+                Gdx.app.exit();
+            }
+        };
+
+        menuOptions.add(newGame);
+        menuOptions.add(selectLevel);
+        menuOptions.add(exit);
+        selected = menuOptions.get(0);
     }
 
     private void initSelectLevelOptions(){

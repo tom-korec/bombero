@@ -82,13 +82,13 @@ public class WorldController {
             Bombero.showScreen(new CutSceneScreen("Level " + next.getNumber(), 3, GameScreen.instance));
         }
         else{
-            Bombero.showScreen(new CutSceneScreen("YOU WON!", 10, new MenuScreen()));
+            Bombero.showScreen(new CutSceneScreen("YOU WON!", 10, MenuScreen.initScreen()));
         }
     }
 
     public void loseLife(){
         if (--livesLeft < 0){
-            Bombero.showScreen(new CutSceneScreen("GAME OVER!", 5, new MenuScreen()));
+            Bombero.showScreen(new CutSceneScreen("GAME OVER!", 5, MenuScreen.initScreen()));
         }
         else{
             LevelType levelType = level.getLevelType();
@@ -143,7 +143,7 @@ public class WorldController {
     public boolean keyUp(int keycode) {
         switch (keycode){
             case Keys.ESCAPE:
-                Gdx.app.exit();
+                Bombero.showScreen(MenuScreen.initScreen());
                 break;
             case Keys.P:
                 paused = !paused;

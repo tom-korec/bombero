@@ -26,10 +26,6 @@ public class GameScreen extends InputScreen {
         renderer = new WorldRenderer(controller, width, height);
     }
 
-    public WorldRenderer getRenderer() {
-        return renderer;
-    }
-
     @Override
     public void render (float delta) {
         controller.update(delta);
