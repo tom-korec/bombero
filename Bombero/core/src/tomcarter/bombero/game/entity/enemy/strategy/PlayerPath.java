@@ -15,8 +15,7 @@ public class PlayerPath extends Movement {
         Direction direction = getDirectionToPlayer();
         int block;
         if (isPossibleDirection(direction)){
-            block = getPathLength(direction.getX(), direction.getY());
-            return direction;
+            block = 1;
         }
         else {
             Direction[] possible = new Direction[3];
@@ -46,7 +45,7 @@ public class PlayerPath extends Movement {
 
         int xDif = enemyPos.x - playerPos.x;
         int yDif = enemyPos.y - playerPos.y;
-        boolean preferHorizontal = Math.abs(xDif) > Math.abs(yDif);
+        boolean preferHorizontal = MathUtils.randomBoolean();
 
         if (xDif == 0){
             return yDif < 0 ? Direction.UP : Direction.DOWN;

@@ -24,7 +24,7 @@ public class CloudEnemy extends Enemy {
 
         randomPath = new RandomPath(this, context);
         longestPath = new LongestPath(this, context);
-        direction = randomPath.getFullPathDirection(true);
+        direction = randomPath.getDirection(true);
         speed = DEFAULT_SPEED;
 
         currentFrameTime = FRAME_TIME;
@@ -42,10 +42,10 @@ public class CloudEnemy extends Enemy {
         int n = MathUtils.random(99);
 
         if (n < 70){
-            return randomPath.getFullPathDirection(false);
+            return randomPath.getDirection(false);
         }
         else if (n < 90){
-            return randomPath.getFullPathDirection(true);
+            return randomPath.getDirection(true);
         }
         else {
             return longestPath.getLongestPathDirection();

@@ -10,7 +10,7 @@ public class RandomPath extends Movement {
         super(enemy, context);
     }
 
-    public Direction getFullPathDirection(boolean randomLength) {
+    public Direction getDirection(boolean randomLength) {
         Direction direction = getRandomDirection();
         int length = getPathLength(direction.getX(), direction.getY());
         while (length < 1){

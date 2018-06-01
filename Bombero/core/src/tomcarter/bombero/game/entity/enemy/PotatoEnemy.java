@@ -38,10 +38,10 @@ public class PotatoEnemy extends Enemy implements Explodable{
         int n = MathUtils.random(99);
 
         if (n < 33){
-            return randomPath.getFullPathDirection(false);
+            return randomPath.getDirection(false);
         }
         else if (n < 66){
-            return randomPath.getFullPathDirection(true);
+            return randomPath.getDirection(true);
         }
         else {
             return longestPath.getLongestPathDirection();

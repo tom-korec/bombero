@@ -47,8 +47,19 @@ public class PigEnemy extends Enemy {
 
     @Override
     protected Direction chooseDirection() {
-        Direction direction = playerPath.getDirection();
-        return direction != null ? direction : randomPath.getFullPathDirection(true);
+        int n = MathUtils.random(99);
+
+        int straightProbability = context.getPlayer().getCenter().dst(getCenter()) <= 10 ? 90 : 50;
+
+        if (n < straightProbability){
+            return playerPath.getDirection();
+        }
+        else if (n < 85){
+            return randomPath.getDirection(false);
+        }
+        else {
+            return randomPath.getDirection(true);
+        }
     }
 
     @Override
