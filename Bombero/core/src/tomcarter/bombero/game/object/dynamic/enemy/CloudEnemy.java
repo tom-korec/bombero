@@ -13,7 +13,7 @@ public class CloudEnemy extends Enemy {
     private static final int FRAMES = 3;
     private static final float EXPLOSION_FRAME_TIME = 0.1f;
     private static final int EXPLOSION_FRAMES = 9;
-    private static final float DEFAULT_SPEED = 1f;
+    private static final float DEFAULT_SPEED = 2f;
 
     private RandomPath randomPath;
     private LongestPath longestPath;

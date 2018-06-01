@@ -11,6 +11,7 @@ public class Constants {
 
     public static final float BOMB_TIME_TO_EXPLODE = 4f;
 
+    public static final int LEVEL_COUNT = 8;
     public static final String PATH_LEVEL1 = "levels/level_1.png";
     public static final String PATH_LEVEL2 = "levels/level_2.png";
     public static final String PATH_LEVEL3 = "levels/level_3.png";
@@ -31,4 +32,5 @@ public class Constants {
     public static final String FONT_CENTURY_GOTHIC64 = "fonts/cgothic64.fnt";
     public static final String FONT_CENTURY_GOTHIC_MENU_SELECTED = "fonts/cgothicMenuSelected.fnt";
     public static final String FONT_CENTURY_GOTHIC_MENU_DEFAULT = "fonts/cgothicMenuDefault.fnt";
+    public static final String FONT_CENTURY_GOTHIC_MENU_UNSELECTABLE = "fonts/cgothicMenuUnselectable.fnt";
 }

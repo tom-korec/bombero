@@ -9,24 +9,39 @@ public abstract class MenuOption {
     private float x;
     private float y;
     private boolean selected;
+    private boolean selectable;
 
-    public MenuOption(String text, float x, float y, boolean selected) {
+    public MenuOption(String text, float x, float y, boolean selectable) {
         this.text = text;
         this.x = x;
         this.y = y;
-        this.selected = selected;
+        this.selectable = selectable;
+    }
+
+    public boolean isSelectable() {
+        return selectable;
     }
 
     public void select(){
-        selected = true;
+        if (selectable){
+            selected = true;
+        }
     }
 
     public void deselect(){
-        selected = false;
+        if (selectable){
+            selected = false;
+        }
     }
 
     public void render(SpriteBatch batch){
-        BitmapFont font = selected ? Assets.instance.fonts.menuSelected : Assets.instance.fonts.menuDefault;
+        BitmapFont font;
+        if (!selectable){
+            font = Assets.instance.fonts.menuUnselectable;
+        }
+        else {
+            font = selected ? Assets.instance.fonts.menuSelected : Assets.instance.fonts.menuDefault;
+        }
         font.draw(batch, text, x, y);
     }
 

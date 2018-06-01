@@ -9,6 +9,7 @@ import tomcarter.bombero.game.Bombero;
 import tomcarter.bombero.game.logic.level.LevelType;
 import tomcarter.bombero.assets.Assets;
 import tomcarter.bombero.assets.DataManager;
+import tomcarter.bombero.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,66 +45,63 @@ public class MenuScreen extends InputScreen{
     private void initMainMenuOptions(){
         final int levelsCompleted = DataManager.getNumberOfCompletedLevels();
         menuOptions = new ArrayList<MenuOption>();
+        boolean advancedMenu = levelsCompleted >= 2;
+        MenuOption continueGame = new MenuOption("Continue", 14*widthPercent, 45*heightPercent, advancedMenu) {
+            @Override
+            public void execute() {
+                GameScreen.instance.selectLevel(LevelType.valueOf(levelsCompleted));
+                Bombero.showScreen(new CutSceneScreen("Level " + levelsCompleted, 3, GameScreen.instance));
+            }
+        };
+        menuOptions.add(continueGame);
 
-        if (levelsCompleted >= 2){
-            MenuOption continueGame = new MenuOption("Continue", 14*widthPercent, 45*heightPercent, true) {
-                @Override
-                public void execute() {
-                    GameScreen.instance.selectLevel(LevelType.valueOf(levelsCompleted));
-                    Bombero.showScreen(new CutSceneScreen("Level " + levelsCompleted, 3, GameScreen.instance));
-                }
-            };
-            menuOptions.add(continueGame);
-        }
-
-        MenuOption newGame = new MenuOption("New game", 14*widthPercent, 55*heightPercent, levelsCompleted < 2) {
+        MenuOption newGame = new MenuOption("New game", 14*widthPercent, 55*heightPercent, true) {
             @Override
             public void execute() {
                 GameScreen.instance.newGame();
                 Bombero.showScreen(new CutSceneScreen("Level 1", 3, GameScreen.instance));
             }
         };
+        menuOptions.add(newGame);
 
-        MenuOption selectLevel = new MenuOption("Select level", 14*widthPercent, 65*heightPercent, false) {
+        MenuOption selectLevel = new MenuOption("Select level", 14*widthPercent, 65*heightPercent, advancedMenu) {
             @Override
             public void execute() {
                 initSelectLevelOptions();
             }
         };
+        menuOptions.add(selectLevel);
 
-        MenuOption exit = new MenuOption("Exit", 14*widthPercent, 75*heightPercent, false) {
+        MenuOption reset = new MenuOption("Reset", 14 * widthPercent, 75*heightPercent, advancedMenu) {
+            @Override
+            public void execute() {
+                DataManager.reset();
+                initMainMenuOptions();
+            }
+        };
+        menuOptions.add(reset);
+
+
+        MenuOption exit = new MenuOption("Exit", 14*widthPercent, 85*heightPercent, true) {
             @Override
             public void execute() {
                 Gdx.app.exit();
             }
         };
-
-        menuOptions.add(newGame);
-        menuOptions.add(selectLevel);
         menuOptions.add(exit);
-        selected = menuOptions.get(0);
+        chooseSelected();
     }
 
     private void initSelectLevelOptions(){
         menuOptions = new ArrayList<MenuOption>();
 
         int levelsAvailable = DataManager.getNumberOfCompletedLevels();
-
-        selected = new MenuOption("1", widthPercent * 20, heightPercent * 82, true) {
-            @Override
-            public void execute() {
-                GameScreen.instance.newGame();
-                Bombero.showScreen(new CutSceneScreen("Level 1", 3000, GameScreen.instance));
-            }
-        };
-        menuOptions.add(selected);
-
-        for (int i = 2; i <= levelsAvailable; ++i){
+        for (int i = 1; i <= Constants.LEVEL_COUNT; ++i){
             float x = widthPercent * 17 + widthPercent * 3 * i;
             float y = i % 2 == 0 ? heightPercent * 88 : heightPercent * 82;
             final int levelNumber = i;
             menuOptions.add(
-                new MenuOption("" + levelNumber, x, y, false) {
+                new MenuOption("" + levelNumber, x, y, i <= levelsAvailable) {
                     @Override
                     public void execute() {
                         GameScreen.instance.selectLevel(LevelType.valueOf(levelNumber));
@@ -114,26 +112,45 @@ public class MenuScreen extends InputScreen{
         }
 
         menuOptions.add(
-                new MenuOption("Back", 65*widthPercent, 85*heightPercent, false) {
+                new MenuOption("Back", 65*widthPercent, 85*heightPercent, true) {
                     @Override
                     public void execute() {
                         initMainMenuOptions();
                     }
                 }
         );
+        chooseSelected();
     }
 
     private void selectNext(){
         int i = (menuOptions.indexOf(selected) + 1) % menuOptions.size();
         selected.deselect();
         selected = menuOptions.get(i);
-        selected.select();
+        if (selected.isSelectable()){
+            selected.select();
+        }
+        else {
+            selectNext();
+        }
     }
 
     private void selectPrevious(){
         int i = menuOptions.indexOf(selected) - 1;
         selected.deselect();
         selected = menuOptions.get((i >= 0 ? i : menuOptions.size() - 1));
+        if (selected.isSelectable()){
+            selected.select();
+        }
+        else {
+            selectPrevious();
+        }
+    }
+
+    private void chooseSelected(){
+        int i = 0;
+        do {
+            selected = menuOptions.get(i++);
+        } while (!selected.isSelectable());
         selected.select();
     }
 

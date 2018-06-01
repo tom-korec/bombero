@@ -8,6 +8,7 @@ import tomcarter.bombero.game.object.dynamic.Player;
 import tomcarter.bombero.game.object.movement.Direction;
 import tomcarter.bombero.game.logic.level.Level;
 import tomcarter.bombero.game.logic.level.LevelMap;
+import tomcarter.bombero.utils.Int2D;
 import tomcarter.bombero.utils.MathHelper;
 
 public abstract class Enemy extends GameObject implements Explodable{
@@ -132,6 +133,8 @@ public abstract class Enemy extends GameObject implements Explodable{
     }
 
     private void checkCollisionWithBomb(){
+        handleWallCollision();
+
         int nextX = getNormalizedPositionX() + direction.getX();
         int nextY = getNormalizedPositionY() + direction.getY();
 
@@ -145,6 +148,14 @@ public abstract class Enemy extends GameObject implements Explodable{
             else{
                 blockedMovement = -1f;
             }
+        }
+    }
+
+    private void handleWallCollision(){
+        Int2D pos = getNormalizedPosition();
+        if (!canGo(pos.x, pos.y)){
+            direction = direction.opposite();
+            position.set(pos.x + direction.getX(), pos.y + direction.getY());
         }
     }
 

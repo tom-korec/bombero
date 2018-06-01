@@ -10,9 +10,6 @@ import tomcarter.bombero.utils.Constants;
 import tomcarter.bombero.assets.DataManager;
 
 public class WorldRenderer implements Disposable {
-
-    private static final String TAG = WorldRenderer.class.getName();
-
     private final int width;
     private final int height;
     private final float widthPercent;
@@ -146,14 +143,8 @@ public class WorldRenderer implements Disposable {
         return result;
     }
 
-
-
-    private void renderGameOver(SpriteBatch batch){
-        Assets.instance.fonts.fontL.draw(batch, "Game over", Gdx.graphics.getWidth() / 2 - 100, Gdx.graphics.getHeight() / 2);
-    }
-
     private void renderPaused(SpriteBatch batch){
-        Assets.instance.fonts.menuSelected.draw(batch, "Paused", 40*widthPercent, 50*heightPercent);
+        Assets.instance.fonts.menuSelected.draw(batch, "P A U S E D", 40*widthPercent, 50*heightPercent);
     }
 
     @Override

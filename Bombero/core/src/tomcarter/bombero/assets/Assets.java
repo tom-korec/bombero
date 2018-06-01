@@ -14,30 +14,37 @@ import tomcarter.bombero.utils.Constants;
 
 public class Assets implements AssetErrorListener, Disposable {
     public static final String TAG = Assets.class.getName();
-
-    public static Assets instance = new Assets();
+    public static Assets instance;
 
     private AssetManager assetManager;
 
-    public AssetMenu menu;
-    public AssetFonts fonts;
-    public AssetGui gui;
+    public final AssetMenu menu;
+    public final AssetFonts fonts;
+    public final AssetGui gui;
 
-    public AssetPlayer player;
-    public AssetEnemy enemies;
+    public final AssetPlayer player;
+    public final AssetEnemy enemies;
 
-    public AssetWall wall;
-    public AssetFloor floor;
-    public AssetBrick brick;
+    public final AssetWall wall;
+    public final AssetFloor floor;
+    public final AssetBrick brick;
 
-    public AssetGate gate;
-    public AssetPowerUp powerUp;
+    public final AssetGate gate;
+    public final AssetPowerUp powerUp;
 
-    public AssetBomb bomb;
-    public AssetExplosion explosion;
+    public final AssetBomb bomb;
+    public final AssetExplosion explosion;
 
+    public static void init(AssetManager assetManager){
+        if (assetManager != null){
+            instance = new Assets(assetManager);
+        }
+        else {
+            instance = new Assets();
+        }
+    }
 
-    public void init(AssetManager assetManager){
+    public Assets(AssetManager assetManager){
         this.assetManager = assetManager;
         assetManager.setErrorListener(this);
         assetManager.load(Constants.TEXTURE_ATLAS, TextureAtlas.class);
@@ -65,7 +72,7 @@ public class Assets implements AssetErrorListener, Disposable {
         public final TextureRegion title;
 
 
-        public AssetMenu(TextureAtlas atlas) {
+        AssetMenu(TextureAtlas atlas) {
             background = atlas.findRegion("background");
             title = atlas.findRegion("title");
         }
@@ -79,8 +86,9 @@ public class Assets implements AssetErrorListener, Disposable {
         public final BitmapFont fontL;
         public final BitmapFont menuSelected;
         public final BitmapFont menuDefault;
+        public final BitmapFont menuUnselectable;
 
-        public AssetFonts () {
+        AssetFonts () {
             defaultFont = new BitmapFont(Gdx.files.internal(Constants.FONT_DEFAULT), true);
             defaultFont.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
@@ -101,6 +109,20 @@ public class Assets implements AssetErrorListener, Disposable {
 
             menuDefault = new BitmapFont(Gdx.files.internal(Constants.FONT_CENTURY_GOTHIC_MENU_DEFAULT), true);
             menuDefault.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
+            menuUnselectable = new BitmapFont(Gdx.files.internal(Constants.FONT_CENTURY_GOTHIC_MENU_UNSELECTABLE), true);
+            menuUnselectable.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        }
+
+        void dispose(){
+            defaultFont.dispose();
+            fontXS.dispose();
+            fontS.dispose();
+            fontM.dispose();
+            fontL.dispose();
+            menuSelected.dispose();
+            menuDefault.dispose();
+            menuUnselectable.dispose();
         }
     }
 
@@ -108,7 +130,7 @@ public class Assets implements AssetErrorListener, Disposable {
         public final TextureRegion life;
         public final TextureRegion score;
 
-        public AssetGui(TextureAtlas atlas) {
+        AssetGui(TextureAtlas atlas) {
             this.life = atlas.findRegion("guiLife");
             this.score = atlas.findRegion("guiScore");
         }
@@ -122,7 +144,15 @@ public class Assets implements AssetErrorListener, Disposable {
         public final TextureRegion[] up;
         public final TextureRegion[] death;
 
-        public AssetPlayer(TextureAtlas atlas){
+        AssetPlayer(){
+            down = getEmptyTextureRegionArray(4);
+            left = getEmptyTextureRegionArray(4);
+            right = getEmptyTextureRegionArray(4);
+            up = getEmptyTextureRegionArray(4);
+            death = getEmptyTextureRegionArray(4);
+        }
+
+        AssetPlayer(TextureAtlas atlas){
             AtlasRegion region = atlas.findRegion("player");
             TextureRegion[][] regions = region.split(region.getRegionWidth() / 4, region.getRegionHeight() / 4);
 
@@ -153,7 +183,16 @@ public class Assets implements AssetErrorListener, Disposable {
         public final TextureRegion pig[];
         public final TextureRegion pigExplosion[];
 
-        public AssetEnemy(TextureAtlas atlas) {
+        AssetEnemy(){
+            potato = getEmptyTextureRegionArray(4);
+            potatoExplosion = getEmptyTextureRegionArray(4);
+            cloud = getEmptyTextureRegionArray(4);
+            cloudExplosion = getEmptyTextureRegionArray(4);
+            pig = getEmptyTextureRegionArray(4);
+            pigExplosion = getEmptyTextureRegionArray(4);
+        }
+
+        AssetEnemy(TextureAtlas atlas) {
             AtlasRegion regionDeath = atlas.findRegion("enemyDeath");
             TextureRegion[][] regionsDeath = regionDeath.split(regionDeath.getRegionWidth() / 7, regionDeath.getRegionHeight());
 
@@ -186,7 +225,11 @@ public class Assets implements AssetErrorListener, Disposable {
     public class AssetWall {
         public final TextureRegion texture;
 
-        public AssetWall(TextureAtlas atlas) {
+        AssetWall(){
+            texture = new TextureRegion();
+        }
+
+        AssetWall(TextureAtlas atlas) {
             this.texture = atlas.findRegion("wall");
         }
     }
@@ -194,7 +237,11 @@ public class Assets implements AssetErrorListener, Disposable {
     public class AssetFloor {
         public final TextureRegion texture;
 
-        public AssetFloor(TextureAtlas atlas) {
+        AssetFloor(){
+            texture = new TextureRegion();
+        }
+
+        AssetFloor(TextureAtlas atlas) {
             this.texture = atlas.findRegion("floor");
         }
     }
@@ -203,7 +250,12 @@ public class Assets implements AssetErrorListener, Disposable {
         public final TextureRegion texture;
         public final TextureRegion[] breaking;
 
-        public AssetBrick(TextureAtlas atlas) {
+        AssetBrick(){
+            texture = new TextureRegion();
+            breaking = getEmptyTextureRegionArray(5);
+        }
+
+        AssetBrick(TextureAtlas atlas) {
             AtlasRegion region = atlas.findRegion("brick");
             TextureRegion[][] regions = region.split(region.getRegionWidth() / 6, region.getRegionHeight());
             this.breaking = new TextureRegion[5];
@@ -215,7 +267,11 @@ public class Assets implements AssetErrorListener, Disposable {
     public class AssetGate {
         public final TextureRegion[] textures;
 
-        public AssetGate(TextureAtlas atlas) {
+        AssetGate(){
+            textures = getEmptyTextureRegionArray(2);
+        }
+
+        AssetGate(TextureAtlas atlas) {
             AtlasRegion region = atlas.findRegion("teleporter");
             TextureRegion[][] regions = region.split(region.getRegionWidth() / 2, region.getRegionHeight());
             this.textures = new TextureRegion[2];
@@ -228,7 +284,13 @@ public class Assets implements AssetErrorListener, Disposable {
         public final TextureRegion[] bomb;
         public final TextureRegion[] itemDestroy;
 
-        public AssetPowerUp(TextureAtlas atlas) {
+        AssetPowerUp(){
+            fire = getEmptyTextureRegionArray(2);
+            bomb = getEmptyTextureRegionArray(2);
+            itemDestroy = getEmptyTextureRegionArray(7);
+        }
+
+        AssetPowerUp(TextureAtlas atlas) {
             AtlasRegion region = atlas.findRegion("items");
             TextureRegion[][] regions = region.split(region.getRegionWidth() / 2, region.getRegionHeight() / 5);
             this.fire = new TextureRegion[2];
@@ -246,7 +308,11 @@ public class Assets implements AssetErrorListener, Disposable {
     public class AssetBomb {
         public final TextureRegion[] textures;
 
-        public AssetBomb(TextureAtlas atlas) {
+        AssetBomb(){
+            textures = getEmptyTextureRegionArray(3);
+        }
+
+        AssetBomb(TextureAtlas atlas) {
             AtlasRegion region = atlas.findRegion("bomb");
             TextureRegion[][] regions = region.split(region.getRegionWidth() / 3, region.getRegionHeight());
             this.textures = new TextureRegion[3];
@@ -263,8 +329,18 @@ public class Assets implements AssetErrorListener, Disposable {
         public final TextureRegion[] horizontal;
         public final TextureRegion[] vertical;
 
+        AssetExplosion(){
+            downEnd = getEmptyTextureRegionArray(4);
+            leftEnd = getEmptyTextureRegionArray(4);
+            rightEnd = getEmptyTextureRegionArray(4);
+            upEnd = getEmptyTextureRegionArray(4);
+            center = getEmptyTextureRegionArray(4);
+            horizontal = getEmptyTextureRegionArray(4);
+            vertical = getEmptyTextureRegionArray(4);
+        }
 
-        public AssetExplosion(TextureAtlas atlas) {
+
+        AssetExplosion(TextureAtlas atlas) {
             AtlasRegion region = atlas.findRegion("explosion");
             TextureRegion[][] regions = region.split(region.getRegionWidth() / 4, region.getRegionHeight() / 7);
             downEnd = new TextureRegion[4];
@@ -289,11 +365,34 @@ public class Assets implements AssetErrorListener, Disposable {
     @Override
     public void dispose () {
         assetManager.dispose();
-        fonts.defaultFont.dispose();
+        fonts.dispose();
     }
 
     @Override
     public void error(AssetDescriptor asset, Throwable throwable) {
         Gdx.app.error(TAG, "Couldn't load asset '" + asset.fileName + "'", (Exception)throwable);
+    }
+
+    public Assets(){
+        menu = null;
+        fonts = null;
+        gui = null;
+        player = new AssetPlayer();
+        enemies = new AssetEnemy();
+        wall = new AssetWall();
+        floor = new AssetFloor();
+        brick = new AssetBrick();
+        gate = new AssetGate();
+        powerUp = new AssetPowerUp();
+        bomb = new AssetBomb();
+        explosion = new AssetExplosion();
+    }
+
+    private TextureRegion[] getEmptyTextureRegionArray(int size){
+        TextureRegion mock[] = new TextureRegion[size];
+        for (int i = 0; i < size; ++i){
+            mock[i] = new TextureRegion();
+        }
+        return mock;
     }
 }
