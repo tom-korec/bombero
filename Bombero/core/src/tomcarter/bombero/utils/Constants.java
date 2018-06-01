@@ -1,11 +1,7 @@
 package tomcarter.bombero.utils;
 
 public class Constants {
-    public static final float VIEWPORT_WIDTH = 15;
     public static final float VIEWPORT_HEIGHT = 17;
-
-    public static final float VIEWPORT_GUI_WIDTH = 800;
-    public static final float VIEWPORT_GUI_HEIGHT = 600;
 
     public static final float LEVEL_TIME = 5 * 60;
 
@@ -26,6 +22,7 @@ public class Constants {
     public static final String LEVEL_DEFAULT = "levels/level_basic.png";
 
 
+    public static final String ICON = "../../core/assets/images/icon.png";
     public static final String TEXTURE_ATLAS = "images/textures.atlas";
     public static final String TEXTURE_BACKGROUND = "images/menu/background.png";
     public static final String FONT_DEFAULT = "fonts/arial-15.fnt";

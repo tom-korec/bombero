@@ -1,5 +1,6 @@
 package tomcarter.bombero.desktop;
 
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker.Settings;
 import tomcarter.bombero.game.Bombero;
+import tomcarter.bombero.utils.Constants;
 
 public class DesktopLauncher {
 	private static boolean rebuildAtlas = false;
@@ -26,7 +28,7 @@ public class DesktopLauncher {
 		config.width = 1920;
 		config.height = 1080;
 		config.vSyncEnabled = true;
-
+		config.addIcon(Constants.ICON, Files.FileType.Internal);
 		new LwjglApplication(new Bombero(), config);
 //		config.fullscreen = true;
 //		config.width = Gdx.graphics.getWidth();
