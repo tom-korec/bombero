@@ -9,7 +9,7 @@ public class BombPowerUp extends PowerUp {
         super(positionX, positionY, context);
         dimension.set(1f, 1f);
         regions = Assets.instance.powerUp.bomb;
-        region = regions[0];;
+        region = regions[0];
     }
 
     @Override

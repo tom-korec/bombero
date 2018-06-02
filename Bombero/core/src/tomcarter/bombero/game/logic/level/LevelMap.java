@@ -48,7 +48,7 @@ public class LevelMap {
      * Returns true if object at (x,y) is null
      */
     public boolean isEmpty(int x, int y){
-         return staticMap[x][y] == null;
+        return x >= 0 && x < staticMap.length && y >= 0 && y < staticMap[0].length && staticMap[x][y] == null;
     }
 
     /**
