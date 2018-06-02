@@ -9,7 +9,7 @@ import tomcarter.bombero.game.object.movement.Direction;
 import tomcarter.bombero.game.logic.level.Level;
 import tomcarter.bombero.assets.Assets;
 
-public class PotatoEnemy extends Enemy implements Explodable{
+public class PotatoEnemy extends Enemy {
     private static final float FRAME_TIME = 0.4f;
     private static final int FRAMES = 3;
     private static final float EXPLOSION_FRAME_TIME = 0.1f;
