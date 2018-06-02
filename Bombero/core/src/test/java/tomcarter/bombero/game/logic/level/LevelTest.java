@@ -1,9 +1,9 @@
 package tomcarter.bombero.game.logic.level;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.badlogic.gdx.math.Vector2;
 import org.junit.Before;
 import org.junit.Test;
 import tomcarter.bombero.assets.Assets;
@@ -12,10 +12,10 @@ import tomcarter.bombero.game.object.Enemy;
 import tomcarter.bombero.game.object.GameObject;
 import tomcarter.bombero.game.object.constant.*;
 import tomcarter.bombero.game.object.dynamic.Player;
+import tomcarter.bombero.utils.Int2D;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class LevelTest {
     private Level level;
@@ -46,6 +46,17 @@ public class LevelTest {
     public void init() throws Exception {
         List<GameObject> gameObjects = level.getGameObjects();
         assertEquals(7, gameObjects.size());
+    }
+
+    @Test
+    public void playerLosesLife() throws Exception {
+        Player player = mock(Player.class);
+        when(player.getNormalizedPosition()).thenReturn(new Int2D(10, 10));
+        when(player.getCenter()).thenReturn(new Vector2(10, 10));
+        when(player.isDestroyed()).thenReturn(true);
+        level.init(player, Arrays.asList(wall), Arrays.asList(brick), Arrays.asList(floor));
+        level.update(1);
+        verify(controller, times(1)).loseLife();
     }
 
     @Test
