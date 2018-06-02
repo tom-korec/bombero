@@ -14,7 +14,7 @@ import tomcarter.bombero.game.object.constant.Wall;
 import tomcarter.bombero.utils.Int2D;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
 
 public class LevelMapTest {
 

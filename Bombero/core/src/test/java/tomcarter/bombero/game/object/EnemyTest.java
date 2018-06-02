@@ -2,7 +2,6 @@ package tomcarter.bombero.game.object;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.math.Vector2;
 import org.junit.Before;
 import org.junit.Test;
 import tomcarter.bombero.assets.Assets;

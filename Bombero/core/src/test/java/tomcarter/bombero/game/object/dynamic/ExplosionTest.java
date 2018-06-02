@@ -14,7 +14,7 @@ import tomcarter.bombero.game.object.GameObject;
 import tomcarter.bombero.game.object.constant.Brick;
 import tomcarter.bombero.game.object.dynamic.enemy.PotatoEnemy;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class ExplosionTest {

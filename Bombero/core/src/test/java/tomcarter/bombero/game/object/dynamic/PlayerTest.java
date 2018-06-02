@@ -1,6 +1,5 @@
 package tomcarter.bombero.game.object.dynamic;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.badlogic.gdx.math.Vector2;
@@ -9,10 +8,7 @@ import org.junit.Test;
 import tomcarter.bombero.assets.Assets;
 import tomcarter.bombero.game.logic.level.Level;
 import tomcarter.bombero.game.logic.level.LevelMap;
-import tomcarter.bombero.game.logic.level.LevelType;
 import tomcarter.bombero.game.logic.world.WorldController;
-import tomcarter.bombero.game.object.Enemy;
-import tomcarter.bombero.game.object.GameObject;
 import tomcarter.bombero.game.object.Item;
 import tomcarter.bombero.game.object.constant.*;
 import tomcarter.bombero.game.object.movement.Direction;
