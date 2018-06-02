@@ -40,16 +40,12 @@ public class Gate extends Item {
         }
     }
 
+    @Override
     public void explode() {
     }
 
+    @Override
     public boolean isDestroyed(){
         return false;
-    }
-
-
-
-    public void turn(boolean on){
-        opened = on;
     }
 }

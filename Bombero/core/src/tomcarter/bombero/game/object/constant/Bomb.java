@@ -14,14 +14,10 @@ public class Bomb extends GameObject implements Explodable {
     private float currentFrameTime;
     private int frameIndex;
 
-    private Level context;
-
-    public Bomb(float positionX, float positionY, Level context, int size) {
+    public Bomb(float positionX, float positionY, int size) {
         super(positionX, positionY);
         region = Assets.instance.bomb.textures[0];
         dimension.set( 1f, 1f);
-
-        this.context = context;
 
         this.size = size;
         timeToExplode = Constants.BOMB_TIME_TO_EXPLODE;
