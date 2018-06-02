@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Generates enemies based on level number
+ */
 public class EnemyFactory {
     private Level context;
     private LevelMap map;
@@ -19,6 +22,11 @@ public class EnemyFactory {
         map = context.getMap();
     }
 
+    /**
+     * Generates enemies for given param levelType
+     * @param levelType - specifies level, type and count of enemies
+     * @return list of all enemies for level
+     */
     public List<Enemy> createEnemies(LevelType levelType){
         List<Enemy> enemies = new ArrayList<Enemy>();
 

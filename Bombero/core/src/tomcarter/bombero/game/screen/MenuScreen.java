@@ -14,6 +14,11 @@ import tomcarter.bombero.utils.Constants;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Menu screen
+ * Application starts here
+ * User selects from options what he wants to do
+ */
 public class MenuScreen extends InputScreen{
     public static MenuScreen instance = new MenuScreen();
 
@@ -122,6 +127,9 @@ public class MenuScreen extends InputScreen{
         chooseSelected();
     }
 
+    /**
+     * Next selectable option
+     */
     private void selectNext(){
         int i = (menuOptions.indexOf(selected) + 1) % menuOptions.size();
         selected.deselect();
@@ -134,6 +142,9 @@ public class MenuScreen extends InputScreen{
         }
     }
 
+    /**
+     * Previous selectable option
+     */
     private void selectPrevious(){
         int i = menuOptions.indexOf(selected) - 1;
         selected.deselect();
@@ -146,6 +157,9 @@ public class MenuScreen extends InputScreen{
         }
     }
 
+    /**
+     * First selectable option
+     */
     private void chooseSelected(){
         int i = 0;
         do {

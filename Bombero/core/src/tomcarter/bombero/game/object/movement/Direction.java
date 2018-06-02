@@ -1,5 +1,9 @@
 package tomcarter.bombero.game.object.movement;
 
+/**
+ * Represent 4 way direction (up, down, left, right)
+ * Contains methods for turning to sides or opposite
+ */
 public enum Direction {
     DOWN( 0, -1) {
         @Override

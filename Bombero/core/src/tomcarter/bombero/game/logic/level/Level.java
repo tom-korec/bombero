@@ -19,6 +19,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Contains level specific data
+ * Updates state through calling update to objects
+ * Returns object for rendering
+ */
 public class Level {
     private WorldController context;
     private LevelType levelType;
@@ -69,6 +74,12 @@ public class Level {
         this.context = context;
     }
 
+    /**
+     * Updates game state through calling update on game objects
+     * Handles destroyed objects
+     * Updates time
+     * @param delta - time since last update
+     */
     public void update(float delta){
         updateTime(delta);
 
@@ -160,6 +171,10 @@ public class Level {
         return bombs.size();
     }
 
+    /**
+     * Places bomb to map
+     * @param size - fire size
+     */
     public void placeBomb(int size){
         if (player.isExploded()){
             return;
@@ -168,21 +183,34 @@ public class Level {
         int posY = player.getNormalizedPositionY();
 
         if (!map.isBomb(posX, posY)){
-            Bomb bomb = new Bomb( posX, posY,this, size);
+            Bomb bomb = new Bomb( posX, posY, size);
             bombs.add(bomb);
             map.set(posX, posY, bomb);
         }
     }
 
-
+    /**
+     * Add flor to list
+     * @param x - coordinate x (width)
+     * @param y - coordinate y (height)
+     */
     public void addFloor(int x, int y){
         floors.add(new Floor(x, y));
     }
 
+    /**
+     * Add item to items list, so it can be rendered
+     * @param item - item to be added
+     */
     public void addItem(Item item){
         items.add(item);
     }
 
+    /**
+     * Deletes brick from map and list
+     * If contains Item, it is placed instead of brick
+     * @param brick - brick to be deleted
+     */
     public void deleteBrick(Brick brick){
         int x = brick.getNormalizedPositionX();
         int y = brick.getNormalizedPositionY();
@@ -194,32 +222,51 @@ public class Level {
         map.set(x, y, hiddenObject);
     }
 
+    /**
+     * Removes game object from static map
+     * @param object - object to be deleted
+     */
     public void deleteObjectFromMap(GameObject object){
         int x = object.getNormalizedPositionX();
         int y = object.getNormalizedPositionY();
-        Floor floor = new Floor(x, y);
-        floors.add(floor);
+        addFloor(x,y);
         map.set(x, y, null);
     }
 
+    /**
+     * Computes bonus score
+     */
     public void levelPassed(){
-        int score = (int) (timeLeft * 10);
+        int score = (int) (timeLeft * 25);
         if (bricks.size() == 0){
-            score += 500;
+            score += 5000;
         }
         context.addScore(score);
     }
 
+    /**
+     * Calls controller next level
+     */
     public void nextLevel(){
         context.nextLevel();
     }
 
+    /**
+     * Increases fire size
+     * Removes item from map and items list
+     * @param powerUp - object taken and removed
+     */
     public void addFirePowerUp(FirePowerUp powerUp){
         context.addFirePowerUp();
         items.remove(powerUp);
         deleteObjectFromMap(powerUp);
     }
 
+    /**
+     * Increases bomb count
+     * Removes item from map and items list
+     * @param powerUp - object taken and removed
+     */
     public void addBombPowerUp(BombPowerUp powerUp){
         context.addBombPowerUp();
         items.remove(powerUp);
@@ -246,6 +293,11 @@ public class Level {
         return enemies;
     }
 
+    /**
+     * Computes list of game objects for rendering
+     * Objects are added in order of rendering - most background object first, most foreground last
+     * @return - list of renderable objects
+     */
     public List<GameObject> getGameObjects(){
         ArrayList<GameObject> objects = new ArrayList<GameObject>();
         objects.addAll(floors);

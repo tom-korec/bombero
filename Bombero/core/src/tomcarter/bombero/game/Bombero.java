@@ -9,6 +9,10 @@ import tomcarter.bombero.game.screen.MenuScreen;
 import tomcarter.bombero.assets.Assets;
 import tomcarter.bombero.assets.DataManager;
 
+/**
+ * Main class
+ * libGdx calls repeatedly render on screen class
+ */
 public class Bombero extends Game {
 	private static Bombero instance;
 
@@ -24,11 +28,15 @@ public class Bombero extends Game {
 		setScreen(MenuScreen.initScreen());
 	}
 
+	/**
+	 * Sets active screen
+	 * Sets inpute processor to new screen
+	 * @param screen - new active screen
+	 */
 	public static void showScreen(InputScreen screen){
 		Gdx.input.setInputProcessor(screen);
 		instance.setScreen(screen);
 	}
-
 
 	@Override
 	public void dispose () {

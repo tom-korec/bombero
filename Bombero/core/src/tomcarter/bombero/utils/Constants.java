@@ -1,5 +1,8 @@
 package tomcarter.bombero.utils;
 
+/**
+ * Application constants
+ */
 public class Constants {
     public static final float VIEWPORT_HEIGHT = 17;
 

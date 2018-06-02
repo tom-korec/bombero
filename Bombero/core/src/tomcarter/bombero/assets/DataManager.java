@@ -5,7 +5,10 @@ import com.badlogic.gdx.Net;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.net.HttpRequestHeader;
 
-
+/**
+ * Singleton
+ * Safes and loads data from libGdx preferences or from remote server
+ */
 public class DataManager {
     private static final String PREFERENCES = "bombero/prefs";
     private static final String DATA_LEVEL_COMPLETED = "level.completed";
@@ -36,11 +39,22 @@ public class DataManager {
         return instance.data;
     }
 
+    /**
+     * Clears preferences file
+     */
     public static void reset(){
         getStorage().clear();
         getStorage().flush();
     }
 
+    /**
+     * Persists starting data for level if it should
+     * @param levelNumber - completed level + 1 (after completing level 1 = starting data for level 2)
+     * @param score - score after completed level
+     * @param livesLeft - how many lives player has after completed level
+     * @param fireSize - size of fire after completed level
+     * @param bombCount - count of bombs after completed level
+     */
     public static void saveLevelData(int levelNumber, int score, int livesLeft, int fireSize, int bombCount){
         Preferences storage = getStorage();
 
@@ -78,29 +92,56 @@ public class DataManager {
         storage.flush();
     }
 
+    /**
+     * @return number of completed levels so far
+     */
     public static int getNumberOfCompletedLevels(){
         return getStorage().getInteger("level.completed");
     }
 
+    /**
+     * Returns starting score
+     * @param levelNumber - selects specific level
+     * @return score for level #levelNumber
+     */
     public static int getLevelScore(int levelNumber){
         String scoreKey = getKey(DATA_LEVEL_SCORE, levelNumber);
         return getStorage().getInteger(scoreKey);
     }
 
+    /**
+     * Returns highscore if valid (fetched)
+     * @return if fetched = highscore, else -1
+     */
     public static int getHighscore(){
         return instance.highscore;
     }
 
+    /**
+     * Returns starting lives left
+     * @param levelNumber - selects specific level
+     * @return lives left for level #levelNumber
+     */
     public static int getLevelLivesLeft(int levelNumber){
         String lifeKey = getKey(DATA_LEVEL_LIFE_LEFT, levelNumber);
         return getStorage().getInteger(lifeKey);
     }
 
+    /**
+     * Returns starting size of fire
+     * @param levelNumber - selects specific level
+     * @return size of fire for level #levelNumber
+     */
     public static int getLevelFireSize(int levelNumber){
         String fireKey = getKey(DATA_LEVEL_FIRE_SIZE, levelNumber);
         return getStorage().getInteger(fireKey);
     }
 
+    /**
+     * Returns starting bomb count
+     * @param levelNumber - selects specific level
+     * @return bomb count for level #levelNumber
+     */
     public static int getLevelBombCount(int levelNumber){
         String bombKey = getKey(DATA_LEVEL_BOMB_COUNT, levelNumber);
         return getStorage().getInteger(bombKey);
@@ -110,7 +151,10 @@ public class DataManager {
         return prefix + "." + number;
     }
 
-
+    /**
+     * Fetches highscore from remote server
+     * If failes, highscore = -1, thus invalid
+     */
     public static void fetchHighscore(){
         Net.HttpRequest request = new Net.HttpRequest(Net.HttpMethods.GET);
         request.setUrl(HIGH_SCORE_URL);
@@ -133,6 +177,10 @@ public class DataManager {
         });
     }
 
+    /**
+     * Posts new highscore to server
+     * @param highscore - new highscore
+     */
     public static void postHighscore(final int highscore){
         Net.HttpRequest request = new Net.HttpRequest(Net.HttpMethods.POST);
         request.setHeader(HttpRequestHeader.Authorization, AUTHORIZATION);

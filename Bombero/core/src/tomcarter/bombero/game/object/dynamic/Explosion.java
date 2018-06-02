@@ -84,6 +84,9 @@ public class Explosion extends GameObject {
         return horizontal.overlaps(object.getBounds()) || vertical.overlaps(object.getBounds());
     }
 
+    /**
+     * @return true if explosion is over
+     */
     public boolean isOver(){
         return frameIndex > 3;
     }
@@ -113,6 +116,12 @@ public class Explosion extends GameObject {
         }
     }
 
+    /**
+     * Computes size of 1 side
+     * @param right - horizontal modifier (-1 left, 1 right)
+     * @param up - vertical modifier (-1 down, 1 up)
+     * @return size of side explosion
+     */
     private int getPartSize(int right, int up){
         int size = 0;
         int x = (int) position.x;
@@ -132,6 +141,12 @@ public class Explosion extends GameObject {
         return size;
     }
 
+    /**
+     * Creates parts of 1 side of explosion
+     * @param right - horizontal modifier (-1 left, 1 right)
+     * @param up - vertical modifier (-1 down, 1 up)
+     * @return array containing parts of explosion's side
+     */
     private ExplosionPart[] createSideFire(int right, int up){
         int size = getPartSize(right, up);
         TextureRegion[] bodyTextures = getTexturesForBody(right);
@@ -173,6 +188,9 @@ public class Explosion extends GameObject {
         }
     }
 
+    /**
+     * @return rectangle of horizontal part for collision checking
+     */
     private Rectangle createHorizontal(){
         float posX = position.x - left.length + FIRE_OFFSET;
         float posY = position.y + FIRE_OFFSET;
@@ -182,6 +200,9 @@ public class Explosion extends GameObject {
         return new Rectangle(posX, posY, width, height);
     }
 
+    /**
+     * @return rectangle of vertical part for collision checking
+     */
     private Rectangle createVertical(){
         float posX = position.x + FIRE_OFFSET;
         float posY = position.y - down.length + FIRE_OFFSET;
@@ -191,6 +212,9 @@ public class Explosion extends GameObject {
         return new Rectangle(posX, posY, width, height);
     }
 
+    /**
+     * Part of explosion
+     */
     public class ExplosionPart extends GameObject {
         private TextureRegion[] regions;
 

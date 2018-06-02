@@ -9,6 +9,9 @@ import tomcarter.bombero.assets.Assets;
 import tomcarter.bombero.utils.Constants;
 import tomcarter.bombero.assets.DataManager;
 
+/**
+ * Takes care of rendering game state and gui
+ */
 public class WorldRenderer implements Disposable {
     private final int width;
     private final int height;
@@ -48,7 +51,7 @@ public class WorldRenderer implements Disposable {
         return width / (float) height;
     }
 
-    public void centerMap(int arenaWidth){
+    private void centerMap(int arenaWidth){
         float ratio = calculateRatio();
         float totalWidth = Constants.VIEWPORT_HEIGHT * ratio;
         float shift = (totalWidth - arenaWidth);
@@ -57,6 +60,9 @@ public class WorldRenderer implements Disposable {
         camera.update();
     }
 
+    /**
+     * Renders game
+     */
     public void render () {
         renderWorld(batch);
         renderGui(batch);
@@ -149,6 +155,6 @@ public class WorldRenderer implements Disposable {
 
     @Override
     public void dispose() {
-
+        batch.dispose();
     }
 }

@@ -1,5 +1,9 @@
 package tomcarter.bombero.utils;
 
+/**
+ * Helper class.
+ * Represent point on the map - two integers: x, y
+ */
 public class Int2D {
     public int x;
     public int y;
@@ -27,6 +31,11 @@ public class Int2D {
         this.y = y;
     }
 
+    /**
+     * Computes distance between 2 points
+     * @param other - other point
+     * @return - distance between this and other point
+     */
     public float distance(Int2D other){
         final int x_d = other.x - x;
         final int y_d = other.y - y;

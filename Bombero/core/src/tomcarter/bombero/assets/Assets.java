@@ -12,6 +12,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Disposable;
 import tomcarter.bombero.utils.Constants;
 
+
+/**
+ * Singleton
+ * instance of this class contains game Assets - fonts and textures
+ * contains inner classes which represent specific Asset
+ */
 public class Assets implements AssetErrorListener, Disposable {
     public static final String TAG = Assets.class.getName();
     public static Assets instance;
@@ -35,6 +41,10 @@ public class Assets implements AssetErrorListener, Disposable {
     public final AssetBomb bomb;
     public final AssetExplosion explosion;
 
+    /**
+     * initialization of instance
+     * @param assetManager - libGdx class, should not be null (except testing)
+     */
     public static void init(AssetManager assetManager){
         if (assetManager != null){
             instance = new Assets(assetManager);
@@ -44,7 +54,7 @@ public class Assets implements AssetErrorListener, Disposable {
         }
     }
 
-    public Assets(AssetManager assetManager){
+    private Assets(AssetManager assetManager){
         this.assetManager = assetManager;
         assetManager.setErrorListener(this);
         assetManager.load(Constants.TEXTURE_ATLAS, TextureAtlas.class);
@@ -373,7 +383,7 @@ public class Assets implements AssetErrorListener, Disposable {
         Gdx.app.error(TAG, "Couldn't load asset '" + asset.fileName + "'", (Exception)throwable);
     }
 
-    public Assets(){
+    private Assets(){
         menu = null;
         fonts = null;
         gui = null;

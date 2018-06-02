@@ -51,6 +51,7 @@ public class Brick extends GameObject implements Explodable {
         }
     }
 
+    @Override
     public void explode() {
         if (hiddenObject == null){
             level.addFloor(getNormalizedPositionX(), getNormalizedPositionY());
@@ -65,6 +66,7 @@ public class Brick extends GameObject implements Explodable {
         region = Assets.instance.brick.breaking[frameIndex];
     }
 
+    @Override
     public boolean isDestroyed(){
         return frameIndex > LAST_FRAME;
     }

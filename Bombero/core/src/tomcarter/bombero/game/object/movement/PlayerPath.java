@@ -5,11 +5,20 @@ import tomcarter.bombero.game.object.Enemy;
 import tomcarter.bombero.game.logic.level.Level;
 import tomcarter.bombero.utils.Int2D;
 
+/**
+ * Enemy movement - aggressive direction
+ * Returns direction which should lead to player
+ */
 public class PlayerPath extends Movement {
     public PlayerPath(Enemy enemy, Level context) {
         super(enemy, context);
     }
 
+    /**
+     * If it is possible to go nearer player, it is going closer
+     * Else it chooses random possible direction, but it will take maximum 3 fields in such direction
+     * @return direction which should lead to player
+     */
     public Direction getDirection() {
         Direction direction = getDirectionToPlayer();
         int block;

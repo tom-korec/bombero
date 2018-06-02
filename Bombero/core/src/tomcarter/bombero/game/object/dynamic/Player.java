@@ -92,6 +92,11 @@ public class Player extends GameObject implements Explodable {
         }
     }
 
+    /**
+     * Handles input from user
+     * If direction changes, rendered region will also
+     * @param direction - new direction
+     */
     public void move(Direction direction){
         if (isExploded || isTransporting){
             return;
@@ -106,6 +111,9 @@ public class Player extends GameObject implements Explodable {
         }
     }
 
+    /**
+     * Player is not moving
+     */
     public void stop(){
         if (isExploded || isTransporting){
             return;
@@ -115,6 +123,9 @@ public class Player extends GameObject implements Explodable {
         resetFrame();
     }
 
+    /**
+     * Checks collisions with world
+     */
     private void handleCollisions(){
         checkItems();
 
@@ -134,6 +145,9 @@ public class Player extends GameObject implements Explodable {
         }
     }
 
+    /**
+     * Checks collision with items
+     */
     private void checkItems(){
         int x = getNormalizedPositionX();
         int y = getNormalizedPositionY();
@@ -261,6 +275,9 @@ public class Player extends GameObject implements Explodable {
         updateRegion();
     }
 
+    /**
+     * Reloads region
+     */
     private void updateRegion(){
         switch (direction){
             case DOWN:
@@ -313,6 +330,9 @@ public class Player extends GameObject implements Explodable {
         }
     }
 
+    /**
+     * Starts ending animation of level
+     */
     public void beginTransport(){
         context.levelPassed();
         isTransporting = true;

@@ -5,6 +5,10 @@ import tomcarter.bombero.utils.Constants;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Enumeration of levels
+ * Contains also count and types of enemies in specific level
+ */
 public enum LevelType {
     LEVEL1(Constants.PATH_LEVEL1, 1){
         @Override

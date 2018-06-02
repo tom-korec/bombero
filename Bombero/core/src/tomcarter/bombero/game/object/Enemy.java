@@ -11,13 +11,16 @@ import tomcarter.bombero.game.logic.level.LevelMap;
 import tomcarter.bombero.utils.Int2D;
 import tomcarter.bombero.utils.MathHelper;
 
+/**
+ * Super class for enemies
+ * Contains shared methods for movement
+ */
 public abstract class Enemy extends GameObject implements Explodable{
     private static final float EXPLODED_FRAME_TIME = 0.3f;
 
     protected Level context;
     protected LevelMap map;
     protected TextureRegion[] regions;
-    protected TextureRegion[] regionsDeath;
 
     protected Direction direction;
     protected float speed;
@@ -80,24 +83,53 @@ public abstract class Enemy extends GameObject implements Explodable{
         return frameIndex == getExplodedFramesCount();
     }
 
+    /**
+     * Blocks choosing direction for specified distance
+     * @param blockedMovement - distance in fields ( 1 field = 1.0)
+     */
     public void blockMovement(float blockedMovement){
         this.blockedMovement = blockedMovement;
     }
 
+    /**
+     * @return score for destroying enemy
+     */
     public abstract int getScore();
 
+    /**
+     * @return true if enemy can enter field (x,y)
+     */
     public abstract boolean canGo(int x, int y);
 
+    /**
+     * Selects a direction using strategy
+     * @return next direction
+     */
     protected abstract Direction chooseDirection();
 
+    /**
+     * @return - normal animation frames count
+     */
     protected abstract int getFramesCount();
 
+    /**
+     * @return - normal animation frame time
+     */
     protected abstract float getFrameTime();
 
+    /**
+     * @return - exploding animation frames count
+     */
     protected abstract int getExplodedFramesCount();
 
+    /**
+     * @return - exploding animation frames time
+     */
     protected abstract float getExplodedFrameTime();
 
+    /**
+     * sets regions to exploding textures
+     */
     protected abstract void setExplodedRegions();
 
     private void move(float delta){
@@ -108,6 +140,9 @@ public abstract class Enemy extends GameObject implements Explodable{
         position.add(addX, addY);
     }
 
+    /**
+     * @return true if there is any direction where enemy can move
+     */
     protected boolean canMove(){
         int x = getNormalizedPositionX();
         int y = getNormalizedPositionY();
@@ -119,6 +154,9 @@ public abstract class Enemy extends GameObject implements Explodable{
         return blockedMovement <= 0;
     }
 
+    /**
+     * @return true if it is in center of field
+     */
     private boolean inCenter(){
         float x = MathHelper.fractionalPart(getCenterX());
         float y = MathHelper.fractionalPart(getCenterY());

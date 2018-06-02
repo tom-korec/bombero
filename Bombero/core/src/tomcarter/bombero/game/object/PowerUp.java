@@ -5,6 +5,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import tomcarter.bombero.game.logic.level.Level;
 import tomcarter.bombero.assets.Assets;
 
+/**
+ * Super class for power ups
+ */
 public abstract class PowerUp extends Item {
     private final static float DESTROY_FRAME_TIME = 0.1f;
     private final static int DESTROY_FRAMES = 7;
@@ -47,6 +50,7 @@ public abstract class PowerUp extends Item {
         }
     }
 
+    @Override
     public void explode() {
         if (destroyed){
             return;
@@ -59,6 +63,7 @@ public abstract class PowerUp extends Item {
         destroyedRegions = Assets.instance.powerUp.itemDestroy;
     }
 
+    @Override
     public boolean isDestroyed(){
         return isTaken || destroyFrameIndex == DESTROY_FRAMES;
     }

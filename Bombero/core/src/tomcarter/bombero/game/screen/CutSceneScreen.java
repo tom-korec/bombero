@@ -10,6 +10,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import tomcarter.bombero.game.Bombero;
 import tomcarter.bombero.assets.Assets;
 
+/**
+ * Screen showing text and logo
+ * After certain time, screen will change to next
+ */
 public class CutSceneScreen extends InputScreen {
     private String text;
     private float textShift;

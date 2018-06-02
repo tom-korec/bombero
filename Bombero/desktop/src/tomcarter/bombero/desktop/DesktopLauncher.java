@@ -12,6 +12,11 @@ import tomcarter.bombero.utils.Constants;
 
 import java.awt.*;
 
+/**
+ * Main
+ * Building of atlas
+ * Config of application
+ */
 public class DesktopLauncher {
 	private static boolean rebuildAtlas = false;
 	private static boolean drawDebugOutline = false;

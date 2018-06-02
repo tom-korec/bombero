@@ -6,6 +6,10 @@ import tomcarter.bombero.game.logic.world.WorldController;
 import tomcarter.bombero.game.logic.world.WorldRenderer;
 import tomcarter.bombero.game.logic.level.LevelType;
 
+/**
+ * Game screen
+ * Shows game
+ */
 public class GameScreen extends InputScreen {
     public static GameScreen instance = new GameScreen();
 
@@ -16,11 +20,18 @@ public class GameScreen extends InputScreen {
         super();
     }
 
+    /**
+     * starts new game from level 1
+     */
     public void newGame(){
         controller = new WorldController();
         renderer = new WorldRenderer(controller, width, height);
     }
 
+    /**
+     * starts new game, starting at specified level
+     * @param levelType - level, from which will game start
+     */
     public void selectLevel(LevelType levelType){
         controller = new WorldController(levelType);
         renderer = new WorldRenderer(controller, width, height);

@@ -14,6 +14,12 @@ import tomcarter.bombero.utils.Constants;
 import tomcarter.bombero.assets.DataManager;
 import tomcarter.bombero.game.logic.level.LevelLoader;
 
+/**
+ * World controller
+ * Holds game specific data as score, lives left...
+ * updates level
+ * alters game state - reload / load of levels
+ */
 public class WorldController {
     private GameScreen app;
 
@@ -27,13 +33,18 @@ public class WorldController {
     private int fireSize;
     private int bombCount;
 
-
-
+    /**
+     * Starts new game - level 1
+     */
     public WorldController() {
         init();
         initNewGame();
     }
 
+    /**
+     * Starts game with specific level
+     * @param levelType - specifies level
+     */
     public WorldController(LevelType levelType) {
         init();
         initLevel(levelType);
@@ -68,6 +79,10 @@ public class WorldController {
         this.level.setContext(this);
     }
 
+    /**
+     * Checks if highscore was beaten - if so, it will post new highscore
+     * Loads next level if there is one, else shows victory cut scene
+     */
     public void nextLevel(){
         LevelType next = level.getLevelType().next();
 
@@ -86,6 +101,10 @@ public class WorldController {
         }
     }
 
+    /**
+     * Subtract 1 life
+     * Checks game over condition
+     */
     public void loseLife(){
         if (--livesLeft < 0){
             Bombero.showScreen(new CutSceneScreen("GAME OVER!", 5, MenuScreen.initScreen()));
@@ -105,6 +124,11 @@ public class WorldController {
         }
     }
 
+    /**
+     * Update state of level
+     * Handle input
+     * @param delta - time since last update
+     */
     public void update(float delta){
         if (!paused){
             handleInput();
@@ -124,22 +148,39 @@ public class WorldController {
         return livesLeft;
     }
 
-    public void addScore(int score){
-        this.score += score;
-    }
-
-    public void addFirePowerUp(){
-        ++fireSize;
-    }
-
-    public void addBombPowerUp(){
-        ++bombCount;
-    }
-
     public boolean isPaused() {
         return paused;
     }
 
+    /**
+     * Adds score
+     * @param score - score to be added
+     */
+    public void addScore(int score){
+        this.score += score;
+    }
+
+    /**
+     * increases fire size
+     */
+    public void addFirePowerUp(){
+        ++fireSize;
+    }
+
+    /**
+     * increases bomb count
+     */
+    public void addBombPowerUp(){
+        ++bombCount;
+    }
+
+
+
+    /**
+     * Handles application controlling keys - pause and return to menu
+     * @param keycode - key released
+     * @return - if was key handled
+     */
     public boolean keyUp(int keycode) {
         switch (keycode){
             case Keys.ESCAPE:

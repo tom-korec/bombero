@@ -13,17 +13,23 @@ import tomcarter.bombero.game.object.constant.Gate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Provides loading of level data and objects
+ */
 public class LevelLoader {
     public static final String TAG = LevelLoader.class.getName();
 
+    /**
+     * Objects are represented by color
+     */
     public enum PixelType {
         PLAYER_SPAWN(0xFF, 0x0, 0x0), //red
         WALL(0x0, 0x0, 0x0), // black
-        BRICK(0x66, 0x33, 0x0), // green
+        BRICK(0x66, 0x33, 0x0), // brown
         FLOOR(0xFF, 0xFF, 0xFF), // white
-        GATE(0x0, 0xFF, 0x0),
-        FIRE_POWERUP(0xFF, 0xAA, 0x0),
-        BOMB_POWERUP(0x0, 0x0, 0xFF);
+        GATE(0x0, 0xFF, 0x0), // green
+        FIRE_POWERUP(0xFF, 0xAA, 0x0), // orange
+        BOMB_POWERUP(0x0, 0x0, 0xFF); // blue
         private int color;
 
         PixelType (int r, int g, int b) {
@@ -35,7 +41,7 @@ public class LevelLoader {
         }
     }
 
-    Level level;
+    private Level level;
 
     private Pixmap pixmap;
     private int width;
@@ -46,7 +52,11 @@ public class LevelLoader {
     private List<Brick> bricks;
     private List<Floor> floors;
 
-
+    /**
+     * Loads level
+     * @param levelType - level data: path to file, level number
+     * @return Level class with loaded game objects
+     */
     public Level load (LevelType levelType){
         init(levelType.getPath());
         level = new Level(width, height, levelType);
@@ -68,6 +78,9 @@ public class LevelLoader {
         height = pixmap.getHeight();
     }
 
+    /**
+     * Clearing after loading
+     */
     public void finishLoading(){
         pixmap.dispose();
         walls.clear();

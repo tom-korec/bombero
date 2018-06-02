@@ -5,6 +5,9 @@ import tomcarter.bombero.game.object.Explodable;
 import tomcarter.bombero.game.object.GameObject;
 import tomcarter.bombero.game.logic.level.Level;
 
+/**
+ * Super class for objects which could be hidden in brick
+ */
 public abstract class Item extends GameObject implements Explodable {
     protected TextureRegion[] regions;
 
@@ -25,9 +28,13 @@ public abstract class Item extends GameObject implements Explodable {
         frameIndex = 0;
     }
 
+
     public abstract void explode();
 
     public abstract boolean isDestroyed();
 
+    /**
+     * Called after player entered field
+     */
     public abstract void enter();
 }

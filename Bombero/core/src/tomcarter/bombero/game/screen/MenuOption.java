@@ -4,6 +4,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import tomcarter.bombero.assets.Assets;
 
+/**
+ * Option in menus
+ */
 public abstract class MenuOption {
     private String text;
     private float x;
@@ -22,18 +25,28 @@ public abstract class MenuOption {
         return selectable;
     }
 
+    /**
+     * If selectable, set selected to true
+     */
     public void select(){
         if (selectable){
             selected = true;
         }
     }
 
+    /**
+     * If selectable, set selected to false
+     */
     public void deselect(){
         if (selectable){
             selected = false;
         }
     }
 
+    /**
+     * Render text to screen
+     * @param batch - libGdx batch
+     */
     public void render(SpriteBatch batch){
         BitmapFont font;
         if (!selectable){
@@ -45,5 +58,8 @@ public abstract class MenuOption {
         font.draw(batch, text, x, y);
     }
 
+    /**
+     * Executes this after choosing option
+     */
     public abstract void execute();
 }
