@@ -1,6 +1,18 @@
 # Bombero
 <img src="img/Bombero Title.png" height="450px" width="100%" />
 
+## Instalation
+Executable files (exe, jar) are located in /executable folder. It is needed to have at least jre-1.8
+In project, working directory should be set to : {repository location}/LPOO1718_T3G3/Bombero/core/assets
+
+## Documentation
+Generated javadoc is located in /docs folder
+
+## Development notes
+We estimate time spent for 100 hours. 
+Work distribution was equaly divided among us. 
+Hardest part was collisions checking - how to store objects to eficiently find and handle collisions.
+
 ## Description
 Bombero is a 2D game similar to Dyna Blaster (Bomberman). 
 Goal of the game is eliminating all enemies and escaping through hidden gate. This is achieved by planting bombs. Player has limited amount of time to do that.
