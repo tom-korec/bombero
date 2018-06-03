@@ -183,6 +183,10 @@ public class MenuScreen extends InputScreen{
 
     @Override
     public boolean keyUp(int keycode) {
+        if (super.keyUp(keycode)){
+            return true;
+        }
+
         switch (keycode){
             case Keys.ESCAPE:
                 Gdx.app.exit();

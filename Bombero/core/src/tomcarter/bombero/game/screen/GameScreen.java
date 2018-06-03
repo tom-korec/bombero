@@ -47,7 +47,7 @@ public class GameScreen extends InputScreen {
 
     @Override
     public boolean keyUp(int keycode) {
-        return controller.keyUp(keycode);
+        return super.keyUp(keycode) || controller.keyUp(keycode);
     }
 
     @Override
