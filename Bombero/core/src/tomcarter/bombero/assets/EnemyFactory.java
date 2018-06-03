@@ -1,5 +1,9 @@
-package tomcarter.bombero.game.logic.level;
+package tomcarter.bombero.assets;
 
+import tomcarter.bombero.game.logic.level.EnemyType;
+import tomcarter.bombero.game.logic.level.Level;
+import tomcarter.bombero.game.logic.level.LevelMap;
+import tomcarter.bombero.game.logic.level.LevelType;
 import tomcarter.bombero.game.object.dynamic.enemy.CloudEnemy;
 import tomcarter.bombero.game.object.Enemy;
 import tomcarter.bombero.game.object.dynamic.enemy.PigEnemy;

@@ -12,7 +12,7 @@ import tomcarter.bombero.game.screen.GameScreen;
 import tomcarter.bombero.game.screen.MenuScreen;
 import tomcarter.bombero.utils.Constants;
 import tomcarter.bombero.assets.DataManager;
-import tomcarter.bombero.game.logic.level.LevelLoader;
+import tomcarter.bombero.assets.LevelLoader;
 
 /**
  * World controller

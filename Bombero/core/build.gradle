@@ -9,5 +9,3 @@ sourceSets.main.java.srcDirs = [ "src/" ]
 eclipse.project {
     name = appName + "-core"
 }
-repositories { jcenter() }
-dependencies { testCompile "org.mockito:mockito-core:2.+" }

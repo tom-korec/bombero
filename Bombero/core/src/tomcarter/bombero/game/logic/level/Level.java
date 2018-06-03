@@ -1,5 +1,6 @@
 package tomcarter.bombero.game.logic.level;
 
+import tomcarter.bombero.assets.EnemyFactory;
 import tomcarter.bombero.game.object.*;
 import tomcarter.bombero.game.object.constant.Bomb;
 import tomcarter.bombero.game.object.constant.Brick;

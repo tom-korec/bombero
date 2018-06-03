@@ -1,7 +1,9 @@
-package tomcarter.bombero.game.logic.level;
+package tomcarter.bombero.assets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
+import tomcarter.bombero.game.logic.level.Level;
+import tomcarter.bombero.game.logic.level.LevelType;
 import tomcarter.bombero.game.object.constant.Brick;
 import tomcarter.bombero.game.object.constant.Floor;
 import tomcarter.bombero.game.object.dynamic.Player;
