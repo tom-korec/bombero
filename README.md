@@ -1,32 +1,47 @@
 # Bombero
-<img src="img/bomberman_title.png" height="450px" width="100%" />
+<img src="img/Bombero Title.png" height="450px" width="100%" />
 
 ## Description
 Bombero is a 2D game similar to Dyna Blaster (Bomberman). 
-Goal of the game is eliminating all enemies and escaping through hidden gate. This is achieved by using bombs. Player has limited amount of time to do that.
+Goal of the game is eliminating all enemies and escaping through hidden gate. This is achieved by planting bombs. Player has limited amount of time to do that.
+
+Game currently contains 8 playable levels with increasing difficulty. You can find 3 types of enemies in game:
+- Potato
+- Cloud
+- Pig
+
+Your progress is saved localy, so you can continue in the last level where you got. 
+Your goal is to get the biggest score from all players. Highscore is then saved on a remote server.
+
+### Controls
+Screenshot: S
+#### Menu
+Next option: arrows down, right
+Previous option: arrows down, right
+Exit: escape
+#### Game
+Movement: arrows (up / down / left / right .. arrow)
+Place bomb: space
+Pause: P
+Back to menu: escape
 
 ### Menu
 After game starts, player can see a menu with following options:
-
+- **Continue** - continue with last level (grayed if you did not complete the first level)
 - **New game** - starts a new game with level #1. 
 Player has 3 lives available. 
 Explosion size: 1
 Available boms: 1 
-
-- **Select level** - opens list of available levels where player can select specific level or return to main menu screen.
-After selecting level game starts in that level with same properties as the New game option.
-
-- **_Options_** - (not guaranteed feature)
-   - opens possible settings such as difficulty (# lives), viewable area of map, music volume ... 
-                
-   - uses libGDX Preferences to store permanent data
-
+- **Select level** - opens list of available levels where player can select specific level or return to main menu screen. (grayed if you did not complete the first level)
+- **Reset** - resets your completion progress (grayed if you did not complete the first level)
 - **Exit** - shuts down game.
 
 ### Initialization of game
+Loads assets. Fetches highscore from remote server.
+
+### Initialization of level
 1. Load level - using level loader
-2. Place items - gate and powerups
-3. Place enemies
+2. Place enemies
 
 ### Main game cycle
 #### Repeat:
@@ -36,9 +51,10 @@ After selecting level game starts in that level with same properties as the New 
 4. Check game over conditions
 5. Render game
 
-#### Game over:
+#### End game:
 - **success**: continue to next level
-- **fail**: substract 1 life, if lives > 0 restart level, otherwise it is game over
+- **fail**: substract 1 life, if lives >= 0 restart level, otherwise it is game over
+After victory or game over
 
 ### Map
 Map contains static and dynamic objects:
@@ -59,25 +75,26 @@ Map contains static and dynamic objects:
 **Gate** 
 - opened when there are no enemies
 - enemies are spawned after contact with explosion
+- entering when opened begins end of level
 
 **Fire powerup** 
-- increases size of explosion (1,3,5)
+- increases size of explosion by 1
 
 **Bomb powerup** 
-- increases number of placable bombs at one moment (1,2,3)
+- increases number of placable bombs at one moment by 1
 
 **Bomb** 
 - planted by player
 - after some time it will explode and destroy enemies, player, brick blocks and items in range
 - will also explode after contact with explosion
-- neither player nor enemies can go through
-- default amount is 1 ATM
+- enemies can not go through
 
 **Explosion** 
-- replaces bomb after +-4 seconds
-- makes fire in 4 directions, except directions where are wall blocks
+- replaces bomb after 4 seconds
+- makes fire in 4 directions
 - destroys bricks, items, enemies and also player if they are in contact
 - default size of fire is 1, but can be enlarged by powerup item
+- fire is spreading until its size - it can be stopped with wall or brick block
 
 #### B) Dynamic objects
 **Player** 
@@ -98,24 +115,25 @@ Map size is defined by image dimensions.
 
 ## Architecture
 ### Class diagram
-Following diagram displays basic concept of game's structure. Diagram focuses on showing connections between classes. 
+Following diagram displays basic concept of game's structure. Diagram focuses on main parts of code. 
 
-To keep diagram **_clean_**:
-- some fields are left out (e.g. rendering fields - size, dimensions, position...)
-- some methods (dispose)
-- some classes are not in diagram (specialized EnemyStrategy classes)
+<img src="img/ClassDiagram_final.png" title="Class diagram" alt="Class diagram" width="100%"/>
 
-<img src="img/ClassDiagram_concept2.png" title="Class diagram" alt="Class diagram" width="100%"/>
+There are __7 colors__, which distinguish purpose (package) of class:
 
-There are __four colors__, which distinguish purpose (package) of class:
+&nbsp; &nbsp; **1. red** - main class, which extends from libGdx Game class 
 
-&nbsp; &nbsp; **1. orange** - main classes, contains logic and game cycle
+&nbsp; &nbsp; **2. orange** - logic classes
 
-&nbsp; &nbsp; **2. blue** - entity classes
+&nbsp; &nbsp; **3. blue** - entity classes
 
-&nbsp; &nbsp; **3. green** - helper classes
+&nbsp; &nbsp; **4. golden** - screen classes 
 
-&nbsp; &nbsp; **4. gray** - libGDX classes
+&nbsp; &nbsp; **5. purple** - assets and data classes
+
+&nbsp; &nbsp; **6. green** - helper classes
+
+&nbsp; &nbsp; **7. gray** - libGDX classes
 
 ### Activity diagram
 Displays cycle of the game.
@@ -124,45 +142,40 @@ Displays cycle of the game.
 
 ### Design patterns
 #### Singleton
-- *Bombero, World controller, Assets*
+- *Bombero, MenuScreen, GameScreen, Assets, DataManager*
 - there is just one instance of these classes and it is desirable to have acess to them from other classes
-- getInstance() methods can be replaced with eager initiliazation (initialized with application start) - direct acess (instance is `public static final`)
 
 #### Flyweight
 - *Assets*
 - Each texture is loaded just once
-- *ViewFactory*
-- each sprite is loaded in memory just once - getSprite() will apply specific attributes of entity to sprite
 
 #### Factory
-- *ViewFactory*
-- *static* class which generates sprites for rendering
-
-#### Strategy
-- *EnemyStrategy*
-- defines type of enemy - movement and score for elimination
+- *EnemyFactory*
+- generates enemies
 
 ## Graphics
 ### Main menu
-Selected option is bolder and bigger than other labels.
+Selected option is bigger and more outlined.
+Unavailable options are gray.
 
-<img title="Main menu" alt="Main menu" src="img/mockups/bomberman menu.jpg"/>
+<img title="Main menu" alt="Main menu" src="img/screenshots/mainmenu-screenshot.png"/>
 
 ### Main menu - select level
-Label of selected level is bigger and rotated. Labels of unavailable levels are gray.
+Label of selected level is bigger and more outlined. 
+Labels of unavailable levels are gray.
 
-<img title="Main menu - select level" alt="Main menu - select level" src="img/mockups/bomberman menu - select level.jpg"/>
+<img title="Main menu - select level" alt="Main menu - select level" src="img/screenshots/selectlevel-screenshot.png"/>
 
 ### Game
 Contains HUD and gameboard. 
 
 HUD shows user:
+- actual score
 - time left
 - lives left
-- actual score
 - highscore
 
-<img title="Game" alt="Game" src="img/mockups/game.png"/>
+<img title="Game" alt="Game" src="img/screenshots/game-screenshot.png"/>
 
 ### Sprites
 #### Player
@@ -188,6 +201,15 @@ HUD shows user:
 
 #### Explosion
 ![Explosion](img/sprites/explosion.png)
+
+#### Enemy Potato
+![Enemy Potato](img/sprites/potato.png)
+
+#### Enemy Cloud
+![Enemy Cloud](img/sprites/enemyCloud.png)
+
+#### Enemy Pig
+![Enemy Pig](img/sprites/enemyPig.png)
 
 ## Testing
 ### Mechanics
